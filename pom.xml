@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>me.lins.bean</groupId>
+  <artifactId>bean</artifactId>
+  <packaging>nar</packaging>
+  <version>0.1-SNAPSHOT</version>
+  <name>Bean JVM</name>
+  <url>https://github.com/cli/bean</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.github.maven-nar</groupId>
+      <artifactId>nar-maven-plugin</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-nar-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <libraries>
+            <library>
+              <type>executable</type>
+              <run>true</run>
+            </library>
+          </libraries>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+                <copy todir="bin" flatten="true">
+                  <fileset dir="target">
+                    <include name="**/*so"/>
+                    <include name="**/*test-app"/>
+                  </fileset>
+                </copy>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
