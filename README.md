@@ -1,11 +1,6 @@
-XAM Java Virtual Machine
-========================
+Bean JVM
+=========
 
-XAM is my small effort to create Java Virtual Machine. It's definitely
+Bean is my small effort to create Java Virtual Machine. It's definitely
 work-in-progress.
-
-To build XAM you currently need the following:
-* A ANSI-C (C99) compiler
-* libgc headers
-* libpthread headers
 
