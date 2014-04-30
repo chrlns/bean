@@ -1,10 +1,18 @@
 /*
- *  XAM Xerxys Artificial Machine
- *  Copyright (C) 2005-2012 Christian Lins <christian@lins.me>
+ *  Bean Java VM
+ *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
  *
- *  This Source Code Form is subject to the terms of the Mozilla Public
- *  License, v. 2.0. If a copy of the MPL was not distributed with this
- *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 #ifndef _XAM_H_
@@ -18,15 +26,15 @@
 	printf("DEBUG: %s\n", msg);
 #endif
 
-#include "xam_method.h"
-#include "xam_process.h"
+#include "bvm_method.h"
+#include "bvm_process.h"
 
 /* These are the only stdc-lib includes */
 #include <assert.h>     /* If NDEBUG is defined "assert" is ignored */
 #include <stdio.h>
 #include <stdlib.h>     /* Necessary for malloc, realloc, exit, etc. */
 #include <string.h>     /* Necessary for strcmp() */
-#include <stdint.h>	    /* Necessary for exact int types, e.g. int64_t */
+#include <stdint.h>     /* Necessary for exact int types, e.g. int64_t */
 
 bool isAccessFlag(struct METHOD_INFO* method, uint16_t accFlag);
 
