@@ -1,15 +1,23 @@
 /*
- *  XAM Xerxys Artificial Machine
- *  Copyright (C) 2005-2012 Christian Lins <christian@lins.me>
+ *  Bean Java VM
+ *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
  *
- *  This Source Code Form is subject to the terms of the Mozilla Public
- *  License, v. 2.0. If a copy of the MPL was not distributed with this
- *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
-#include <xam.h>
-#include <xam_link.h>
-#include <xam_mem.h>
+#include <bvm.h>
+#include <bvm_link.h>
+#include <bvm_mem.h>
 
 void do_INVOKEINTERFACE(struct VMTHREAD *thread)
 {
@@ -17,8 +25,8 @@ void do_INVOKEINTERFACE(struct VMTHREAD *thread)
     current_frame(thread)->instPtr++;
 }
 
-/* 
- * Invoke instance method; dispatch based on runtime class type 
+/*
+ * Invoke instance method; dispatch based on runtime class type
  * (virtual method invokation).
  */
 void do_INVOKEVIRTUAL(struct VMTHREAD *thread)
@@ -26,9 +34,9 @@ void do_INVOKEVIRTUAL(struct VMTHREAD *thread)
     dbgmsg("INVOKEVIRTUAL");
 }
 
-/* 
- * Invoke instance method; special handling for superclass, private, 
- * and instance initialization method invocations. 
+/*
+ * Invoke instance method; special handling for superclass, private,
+ * and instance initialization method invocations.
  */
 void do_INVOKESPECIAL(struct VMTHREAD *thread)
 {
@@ -36,8 +44,8 @@ void do_INVOKESPECIAL(struct VMTHREAD *thread)
         current_frame(thread)->instPtr++;
 }
 
-/* 
- * Invoke static class method. 
+/*
+ * Invoke static class method.
  * The invoked method must be declared as static and must not be abstract.
  */
 void do_INVOKESTATIC(struct VMTHREAD *thread)
@@ -46,7 +54,7 @@ void do_INVOKESTATIC(struct VMTHREAD *thread)
 
     /* Index in the constant pool pointing to method reference */
     uint16_t index = Get2ByteOperand(current_frame(thread));
-    uint16_t nargs = 0;         // TODO: Parse method descriptor 
+    uint16_t nargs = 0;         // TODO: Parse method descriptor
 
     /* Create a new frame for the invoking method */
     struct stackframe_t *new_frame =
@@ -55,7 +63,7 @@ void do_INVOKESTATIC(struct VMTHREAD *thread)
 
     new_frame->method = dlink(thread, index, NULL);
 
-    /* Operand stack contains nargs arguments for the called method 
+    /* Operand stack contains nargs arguments for the called method
      * which form the contents of the new_frame's local var array */
     new_frame->localVarsLen = nargs;
     new_frame->localVars = xam_alloc(sizeof(struct varframe_t) * nargs);

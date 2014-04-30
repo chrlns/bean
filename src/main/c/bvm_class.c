@@ -15,10 +15,10 @@
  *  limitations under the License.
  */
 
-#include <xam.h>
-#include <xam_io.h>
-#include <xam_error.h>
-#include <xam_mem.h>
+#include <bvm.h>
+#include <bvm_io.h>
+#include <bvm_error.h>
+#include <bvm_mem.h>
 
 bool ReadAttributeInfo(struct ATTRIBUTE_INFO *, IOHandle *);
 bool ReadMethodInfo(struct VMCLASS *, IOHandle *, int, int);

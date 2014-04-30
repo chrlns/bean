@@ -1,18 +1,26 @@
 /*
- *  XAM Xerxys Artificial Machine
- *  Copyright (C) 2005-2012 Christian Lins <christian@lins.me>
+ *  Bean Java VM
+ *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
  *
- *  This Source Code Form is subject to the terms of the Mozilla Public
- *  License, v. 2.0. If a copy of the MPL was not distributed with this
- *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 #ifndef _XAM_PROCESS_H_
 #define _XAM_PROCESS_H_
 
-#include "xam_class.h"
-#include "xam_stack.h"
-#include "xam_io.h"
+#include "bvm_class.h"
+#include "bvm_stack.h"
+#include "bvm_io.h"
 
 #define PROCESS_STATUS_FREE     0
 #define PROCESS_STATUS_SLEEPING 1
