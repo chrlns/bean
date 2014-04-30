@@ -19,6 +19,7 @@
           <groupId>com.github.maven-nar</groupId>
           <artifactId>nar-maven-plugin</artifactId>
           <version>3.0.0</version>
+          <extensions>true</extensions>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -27,12 +28,20 @@
         <groupId>com.github.maven-nar</groupId>
         <artifactId>nar-maven-plugin</artifactId>
         <version>3.0.0</version>
+        <extensions>true</extensions>
         <configuration>
           <linker>
             <name>gcc</name>
           </linker>
           <c>
             <name>gcc</name>
+            <sourceDirectory>${basedir}/src/main/c</sourceDirectory>
+            <includes>
+              <include>**/*.c</include>
+            </includes>
+            <includePaths>
+              <includePath>${basedir}/src/main/include</includePath>
+            </includePaths>
           </c>
           <libraries>
             <library>

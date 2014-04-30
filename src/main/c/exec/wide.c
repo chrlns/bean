@@ -7,7 +7,7 @@
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <xam.h>
+#include <bvm.h>
 
 /* Extend local variables index by additional bytes
  * This instruction needs support by the following other opcodes:
