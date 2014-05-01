@@ -87,7 +87,7 @@ int XamStart(int argc, char *argv[], void *mempointer, int memsize)
     }
 
     if (processFile == NULL && mempointer == NULL) {
-        printf("xam [options] <classname>\n");
+        printf("bean [options] <classname>\n");
         printf("Missing options!\n");
         printf("-bootclasspath\t Class library path\n");
 

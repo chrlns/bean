@@ -18,6 +18,7 @@
 #ifndef _XAM_MEM_H_
 #define _XAM_MEM_H_
 
+#define NOGC // FIXME Use a Garbage Collector
 #ifdef NOGC
 
 /* Use standard malloc */

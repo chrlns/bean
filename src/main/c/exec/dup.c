@@ -15,7 +15,7 @@
  *  limitations under the License.
  */
 
-#include <xam.h>
+#include <bvm.h>
 
 void do_DUP(struct VMTHREAD *thread)
 {

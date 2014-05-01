@@ -20,8 +20,8 @@
 
 #include "bvm_error.h"
 
-// __LITTLE_ENDIAN__ must be provided by the compiler
-#ifdef __LITTLE_ENDIAN__
+// The following byte order defines are GCC specific defines
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 #define bswp16(x) \
 	x << 8 | x >> 8
 #define bswp32(x) \
@@ -29,7 +29,7 @@
 #define bswp64(x) \
 	bswp32(x) << 32 | bswp32(x)
 #else
-#ifdef __BIG_ENDIAN__
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 #define bswp16(x) (x)
 #define bswp32(x) (x)
 #define bswp64(x) (x)

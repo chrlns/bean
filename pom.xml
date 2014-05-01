@@ -27,7 +27,6 @@
       <plugin>
         <groupId>com.github.maven-nar</groupId>
         <artifactId>nar-maven-plugin</artifactId>
-        <version>3.0.0</version>
         <extensions>true</extensions>
         <configuration>
           <linker>
@@ -42,6 +41,9 @@
             <includePaths>
               <includePath>${basedir}/src/main/include</includePath>
             </includePaths>
+            <options>
+              <option>-std=c99</option>
+            </options>
           </c>
           <libraries>
             <library>
