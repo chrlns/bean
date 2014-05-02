@@ -27,6 +27,7 @@ int LoadJavaClass(IOIdentifier, struct VMCLASS *);
 int init_thread(struct VMTHREAD *thread)
 {
     thread->Priority = THREAD_PRIORITY_NORMAL;
+    stack_init(&(thread->frameStack), 32); // FIXME What's the appropriate size?
     return true;
 }
 
@@ -83,9 +84,10 @@ int start_process(IOIdentifier processFileID)
         xam_alloc(sizeof(struct stackframe_t));
     stackframe_init(stackframe, mainMethod);
 
-    // and push it onto thread's invokation stack
-    stack_push(&VM.Threads[0].frameStack, stackframe);
-    assert(&VM.Threads[0].frameStack.size);
+    // and push it onto thread's invocation stack
+    int ret = stack_push(&VM.Threads[0].frameStack, stackframe);
+    assert(0 == ret); // check for unexpected stack overflow
+    assert(1 == VM.Threads[0].frameStack.size);
 
     return true;
 }

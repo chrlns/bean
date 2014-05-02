@@ -104,6 +104,37 @@
             </build>
         </profile>
 
+        <profile>
+            <id>arm-Linux</id>
+            <activation>
+                <os>
+                    <name>Linux</name>
+                    <arch>arm</arch>
+                </os>
+            </activation>
+            <properties>
+                <stack.protector.option>-fno-stack-protector</stack.protector.option>
+                <debug.option>true</debug.option>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.maven-nar</groupId>
+                        <artifactId>nar-maven-plugin</artifactId>
+                        <configuration>
+                            <c>
+                                <options>
+                                    <option>-DDEBUG</option>
+                                    <option>-std=c99</option>
+                                    <option>-Wall</option>
+                                </options>
+                            </c>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 
 </project>
