@@ -25,7 +25,7 @@
 #include "bvm_stack.h"
 
 /* A method, but without running information */
-struct METHOD_INFO
+struct method_info_t
 {
 	uint16_t AccessFlags;
 	uint16_t NameIndex;
@@ -44,10 +44,10 @@ struct METHOD_INFO
 #include "bvm_stack.h"
 
 /* Identifies a running method (method "instance", old: METHOD_FQID) */
-struct METHOD
+struct method_t
 {
-	struct VMCLASS*     Class;    /* Pointer to a class */
-	struct STACKFRAME*  Frame;    /* Pointer to a StackFrame-copy of this method */
-	struct METHOD_INFO* Method;   /* Pointer to the METHOD_INFO that describes this method */
+    struct VMCLASS*      class;         /* Pointer to a class */
+    struct stackframe_t* frame;         /* Pointer to a StackFrame-copy of this method */
+    struct method_info_t*  method_info; /* Pointer to the METHOD_INFO that describes this method */
 };
 #endif

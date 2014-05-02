@@ -40,25 +40,25 @@ struct stack_t
 /* This stackframe is attached to every method invocation. */
 struct stackframe_t
 {
-	/* Local variable array */
-	struct varframe_t* localVars;
-	int16_t            localVarsLen;
+    /* Local variable array */
+    struct varframe_t* localVars;
+    int16_t            localVarsLen;
 
-	/* Operand stack */
-	struct stack_t operandStack;
-	int16_t        operandStackSize; /* Max. size of the operand stack */
+    /* Operand stack */
+    struct stack_t operandStack;
+    int16_t        operandStackSize; /* Max. size of the operand stack */
 
-	/* Reference to the constant pool */
-	struct CONSTANTPOOL* constantPool;
+    /* Reference to the constant pool */
+    struct CONSTANTPOOL* constantPool;
 
-	/* Pointer to the current running opcode. */
-	unsigned char* instPtr;
+    /* Pointer to the current running opcode. */
+    unsigned char* instPtr;
 
-	/* Invoked method */
-	struct METHOD* method;
+    /* Invoked method */
+    struct method_t* method;
 };
 
-void stackframe_init(struct stackframe_t* frame, struct METHOD* method);
+void stackframe_init(struct stackframe_t* frame, struct method_t* method);
 
 void stack_init(struct stack_t* stack, unsigned int limit);
 void stack_free(struct stack_t* stack);

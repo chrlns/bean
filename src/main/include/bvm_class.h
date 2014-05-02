@@ -230,7 +230,7 @@ struct VMCLASS
 	uint16_t*                 Interfaces;
 	uint16_t                  InterfacesNum;
 	uint16_t                  MainMethodIndex;    /* 0 means no method, >0 index in the Methods array. */
-	struct METHOD_INFO*     Methods;
+	struct method_info_t*     Methods;
 	uint16_t                  MethodsNum;
 	const char*             QualifiedName;      /* Full qualified name */
 	uint16_t                  SuperClassIndex;

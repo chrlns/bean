@@ -523,7 +523,7 @@ bool ReadMethodInfo(struct VMCLASS * vmclass, IOHandle * classfile,
     register short n, m, i;
     unsigned char buffer2[2];
 
-    dbgmsg("Begin reading METHOD_INFO...\n");
+    dbgmsg("Begin reading method_info_t...\n");
 
     /* Read methods count */
     if (IORead(buffer2, 2, classfile) == 2) {
@@ -534,7 +534,7 @@ bool ReadMethodInfo(struct VMCLASS * vmclass, IOHandle * classfile,
 
     /* Read methods */
     vmclass->Methods =
-        (struct METHOD_INFO *) xam_alloc(sizeof(struct METHOD_INFO) *
+        (struct method_info_t *) xam_alloc(sizeof(struct method_info_t) *
                                          vmclass->MethodsNum);
 
     if (vmclass->Methods == NULL) {

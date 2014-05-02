@@ -19,7 +19,7 @@
 #include <bvm.h>
 #include <bvm_opcode.h>
 
-bool isAccessFlag(struct METHOD_INFO * method, uint16_t accFlag)
+bool isAccessFlag(struct method_info_t* method, uint16_t accFlag)
 {
     return (method->AccessFlags & accFlag) == accFlag;
 }
@@ -54,11 +54,11 @@ uint32_t Get4ByteOperand(struct stackframe_t * frame)
 int exec_thread(struct VMTHREAD *thread)
 {
     struct stackframe_t *frame =
-        (struct stackframe_t *) thread->frameStack.top;
+        (struct stackframe_t *) thread->frameStack.top->data;
 #ifdef DEBUG
     assert(frame != NULL);
     printf("Opcode %x (%p)\tClass %p",
-           *frame->instPtr, (void *) frame->instPtr,
+           *(frame->instPtr), (void *) frame->instPtr,
            (void *) thread->RunningClass);
 #endif
 

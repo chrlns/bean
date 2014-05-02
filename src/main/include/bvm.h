@@ -36,7 +36,7 @@
 #include <string.h>     /* Necessary for strcmp() */
 #include <stdint.h>     /* Necessary for exact int types, e.g. int64_t */
 
-bool isAccessFlag(struct METHOD_INFO* method, uint16_t accFlag);
+bool isAccessFlag(struct method_info_t* method, uint16_t accFlag);
 
 #define true  1
 #define false 0

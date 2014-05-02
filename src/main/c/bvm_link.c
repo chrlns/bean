@@ -72,11 +72,11 @@ struct VMCLASS *FindClassByNameIndex(struct VMCLASS *localClass,
 
 /* This method searches in the local constant pool for a method and returns the index
      of the method in the MethodLookupTable. */
-struct METHOD *find_method_name(struct VMCLASS *vmclass,
+struct method_t* find_method_name(struct VMCLASS *vmclass,
                                 const char *qualifiedName)
 {
     unsigned short n, nameIndex;
-    struct METHOD *method;
+    struct method_t* method;
 
 #ifdef DEBUG
     printf("Link: finding method %s...", qualifiedName);
@@ -92,9 +92,9 @@ struct METHOD *find_method_name(struct VMCLASS *vmclass,
             (qualifiedName,
              ((struct CONSTANT_UTF8_INFO *)
               vmclass->ConstantPool[nameIndex].Data)->Text) == 0) {
-            method = (struct METHOD *) xam_alloc(sizeof(struct METHOD));
-            method->Method = &(vmclass->Methods[n]);
-            method->Class = vmclass;
+            method = (struct method_t*)xam_alloc(sizeof(struct method_t));
+            method->method_info = &(vmclass->Methods[n]);
+            method->class = vmclass;
 
 #ifdef DEBUG
             printf("Found!\n");
@@ -111,17 +111,17 @@ struct METHOD *find_method_name(struct VMCLASS *vmclass,
     return NULL;
 }
 
-struct METHOD *find_method_nameidx(struct VMCLASS *vmclass,
+struct method_t* find_method_nameidx(struct VMCLASS *vmclass,
                                    short methodNameIndex)
 {
     unsigned short n;
-    struct METHOD *method;
+    struct method_t* method;
 
     for (n = 0; n < vmclass->MethodsNum; n++) {
         if (vmclass->Methods[n].NameIndex == methodNameIndex + 1) {     /* +1 ? */
-            method = (struct METHOD *) xam_alloc(sizeof(struct METHOD));
-            method->Method = &(vmclass->Methods[n]);
-            method->Class = vmclass;
+            method = (struct method_t *) xam_alloc(sizeof(struct method_t));
+            method->method_info = &(vmclass->Methods[n]);
+            method->class = vmclass;
             return method;
         }
     }
@@ -133,13 +133,13 @@ struct METHOD *find_method_nameidx(struct VMCLASS *vmclass,
  * This method tries to find a method by parsing the string identifier
  * and looking for method in local classes.
  */
-struct METHOD *find_method_idx(struct VMCLASS *vmclass,
+struct method_t *find_method_idx(struct VMCLASS *vmclass,
                                struct VMTHREAD *thread,
                                uint16_t methodIndex,
                                struct LINKFLAGS *flags)
 {
     struct VMCLASS *methodClass;
-    struct METHOD *methodInvoked;
+    struct method_t* methodInvoked;
     unsigned short classIndex, classNameIndex, nameTypeIndex,
         methodNameIndex;
     char *className;
@@ -215,7 +215,7 @@ struct METHOD *find_method_idx(struct VMCLASS *vmclass,
 }
 
 /* Dynamically finds a method to invoke */
-struct METHOD *dlink(struct VMTHREAD *thread, unsigned short methodIndex,
+struct method_t* dlink(struct VMTHREAD *thread, unsigned short methodIndex,
                      struct LINKFLAGS *flags)
 {
     if (IsNative(thread, methodIndex, flags) == false) {

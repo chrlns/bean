@@ -75,8 +75,9 @@ int stack_push(struct stack_t *stack, void *data)
     }
 }
 
-void stackframe_init(struct stackframe_t *frame, struct METHOD *method)
+void stackframe_init(struct stackframe_t *frame, struct method_t* method)
 {
-    frame->method = method;
-    frame->instPtr = method->Method->CodeInfo->Code;
+    frame->method  = method;
+    frame->instPtr = method->method_info->CodeInfo->Code;
+    assert(frame->instPtr != NULL);
 }

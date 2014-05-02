@@ -33,8 +33,8 @@ int init_thread(struct VMTHREAD *thread)
 
 int start_process(IOIdentifier processFileID)
 {
-    struct METHOD *mainMethod = NULL;
-    struct METHOD *clinitMethod = NULL;
+    struct method_t* mainMethod = NULL;
+    struct method_t* clinitMethod = NULL;
 
     /* Create main thread */
     VM.ThreadNum++;
