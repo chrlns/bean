@@ -27,7 +27,7 @@ unsigned short (*BufferToShort) (unsigned char[2]);
 
 int XamInit(void)
 {
-    dbgmsg("Initializing Xerxys Artificia Machina...");
+    dbgmsg("Initializing Bean Java VM...");
 
     /* Set some function pointer... */
     BufferToInt = &BufferToInt_LittleEndian;
