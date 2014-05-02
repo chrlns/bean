@@ -85,6 +85,7 @@ int start_process(IOIdentifier processFileID)
 
     // and push it onto thread's invokation stack
     stack_push(&VM.Threads[0].frameStack, stackframe);
+    assert(&VM.Threads[0].frameStack.size);
 
     return true;
 }
@@ -100,6 +101,9 @@ struct VMTHREAD *next_thread(void)
 
     // Reset all priorities...
     for (int n = 0; n < VM.ThreadNum; n++) {
+#ifdef DEBUG
+        printf("[DEBUG] Setting Thread %u priority to %u\n", n, VM.Threads[n].Priority);
+#endif
         VM.Threads[n].PriorityCurrent = VM.Threads[n].Priority;
     }
 
@@ -115,6 +119,7 @@ void exec_process(void)
     while (VM.Running) {
         // Get next thread to be executed
         thread = next_thread();
+        assert(thread != NULL);
 
         // Run the thread code until timeslice is over
         for (; thread->PriorityCurrent > 0; thread->PriorityCurrent >>= 1) {
