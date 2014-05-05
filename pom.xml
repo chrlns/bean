@@ -97,6 +97,7 @@
                                     <option>-DDEBUG</option>
                                     <option>-std=c99</option>
                                     <option>-g</option>
+                                    <option>-Wall</option>
                                 </options>
                             </c>
                         </configuration>

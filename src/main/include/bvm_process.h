@@ -35,7 +35,7 @@
 #define THREAD_PRIORITY_IDLE        0
 
 #define current_frame(thread) \
-	((struct stackframe_t*)thread->frameStack.top)
+	((struct stackframe_t*)thread->frameStack.top->data)
 
 struct VMTHREAD
 {

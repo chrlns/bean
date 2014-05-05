@@ -24,27 +24,24 @@ void do_GETSTATIC(struct VMTHREAD *thread)
     struct CONSTANTPOOL *constant = NULL;
     struct CONSTANT_NAMETYPE_INFO *nameTypeInfo = NULL;
     struct CONSTANT_REF_INFO *refInfo = NULL;
+    
     uint16_t operand = 0;
+    struct stackframe_t* frame = current_frame(thread);
+    assert(frame != NULL);
 
-    assert(thread != NULL);
-    assert(thread->RunningClass != NULL);
-    assert(thread->RunningClass->ConstantPool != NULL);
-
-    operand = Get2ByteOperand(current_frame(thread));
+    operand = Get2ByteOperand(frame);
 
     dbgmsg("GETSTATIC");
 
-    constant = (struct CONSTANTPOOL *)
-        &(thread->RunningClass->ConstantPool[operand - 1]);
+    constant = (struct CONSTANTPOOL *)&(frame->constants[operand - 1]);
 
     assert(constant != NULL);
     assert(constant->Tag == CONSTANTPOOL_FIELDREF);
     assert(constant->Data != NULL);
 
-    refInfo = (struct CONSTANT_REF_INFO *) constant->Data;
+    refInfo   = (struct CONSTANT_REF_INFO *)constant->Data;
     classInfo = (struct CONSTANT_CLASS_INFO *)
-        thread->RunningClass->ConstantPool[refInfo->ClassIndex - 1].Data;
+        frame->constants[refInfo->ClassIndex - 1].Data;
     nameTypeInfo = (struct CONSTANT_NAMETYPE_INFO *)
-        thread->RunningClass->ConstantPool[refInfo->NameAndTypeIndex -
-                                           1].Data;
+        frame->constants[refInfo->NameAndTypeIndex - 1].Data;
 }

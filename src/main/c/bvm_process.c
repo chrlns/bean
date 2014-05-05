@@ -31,6 +31,20 @@ int init_thread(struct VMTHREAD *thread)
     return true;
 }
 
+void stackframe_init(
+    struct stackframe_t *frame,
+    struct method_t* method,
+    struct CONSTANTPOOL* constants)
+{
+    frame->constants = constants;
+    frame->method    = method;
+    frame->instPtr   = method->method_info->CodeInfo->Code;
+
+    assert(frame->constants != NULL);
+    assert(frame->instPtr != NULL);
+    assert(frame->method != NULL);
+}
+
 int start_process(IOIdentifier processFileID)
 {
     struct method_t* mainMethod = NULL;
@@ -80,9 +94,11 @@ int start_process(IOIdentifier processFileID)
                               __FILE__, __LINE__);
     }
     // Create stackframe for main method
-    struct stackframe_t *stackframe =
+    struct stackframe_t *stackframe = 
         xam_alloc(sizeof(struct stackframe_t));
-    stackframe_init(stackframe, mainMethod);
+    stackframe_init(stackframe, 
+                    mainMethod, 
+                    VM.LocalClasses[VM.LocalClassesNum - 1]->ConstantPool);
 
     // and push it onto thread's invocation stack
     int ret = stack_push(&VM.Threads[0].frameStack, stackframe);

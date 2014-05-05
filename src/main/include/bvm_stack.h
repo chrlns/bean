@@ -49,7 +49,7 @@ struct stackframe_t
     int16_t        operandStackSize; /* Max. size of the operand stack */
 
     /* Reference to the constant pool */
-    struct CONSTANTPOOL* constantPool;
+    struct CONSTANTPOOL* constants;
 
     /* Pointer to the current running opcode. */
     unsigned char* instPtr;
@@ -57,8 +57,6 @@ struct stackframe_t
     /* Invoked method */
     struct method_t* method;
 };
-
-void stackframe_init(struct stackframe_t* frame, struct method_t* method);
 
 void stack_init(struct stack_t* stack, unsigned int limit);
 void stack_free(struct stack_t* stack);
