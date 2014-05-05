@@ -15,8 +15,6 @@
  *  limitations under the License.
  */
 
-#define NULL 0
-
 #ifndef STRUCT_METHOD_INFO
 #define STRUCT_METHOD_INFO
 

@@ -43,60 +43,37 @@ int XamInit(void)
     return true;
 }
 
-#ifndef XERXYS
+
 int main(int argc, char *argv[])
 {
-    void *mempointer = NULL;
-    int memsize = 0;
-#else
-int XamStart(int argc, char *argv[], void *mempointer, int memsize)
-{
-#endif
-    int n;
-    char *processFile = NULL;
-    IOIdentifier processFileID;
+    char* main_class = NULL;
 
     /* Parsing command line options */
     if (argc > 1) {
-        for (n = 1; n < argc; n++) {
+        for (int n = 1; n < argc; n++) {
             if (argv[n][0] == '-') {
-                switch (argv[n][1]) {
-                case 'f':      /* Filename of startup class */
-                    {
-                        processFile = argv[++n];
-                        break;
-                    }
-                case 'l':      /* Path to the classlib */
-                    {
-                        VM.LibraryPath = argv[++n];
-                        break;
-                    }
-                default:       /* Handling of long parameter names */
-                    {
-                        if (strcmp(argv[n], "-bootclasspath") == 0) {
-                            VM.LibraryPath = argv[++n];
-                        }
-                        break;
-                    }
+                if (strcmp(argv[n], "-cp") == 0) {
+                    VM.LibraryPath = argv[++n];
                 }
             } else {
                 /* Could be the name of the startup class */
-                processFile = argv[n];
+                main_class = argv[n];
             }
         }
     }
 
-    if (processFile == NULL && mempointer == NULL) {
+    if (main_class == NULL) {
         printf("bean [options] <classname>\n");
         printf("Missing options!\n");
-        printf("-bootclasspath\t Class library path\n");
-
-        return false;
+        printf("-cp\t Class path (currently only one supported)\n");
+        return 0;
     }
 
-    processFileID.filename = strncat(processFile, ".class", 6);
-    processFileID.filebuffer = (unsigned char *) mempointer;
-    processFileID.filebuffer_len = memsize;
+    FILE* class_file = find_class_file(main_class);
+    if (class_file == NULL) {
+        printf("Could not open main class: %s\n", main_class);
+        return 1;
+    }
 
     /* Initalizing virtual machine... */
     if (VM.Initialized == false) {
@@ -104,10 +81,9 @@ int XamStart(int argc, char *argv[], void *mempointer, int memsize)
     }
 
     /* Creating init processes... */
-    if (start_process(processFileID) == false) {
-        printf("Fatal Error: Could not start init process %s!\n",
-               processFile);
-        return false;
+    if (start_process(class_file) == false) {
+        printf("Fatal Error: Could not start init process %s!\n", main_class);
+        return 2;
     }
 
     dbgmsg("Start!");

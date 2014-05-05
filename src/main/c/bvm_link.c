@@ -16,17 +16,19 @@
  */
 
 #include <bvm.h>
+#include <bvm_class.h>
 #include <bvm_io.h>
 #include <bvm_link.h>
 #include <bvm_mem.h>
 
 bool IsNative(struct VMTHREAD * thread, unsigned short methodIndex,
               struct LINKFLAGS * flags);
-int LoadJavaClass(IOIdentifier, struct VMCLASS *);
 
-/* Finds, loads and initializes a new class specified by the
-     full qualified name. */
-struct VMCLASS *FindClassByName(char *qualifiedName)
+/**
+ * Finds, loads and initializes a new class specified by the
+ * full qualified name.
+ */
+struct VMCLASS *FindClassByName(char* qualifiedName)
 {
     IOIdentifier fileID;
     struct VMCLASS *class = NULL;
@@ -42,9 +44,11 @@ struct VMCLASS *FindClassByName(char *qualifiedName)
         }
     }
 
-    fileID.filename = compose_path(qualifiedName, VM.LibraryPath);
-    fileID.filebuffer_len = 0;
-    fileID.filebuffer = NULL;
+    FILE* class_file = find_class_file(qualifiedName);
+    if (class_file == NULL) {
+        printf("Classfile %s not found!\n", qualifiedName);
+        return NULL;
+    }
 
     VM.LocalClassesNum++;
     VM.LocalClasses = (struct VMCLASS **) xam_realloc(VM.LocalClasses,
@@ -55,7 +59,7 @@ struct VMCLASS *FindClassByName(char *qualifiedName)
     class = (struct VMCLASS *) xam_alloc(sizeof(struct VMCLASS));
     VM.LocalClasses[VM.LocalClassesNum - 1] = class;
 
-    if (LoadJavaClass(fileID, class) == false) {
+    if (load_class_file(class_file, class) == false) {
         return NULL;
     }
 

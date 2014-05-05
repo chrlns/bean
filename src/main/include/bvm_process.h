@@ -50,6 +50,6 @@ struct VMTHREAD
 
 void exec_process(void);
 int  exec_thread(struct VMTHREAD*);
-int  start_process(IOIdentifier);
+int  start_process(FILE*);
 
 #endif

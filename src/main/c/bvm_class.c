@@ -20,10 +20,10 @@
 #include <bvm_error.h>
 #include <bvm_mem.h>
 
-bool ReadAttributeInfo(struct ATTRIBUTE_INFO *, IOHandle *);
-bool ReadMethodInfo(struct VMCLASS *, IOHandle *, int, int);
+bool ReadAttributeInfo(struct ATTRIBUTE_INFO *, FILE*);
+bool ReadMethodInfo(struct VMCLASS *, FILE*, int, int);
 
-bool LoadJavaClass(IOIdentifier file, struct VMCLASS *class)
+bool load_class_file(FILE* classfile, struct VMCLASS *class)
 {
     short n, m;
     int attributeCodeIndex = 0;
@@ -32,9 +32,6 @@ bool LoadJavaClass(IOIdentifier file, struct VMCLASS *class)
     unsigned char buffer2[2] = { 0, 0 };
     unsigned char buffer4[4] = { 0, 0, 0, 0 };
     uint64_t buffer8;
-    IOHandle *classfile = NULL;
-
-    classfile = IOOpen(file);
 
     /* Set init values */
     class->AccessFlags = 0x0000;
@@ -46,7 +43,7 @@ bool LoadJavaClass(IOIdentifier file, struct VMCLASS *class)
 #endif
 
         /* Read Magic */
-        IORead(buffer4, 4, classfile);
+        fread(buffer4, 1, 4, classfile);
         if (buffer4[0] != 0xCA || buffer4[1] != 0xFE || buffer4[2] != 0xBA || buffer4[3] != 0xBE) {     /*
                                                                                                            printf("Class file has invalid magic! Read: %x %x %x %x\n", buffer4[0], buffer4[1], buffer4[2], buffer4[3]); */
             return RaiseException(ExceptionUnknown, "LoadJavaClass",
@@ -54,11 +51,11 @@ bool LoadJavaClass(IOIdentifier file, struct VMCLASS *class)
         }
 
         /* Read minor version */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         class->Version.Minor = BufferToShort(buffer2);
 
         /* Read major version */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         class->Version.Major = BufferToShort(buffer2);
 #ifdef DEBUG
         printf("Class Version: %d.%d\n", class->Version.Major,
@@ -66,7 +63,7 @@ bool LoadJavaClass(IOIdentifier file, struct VMCLASS *class)
 #endif
 
         /* Read constant pool count */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         class->ConstantPoolNum = BufferToShort(buffer2);
 #ifdef DEBUG
         printf("Constant pool count: %d\n", class->ConstantPoolNum);
@@ -79,7 +76,7 @@ bool LoadJavaClass(IOIdentifier file, struct VMCLASS *class)
 
         /* Read constants from pool */
         for (n = 1; n < class->ConstantPoolNum; n++) {
-            IORead(&buffer1, 1, classfile);
+            fread(&buffer1, 1, 1, classfile);
             class->ConstantPool[n - 1].Tag = buffer1;
 
 #ifdef DEBUG
@@ -94,13 +91,12 @@ bool LoadJavaClass(IOIdentifier file, struct VMCLASS *class)
                         xam_alloc(sizeof(struct CONSTANT_REF_INFO));
 
                     /* Read class index */
-                    IORead(buffer2, 2, classfile);
+                    fread(buffer2, 1, 2, classfile);
                     ((struct CONSTANT_REF_INFO *)
-                     class->ConstantPool[n - 1].Data)->ClassIndex =
-BufferToShort(buffer2);
+                        class->ConstantPool[n - 1].Data)->ClassIndex = BufferToShort(buffer2);
 
                     /* Read name and type index */
-                    IORead(buffer2, 2, classfile);
+                    fread(buffer2, 1, 2, classfile);
                     ((struct CONSTANT_REF_INFO *) class->ConstantPool[n -
                                                                       1].
                      Data)->NameAndTypeIndex = BufferToShort(buffer2);
@@ -116,7 +112,7 @@ BufferToShort(buffer2);
                         xam_alloc(sizeof(struct CONSTANT_CLASS_INFO));
 
                     /* Read name index */
-                    IORead(buffer2, 2, classfile);
+                    fread(buffer2, 1, 2, classfile);
                     ((struct CONSTANT_CLASS_INFO *)
                      class->ConstantPool[n - 1].Data)->NameIndex =
 BufferToShort(buffer2);
@@ -136,13 +132,13 @@ BufferToShort(buffer2);
                         xam_alloc(sizeof(struct CONSTANT_REF_INFO));
 
                     /* Read class index */
-                    IORead(buffer2, 2, classfile);
+                    fread(buffer2, 1, 2, classfile);
                     ((struct CONSTANT_REF_INFO *)
                      class->ConstantPool[n - 1].Data)->ClassIndex =
 BufferToShort(buffer2);
 
                     /* Read name and type index */
-                    IORead(buffer2, 2, classfile);
+                    fread(buffer2, 1, 2, classfile);
                     ((struct CONSTANT_REF_INFO *) class->ConstantPool[n -
                                                                       1].
                      Data)->NameAndTypeIndex = BufferToShort(buffer2);
@@ -159,13 +155,13 @@ BufferToShort(buffer2);
                         xam_alloc(sizeof(struct CONSTANT_REF_INFO));
 
                     /* Read class index */
-                    IORead(buffer2, 2, classfile);
+                    fread(buffer2, 1, 2, classfile);
                     ((struct CONSTANT_REF_INFO *)
                      class->ConstantPool[n - 1].Data)->ClassIndex =
 BufferToShort(buffer2);
 
                     /* Read name and type index */
-                    IORead(buffer2, 2, classfile);
+                    fread(buffer2, 1, 2, classfile);
                     ((struct CONSTANT_REF_INFO *) class->ConstantPool[n -
                                                                       1].
                      Data)->NameAndTypeIndex = BufferToShort(buffer2);
@@ -182,7 +178,7 @@ BufferToShort(buffer2);
                         xam_alloc(sizeof(struct CONSTANT_STRING_INFO));
 
                     /* Read string index */
-                    IORead(buffer2, 2, classfile);
+                    fread(buffer2, 1, 2, classfile);
                     ((struct CONSTANT_STRING_INFO *)
                      class->ConstantPool[n - 1].Data)->StringIndex =
 BufferToShort(buffer2);
@@ -198,7 +194,7 @@ BufferToShort(buffer2);
                         xam_alloc(sizeof(struct CONSTANT_INTEGER_INFO));
 
                     /* Read integer */
-                    IORead(buffer4, 4, classfile);
+                    fread(buffer4, 1, 4, classfile);
                     ((struct CONSTANT_INTEGER_INFO *)
                      class->ConstantPool[n - 1].Data)->Value =
 BufferToInt(buffer4);
@@ -214,7 +210,7 @@ BufferToInt(buffer4);
                         malloc(sizeof(struct CONSTANT_FLOAT_INFO));
 
                     /* Read float */
-                    IORead(buffer4, 4, classfile);
+                    fread(buffer4, 1, 4, classfile);
                     ((struct CONSTANT_FLOAT_INFO *)
                      class->ConstantPool[n - 1].Data)->Value =
 (float) BufferToInt(buffer4);
@@ -228,7 +224,7 @@ BufferToInt(buffer4);
                 {
                     class->ConstantPool[n - 1].Data =
                         malloc(sizeof(struct CONSTANT_LONG_INFO));
-                    IORead((void *) &buffer8, 8, classfile);
+                    fread((void *) &buffer8, 1, 8, classfile);
                     buffer8 = bswp64(buffer8);
                     ((struct CONSTANT_LONG_INFO *)
                      class->ConstantPool[n - 1].Data)->Value = buffer8;
@@ -257,14 +253,14 @@ BufferToInt(buffer4);
                         xam_alloc(sizeof(struct CONSTANT_NAMETYPE_INFO));
 
                     /* Read name index */
-                    IORead(buffer2, 2, classfile);
+                    fread(buffer2, 1, 2, classfile);
                     ((struct CONSTANT_NAMETYPE_INFO *)
                      class->ConstantPool[n -
                                          1].Data)->NameIndex =
                         BufferToShort(buffer2);
 
                     /* Read descriptor index */
-                    IORead(buffer2, 2, classfile);
+                    fread(buffer2, 1, 2, classfile);
                     ((struct CONSTANT_NAMETYPE_INFO *)
                      class->ConstantPool[n -
                                          1].Data)->DescriptorIndex =
@@ -282,7 +278,7 @@ BufferToInt(buffer4);
                         malloc(sizeof(struct CONSTANT_UTF8_INFO));
 
                     /* Read length */
-                    IORead(buffer2, 2, classfile);
+                    fread(buffer2, 1, 2, classfile);
                     ((struct CONSTANT_UTF8_INFO *)
                      class->ConstantPool[n - 1].Data)->Length =
 BufferToShort(buffer2);
@@ -296,12 +292,11 @@ BufferToShort(buffer2);
                                   sizeof(char) + 1);
 
                     /* Read string */
-                    IORead((unsigned char *) ((struct CONSTANT_UTF8_INFO *)
-                                              class->ConstantPool[n -
-                                                                  1].Data)->
-                           Text, ((struct CONSTANT_UTF8_INFO *)
-                                  class->ConstantPool[n - 1].Data)->Length,
-                           classfile);
+                    fread((unsigned char*)((struct CONSTANT_UTF8_INFO *)
+                        class->ConstantPool[n - 1].Data)->Text, 1,
+                        ((struct CONSTANT_UTF8_INFO *)
+                        class->ConstantPool[n - 1].Data)->Length,
+                        classfile);
 
                     /* Terminating zero character */
                     ((struct CONSTANT_UTF8_INFO *) class->ConstantPool[n -
@@ -334,26 +329,26 @@ BufferToShort(buffer2);
                 {
                     printf("Unknown constant type: %d!\n",
                            class->ConstantPool[n - 1].Tag);
-                    IOClose(classfile);
+                    fclose(classfile);
                     return false;
                 }
             }
         }
 
         /* Read access flags */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         class->AccessFlags = BufferToShort(buffer2);
 
         /* Read this class index */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         class->ThisClassIndex = BufferToShort(buffer2);
 
         /* Read super class index */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         class->SuperClassIndex = BufferToShort(buffer2);
 
         /* Read interface count */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         class->InterfacesNum = BufferToShort(buffer2);
 
         /* Read interface indices */
@@ -361,12 +356,12 @@ BufferToShort(buffer2);
             (unsigned short *) xam_alloc(sizeof(unsigned short) *
                                          class->InterfacesNum);
         for (n = 0; n < class->InterfacesNum; n++) {
-            IORead(buffer2, 2, classfile);
+            fread(buffer2, 1, 2, classfile);
             class->Interfaces[n] = BufferToShort(buffer2);
         }
 
         /* Read fields count */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         class->FieldsNum = BufferToShort(buffer2);
 
         /* Read fields */
@@ -375,19 +370,19 @@ BufferToShort(buffer2);
                                             class->FieldsNum);
         for (n = 0; n < class->FieldsNum; n++) {
             /* Read access flags */
-            IORead(buffer2, 2, classfile);
+            fread(buffer2, 1, 2, classfile);
             class->Fields[n].AccessFlags = BufferToShort(buffer2);
 
             /* Read name index */
-            IORead(buffer2, 2, classfile);
+            fread(buffer2, 1, 2, classfile);
             class->Fields[n].NameIndex = BufferToShort(buffer2);
 
             /* Read descriptor index */
-            IORead(buffer2, 2, classfile);
+            fread(buffer2, 1, 2, classfile);
             class->Fields[n].DescriptorIndex = BufferToShort(buffer2);
 
             /* Read attributes count */
-            IORead(buffer2, 2, classfile);
+            fread(buffer2, 1, 2, classfile);
             class->Fields[n].AttributesNum = BufferToShort(buffer2);
 
             /* Read attributes */
@@ -396,12 +391,12 @@ BufferToShort(buffer2);
                           class->Fields[n].AttributesNum);
             for (m = 0; m < class->Fields[n].AttributesNum; m++) {
                 /* Read attribute name index */
-                IORead(buffer2, 2, classfile);
+                fread(buffer2, 1, 2, classfile);
                 class->Fields[n].Attributes[m].AttributeNameIndex =
                     BufferToShort(buffer2);
 
                 /* Read length of info array */
-                IORead(buffer4, 4, classfile);
+                fread(buffer4, 1, 4, classfile);
                 class->Fields[n].Attributes[m].AttributeLength =
                     BufferToInt(buffer4);
 
@@ -410,7 +405,7 @@ BufferToShort(buffer2);
                     (unsigned char *) xam_alloc(class->
                                                 Fields[n].Attributes
                                                 [m].AttributeLength);
-                IORead(class->Fields[n].Attributes[m].Info,
+                fread(class->Fields[n].Attributes[m].Info, 1,
                        class->Fields[n].Attributes[m].AttributeLength,
                        classfile);
             }
@@ -420,7 +415,7 @@ BufferToShort(buffer2);
         ReadMethodInfo(class, classfile, mainIndex, attributeCodeIndex);
 
         /* Read attributes count */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         class->AttributesNum = BufferToShort(buffer2);
 
         /* Read attributes */
@@ -429,42 +424,42 @@ BufferToShort(buffer2);
                       class->AttributesNum);
         for (m = 0; m < class->AttributesNum; m++) {
             /* Read attribute name index */
-            IORead(buffer2, 2, classfile);
+            fread(buffer2, 1, 2, classfile);
             class->Attributes[m].AttributeNameIndex =
                 BufferToShort(buffer2);
 
             /* Read length of info array */
-            IORead(buffer4, 4, classfile);
+            fread(buffer4, 1, 4, classfile);
             class->Attributes[m].AttributeLength = BufferToInt(buffer4);
 
             /* Allocate space for infos */
             class->Attributes[m].Info = (unsigned char *)
                 xam_alloc(sizeof(struct ATTRIBUTE_INFO) *
                           class->Attributes[m].AttributeLength);
-            IORead(class->Attributes[m].Info,
+            fread(class->Attributes[m].Info, 1,
                    class->Attributes[m].AttributeLength, classfile);
         }
     } else {
 #ifdef DEBUG
-        printf("IO-Error: %s %p\n", file.filename,
-               (void *) file.filebuffer);
+        printf("IO-Error: %u\n", ferror(classfile));
 #endif
         return RaiseException(ExceptionIO, "LoadJavaClass", __FILE__,
                               __LINE__);
     }
 
-    if (IOEnd(classfile) == false) {
+    if (!feof(classfile)) {
         printf("Class not wellformed: unused data at end of file!\n");
-        return false;
+       // fclose(classfile);
+       // return false;
     }
 
-    IOClose(classfile);
+    fclose(classfile);
 
     return true;
 }
 
 bool ReadAttributeInfo(struct ATTRIBUTE_INFO * attributeInfo,
-                       IOHandle * classfile)
+                       FILE* classfile)
 {
     unsigned char buffer2[2];
     unsigned char buffer4[4];
@@ -474,7 +469,7 @@ bool ReadAttributeInfo(struct ATTRIBUTE_INFO * attributeInfo,
 #endif
 
     /* Read attribute name index */
-    if (IORead(buffer2, 2, classfile) == 2) {
+    if (fread(buffer2, 1, 2, classfile) == 2) {
         attributeInfo->AttributeNameIndex = BufferToShort(buffer2);
     } else {
 #ifdef DEBUG
@@ -484,7 +479,7 @@ bool ReadAttributeInfo(struct ATTRIBUTE_INFO * attributeInfo,
     }
 
     /* Read length of info array */
-    if (IORead(buffer4, 4, classfile) == 4) {
+    if (fread(buffer4, 1, 4, classfile) == 4) {
         attributeInfo->AttributeLength = BufferToInt(buffer4);
     } else {
 #ifdef DEBUG
@@ -502,8 +497,8 @@ bool ReadAttributeInfo(struct ATTRIBUTE_INFO * attributeInfo,
         return false;
     }
 
-    if (IORead
-        (attributeInfo->Info, attributeInfo->AttributeLength,
+    if (fread
+        (attributeInfo->Info, 1, attributeInfo->AttributeLength,
          classfile) != attributeInfo->AttributeLength) {
 #ifdef DEBUG
         printf("Read of ATTRIBUTE_INFO failed!\n");
@@ -517,7 +512,7 @@ bool ReadAttributeInfo(struct ATTRIBUTE_INFO * attributeInfo,
     return true;
 }
 
-bool ReadMethodInfo(struct VMCLASS * vmclass, IOHandle * classfile,
+bool ReadMethodInfo(struct VMCLASS * vmclass, FILE* classfile,
                     int mainIndex, int attributeCodeIndex)
 {
     register short n, m, i;
@@ -526,7 +521,7 @@ bool ReadMethodInfo(struct VMCLASS * vmclass, IOHandle * classfile,
     dbgmsg("Begin reading method_info_t...\n");
 
     /* Read methods count */
-    if (IORead(buffer2, 2, classfile) == 2) {
+    if (fread(buffer2, 1, 2, classfile) == 2) {
         vmclass->MethodsNum = BufferToShort(buffer2);
     } else {
         return false;
@@ -543,21 +538,21 @@ bool ReadMethodInfo(struct VMCLASS * vmclass, IOHandle * classfile,
 
     for (n = 0; n < vmclass->MethodsNum; n++) {
         /* Read access flags */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         vmclass->Methods[n].AccessFlags = BufferToShort(buffer2);
 
         /* Read name index */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         vmclass->Methods[n].NameIndex = BufferToShort(buffer2);
         if (vmclass->Methods[n].NameIndex == mainIndex)
             vmclass->MainMethodIndex = n + 1;
 
         /* Read descriptor index */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         vmclass->Methods[n].DescriptorIndex = BufferToShort(buffer2);
 
         /* Read attributes count */
-        IORead(buffer2, 2, classfile);
+        fread(buffer2, 1, 2, classfile);
         vmclass->Methods[n].AttributesNum = BufferToShort(buffer2);
 
         /* Read attributes */
@@ -665,49 +660,33 @@ bool ReadMethodInfo(struct VMCLASS * vmclass, IOHandle * classfile,
     return true;
 }
 
-int XamPreloadClass(void *mempointer, int memsize,
-                    const char *fullQualifiedName)
+FILE* find_class_file(const char* class)
 {
-    IOIdentifier file;
-    file.filebuffer = (unsigned char *) mempointer;
-    file.filebuffer_len = memsize;
-    file.filename = NULL;
+    FILE* file;
 
-    /* Create class struct */
-    VM.LocalClassesNum++;
-    VM.LocalClasses =
-        (struct VMCLASS **) xam_realloc(VM.LocalClasses,
-                                        sizeof(struct VMCLASS *) *
-                                        VM.LocalClassesNum);
-
-    if (LoadJavaClass(file, VM.LocalClasses[VM.LocalClassesNum - 1]) ==
-        false) {
-        return false;
-    } else {
-        VM.LocalClasses[VM.LocalClassesNum - 1]->QualifiedName =
-            fullQualifiedName;
-    }
-
-#ifdef DEBUG
-    printf("Class %s preloaded.\n",
-           VM.LocalClasses[VM.LocalClassesNum - 1]->QualifiedName);
-#endif
-
-    return true;
-}
-
-FILE find_class_file(const char* class) 
-{
     // Argument class is the Java class name with slashes as separator
     // instead of points, e.g. "java/lang/System".
-    char* class_file = xam_alloc(strlen(class) + 7);
+    char* class_file = xam_alloc(sizeof(char) * (strlen(class) + 7));
     strcpy(class_file, class);
-    
-    // At first we add ".class" 
+
+    // At first we add ".class"
     strncat(class_file, ".class", 6);
-    
+
     // Then we try all classpaths for the given class file
-    
+    // (currently there is only one classpath (and "."))
+    file = fopen(class_file, "rb");
+    if (file != NULL) {
+        xam_free(class_file);
+        return file;
+    }
+
+    char* class_file_path = xam_alloc(sizeof(char) *
+        (strlen(class_file) + strlen(VM.LibraryPath) + 1));
+    strcpy(class_file_path, VM.LibraryPath);
+    strncat(class_file_path, class_file, sizeof(class_file));
+    file = fopen(class_file_path, "rb");
+
     // If we found it, we return the FILE handle to it
     xam_free(class_file);
+    return file;
 }

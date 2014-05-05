@@ -21,8 +21,6 @@
 #include <bvm_process.h>
 #include <bvm_link.h>
 
-/* Prototypes */
-int LoadJavaClass(IOIdentifier, struct VMCLASS *);
 
 int init_thread(struct VMTHREAD *thread)
 {
@@ -45,7 +43,7 @@ void stackframe_init(
     assert(frame->method != NULL);
 }
 
-struct VMCLASS* new_class_alloc() 
+struct VMCLASS* new_class_alloc()
 {
     /* Create class struct */
     VM.LocalClassesNum++;
@@ -59,7 +57,7 @@ struct VMCLASS* new_class_alloc()
     return VM.LocalClasses[VM.LocalClassesNum - 1];
 }
 
-int start_process(IOIdentifier processFileID)
+int start_process(FILE* class_file)
 {
     struct method_t* mainMethod = NULL;
     struct method_t* clinitMethod = NULL;
@@ -74,7 +72,7 @@ int start_process(IOIdentifier processFileID)
 
     struct VMCLASS *new_class = new_class_alloc();
 
-    if (LoadJavaClass(processFileID, new_class) == false) {
+    if (load_class_file(class_file, new_class) == false) {
         return false;
     }
 
@@ -99,10 +97,10 @@ int start_process(IOIdentifier processFileID)
                               __FILE__, __LINE__);
     }
     // Create stackframe for main method
-    struct stackframe_t *stackframe = 
+    struct stackframe_t *stackframe =
         xam_alloc(sizeof(struct stackframe_t));
-    stackframe_init(stackframe, 
-                    mainMethod, 
+    stackframe_init(stackframe,
+                    mainMethod,
                     VM.LocalClasses[VM.LocalClassesNum - 1]->ConstantPool);
 
     // and push it onto thread's invocation stack

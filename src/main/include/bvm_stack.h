@@ -22,19 +22,17 @@
 #include "bvm_types.h"
 #include "bvm_method.h"
 
-#define NULL 0
-
 struct stack_element_t
 {
-	void*                   data; /* data structure */
-	struct stack_element_t* next; /* ptr to next element */
+    void*                   data; /* data structure */
+    struct stack_element_t* next; /* ptr to next element */
 };
 
 struct stack_t
 {
-	unsigned int limit;   /* maximum number of elements */
-	unsigned int size;    /* current number of elements */
-	struct stack_element_t* top;
+    unsigned int limit;   /* maximum number of elements */
+    unsigned int size;    /* current number of elements */
+    struct stack_element_t* top;
 };
 
 /* This stackframe is attached to every method invocation. */

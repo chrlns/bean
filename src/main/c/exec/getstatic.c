@@ -27,7 +27,7 @@ void do_GETSTATIC(struct VMTHREAD *thread)
     struct CONSTANT_UTF8_INFO *className = NULL;
     struct CONSTANT_UTF8_INFO *typeName = NULL;
     struct CONSTANT_UTF8_INFO *descName = NULL;
-    
+
     uint16_t operand = 0;
     struct stackframe_t* frame = current_frame(thread);
     assert(frame != NULL);
@@ -47,7 +47,7 @@ void do_GETSTATIC(struct VMTHREAD *thread)
         frame->constants[refInfo->ClassIndex - 1].Data;
     nameTypeInfo = (struct CONSTANT_NAMETYPE_INFO *)
         frame->constants[refInfo->NameAndTypeIndex - 1].Data;
-        
+
     className = (struct CONSTANT_UTF8_INFO *)frame->constants[classInfo->NameIndex - 1].Data;
 #ifdef DEBUG
 	printf("\tClass name = %s\n", className->Text);
@@ -65,6 +65,7 @@ void do_GETSTATIC(struct VMTHREAD *thread)
 
 	// We have to make sure that the given class and field type are
 	// already loaded. If not they must be loaded now.
-	
+        struct VMCLASS* class = FindClassByName(className->Text);
+
 	// Push the scalar type value or object reference onto the stack
 }

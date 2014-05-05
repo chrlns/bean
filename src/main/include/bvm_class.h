@@ -19,11 +19,11 @@
 #define _XAM_CLASS_H_
 
 #include <stdint.h>
+#include <stdio.h>
 #include "bvm_types.h"
 #include "bvm_stack.h"
 
 #define JAVAMAGIC 0xCAFEBABE
-#define NULL 0
 
 #define CONSTANTPOOL_CLASS              7
 #define CONSTANTPOOL_FIELDREF           9
@@ -237,5 +237,8 @@ struct VMCLASS
 	uint16_t                  ThisClassIndex;
 	struct VERSION          Version;
 };
+
+
+bool load_class_file(FILE* classfile, struct VMCLASS* class);
 
 #endif
