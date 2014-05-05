@@ -45,6 +45,20 @@ void stackframe_init(
     assert(frame->method != NULL);
 }
 
+struct VMCLASS* new_class_alloc() 
+{
+    /* Create class struct */
+    VM.LocalClassesNum++;
+    VM.LocalClasses =
+        (struct VMCLASS **) xam_realloc(VM.LocalClasses,
+                                        sizeof(struct VMCLASS *) *
+                                        VM.LocalClassesNum);
+    VM.LocalClasses[VM.LocalClassesNum - 1] =
+        (struct VMCLASS *) xam_alloc(sizeof(struct VMCLASS));
+
+    return VM.LocalClasses[VM.LocalClassesNum - 1];
+}
+
 int start_process(IOIdentifier processFileID)
 {
     struct method_t* mainMethod = NULL;
@@ -58,18 +72,9 @@ int start_process(IOIdentifier processFileID)
     /* Initialize main thread */
     init_thread(&VM.Threads[0]);
 
-    /* Create class struct */
-    VM.LocalClassesNum++;
-    VM.LocalClasses =
-        (struct VMCLASS **) xam_realloc(VM.LocalClasses,
-                                        sizeof(struct VMCLASS *) *
-                                        VM.LocalClassesNum);
-    VM.LocalClasses[VM.LocalClassesNum - 1] =
-        (struct VMCLASS *) xam_alloc(sizeof(struct VMCLASS));
+    struct VMCLASS *new_class = new_class_alloc();
 
-    if (LoadJavaClass
-        (processFileID,
-         VM.LocalClasses[VM.LocalClassesNum - 1]) == false) {
+    if (LoadJavaClass(processFileID, new_class) == false) {
         return false;
     }
 

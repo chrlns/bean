@@ -695,3 +695,19 @@ int XamPreloadClass(void *mempointer, int memsize,
 
     return true;
 }
+
+FILE find_class_file(const char* class) 
+{
+    // Argument class is the Java class name with slashes as separator
+    // instead of points, e.g. "java/lang/System".
+    char* class_file = xam_alloc(strlen(class) + 7);
+    strcpy(class_file, class);
+    
+    // At first we add ".class" 
+    strncat(class_file, ".class", 6);
+    
+    // Then we try all classpaths for the given class file
+    
+    // If we found it, we return the FILE handle to it
+    xam_free(class_file);
+}
