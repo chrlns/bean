@@ -57,7 +57,7 @@ int exec_thread(struct VMTHREAD *thread)
         (struct stackframe_t *) thread->frameStack.top->data;
 #ifdef DEBUG
     assert(frame != NULL);
-    printf("Opcode %x (%p)\tClass %p",
+    printf("Opcode %x (%p)\tClass %p\n",
            *(frame->instPtr), (void *) frame->instPtr,
            (void *) thread->RunningClass);
 #endif
