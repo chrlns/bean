@@ -39,62 +39,62 @@
 
 struct VERSION
 {
-	uint16_t Major;
-	uint16_t Minor;
+    uint16_t Major;
+    uint16_t Minor;
 };
 
 struct CONSTANT_CLASS_INFO
 {
-	uint16_t NameIndex;
+    uint16_t NameIndex;
 };
 
 struct CONSTANT_REF_INFO
 {
-	uint16_t ClassIndex;
-	uint16_t NameAndTypeIndex;
+    uint16_t ClassIndex;
+    uint16_t NameAndTypeIndex;
 };
 
 struct CONSTANT_STRING_INFO
 {
-	uint16_t StringIndex;
+    uint16_t StringIndex;
 };
 
 struct CONSTANT_FLOAT_INFO
 {
-	float Value;
+    float Value;
 };
 
 struct CONSTANT_INTEGER_INFO
 {
-	int32_t Value;
+    int32_t Value;
 };
 
 struct CONSTANT_LONG_INFO
 {
-	int64_t Value;
+    int64_t Value;
 };
 
 struct CONSTANT_DOUBLE_INFO
 {
-	double Value;
+    double Value;
 };
 
 struct CONSTANT_NAMETYPE_INFO
 {
-	uint16_t NameIndex;
-	uint16_t DescriptorIndex;
+    uint16_t NameIndex;
+    uint16_t DescriptorIndex;
 };
 
 struct CONSTANT_UTF8_INFO
 {
-	uint16_t Length;
-	StringUTF8* Text;
+    uint16_t Length;
+    StringUTF8* Text;
 };
 
 struct CONSTANTPOOL
 {
-	uint8_t Tag;
-	void* Data;	/* Pointer to a dynamically allocated structure. */
+    uint8_t Tag;
+    void* Data; /* Pointer to a dynamically allocated structure. */
 };
 
 
@@ -104,103 +104,103 @@ struct CONSTANTPOOL
 
 struct ATTRIBUTE_INFO
 {
-	uint16_t AttributeNameIndex;
-	uint32_t AttributeLength;
-	unsigned char* Info;
+    uint16_t AttributeNameIndex;
+    uint32_t AttributeLength;
+    unsigned char* Info;
 };
 
 struct ATTRIBUTE_INFO_CONSTANTVALUE
 {
-	uint16_t AttributeNameIndex;
-	uint32_t AttributeLength;
-	uint16_t ConstantValueIndex;
+    uint16_t AttributeNameIndex;
+    uint32_t AttributeLength;
+    uint16_t ConstantValueIndex;
 };
 
 struct EXCEPTIONTABLE_ENTRY
 {
-	uint16_t StartPC, EndPC;
-	uint16_t HandlerPC;
-	uint16_t CatchType;
+    uint16_t StartPC, EndPC;
+    uint16_t HandlerPC;
+    uint16_t CatchType;
 };
 
 struct ATTRIBUTE_INFO_CODE
 {
-	uint16_t AttributeNameIndex;
-	uint32_t AttributeLength;
-	uint16_t MaxStack;
-	uint16_t MaxLocals;
-	uint32_t CodeLength;
-	unsigned char*  Code;
-	uint16_t ExceptionTableLength;
-	struct EXCEPTIONTABLE_ENTRY* ExceptionTable;
-	uint16_t AttributesNum;
-	struct ATTRIBUTE_INFO* Attributes;
+    uint16_t AttributeNameIndex;
+    uint32_t AttributeLength;
+    uint16_t MaxStack;
+    uint16_t MaxLocals;
+    uint32_t CodeLength;
+    unsigned char*  Code;
+    uint16_t ExceptionTableLength;
+    struct EXCEPTIONTABLE_ENTRY* ExceptionTable;
+    uint16_t AttributesNum;
+    struct ATTRIBUTE_INFO* Attributes;
 };
 
 struct ATTRIBUTE_INFO_EXCEPTION
 {
-	uint16_t  AttributeNameIndex;
-	uint32_t  AttributeLength;
-	uint16_t  ExceptionNum;
-	uint16_t* ExceptionIndexTable;
+    uint16_t  AttributeNameIndex;
+    uint32_t  AttributeLength;
+    uint16_t  ExceptionNum;
+    uint16_t* ExceptionIndexTable;
 };
 
 struct ATTRIBUTE_INFO_INNERCLASS
 {
-	uint16_t AttributeNameIndex;
-	uint32_t AttributeLength;
-	uint16_t InnerClassesNum;
+    uint16_t AttributeNameIndex;
+    uint32_t AttributeLength;
+    uint16_t InnerClassesNum;
 /* Inner classes table */
 };
 
 struct ATTRIBUTE_INFO_SYNTHETIC
 {
-	uint16_t AttributeNameIndex;
-	uint32_t AttributeLength;     /* Must be zero. */
+    uint16_t AttributeNameIndex;
+    uint32_t AttributeLength;     /* Must be zero. */
 };
 
 struct ATTRIBUTE_INFO_SOURCEFILE
 {
-	uint16_t AttributeNameIndex;
-	uint32_t AttributeLength;
-	uint16_t SourceFileIndex;     /* Index in the constant pool table. */
+    uint16_t AttributeNameIndex;
+    uint32_t AttributeLength;
+    uint16_t SourceFileIndex;     /* Index in the constant pool table. */
 };
 
 struct LINENUMBERTABLE_ENTRY
 {
-	uint16_t StartPC;
-	uint16_t LineNumber;
+    uint16_t StartPC;
+    uint16_t LineNumber;
 };
 
 struct ATTRIBUTE_INFO_LINENUMBERTABLE
 {
-	uint16_t AttributeNameIndex;
-	uint32_t AttributeLength;
-	uint16_t LineNumberTableLength;
-	struct LINENUMBERTABLE_ENTRY* LineNumberTable;
+    uint16_t AttributeNameIndex;
+    uint32_t AttributeLength;
+    uint16_t LineNumberTableLength;
+    struct LINENUMBERTABLE_ENTRY* LineNumberTable;
 };
 
 struct LOCALVARIABLETABLE_ENTRY
 {
-	uint16_t StartPC;
-	uint16_t Length;
-	uint16_t NameIndex;
-	uint16_t DescriptorIndex;
-	uint16_t Index;
+    uint16_t StartPC;
+    uint16_t Length;
+    uint16_t NameIndex;
+    uint16_t DescriptorIndex;
+    uint16_t Index;
 };
 
 struct ATTRIBUTE_INFO_LOCALVARIABLETABLE
 {
-	uint16_t AttributeNameIndex;
-	uint32_t AttributeLength;
-	uint16_t LocalVariableTableLength;
-	struct LOCALVARIABLETABLE_ENTRY* LocalVariableTable;
+    uint16_t AttributeNameIndex;
+    uint32_t AttributeLength;
+    uint16_t LocalVariableTableLength;
+    struct LOCALVARIABLETABLE_ENTRY* LocalVariableTable;
 };
 
 struct ATTRIBUTE_INFO_DEPRECATED
 {
-	uint16_t AttributeNameIndex;
-	uint32_t AttributeLength;     /* Must be zero. */
+    uint16_t AttributeNameIndex;
+    uint32_t AttributeLength;     /* Must be zero. */
 };
 
 
@@ -208,36 +208,41 @@ struct ATTRIBUTE_INFO_DEPRECATED
 
 struct FIELD_INFO
 {
-	uint16_t AccessFlags;
-	uint16_t NameIndex;
-	uint16_t DescriptorIndex;
-	uint16_t AttributesNum;
-	struct ATTRIBUTE_INFO *Attributes;
+    uint16_t AccessFlags;
+    uint16_t NameIndex;
+    uint16_t DescriptorIndex;
+    uint16_t AttributesNum;
+    struct ATTRIBUTE_INFO *Attributes;
 };
 
 /* Represents a Java class */
 struct VMCLASS
 {
-	uint16_t                  AccessFlags;
-	struct ATTRIBUTE_INFO*  Attributes;
-	uint16_t                  AttributesNum;
-	struct CONSTANTPOOL*    ConstantPool;       /* Is indexed from 1 to ConstantPoolNum-1 */
-	uint16_t                  ConstantPoolNum;
-	struct FIELD_INFO*      Fields;
-	uint16_t                  FieldsNum;
-	uint32_t                  InstanceCounter;    /* Counts the number of instances that use this class.
-                                                 If that count is 0, the Garbage Collector can free this class.*/
-	uint16_t*                 Interfaces;
-	uint16_t                  InterfacesNum;
-	uint16_t                  MainMethodIndex;    /* 0 means no method, >0 index in the Methods array. */
-	struct method_info_t*     Methods;
-	uint16_t                  MethodsNum;
-	const char*             QualifiedName;      /* Full qualified name */
-	uint16_t                  SuperClassIndex;
-	uint16_t                  ThisClassIndex;
-	struct VERSION          Version;
+    uint16_t                AccessFlags;
+    struct ATTRIBUTE_INFO*  Attributes;
+    uint16_t                AttributesNum;
+    struct CONSTANTPOOL*    ConstantPool;       // Is indexed from 1 to ConstantPoolNum-1
+    uint16_t                ConstantPoolNum;
+    struct FIELD_INFO*      Fields;
+    uint16_t                FieldsNum;
+    uint32_t                InstanceCounter;    // Counts the number of instances that use this class.
+                                                // If that count is 0, the Garbage Collector can free this class.
+    uint16_t*               Interfaces;
+    uint16_t                InterfacesNum;
+    uint16_t                MainMethodIndex;    // 0 means no method, >0 index in the Methods array.
+    struct method_info_t*   Methods;
+    uint16_t                MethodsNum;
+    const char*             QualifiedName;      // Full qualified name
+    uint16_t                SuperClassIndex;
+    uint16_t                ThisClassIndex;
+    struct VERSION          Version;
 };
 
+struct vmobject_t {
+    struct VMCLASS*    class;
+    struct varframe_t* fields;
+    uint16_t           fields_num;
+};
 
 bool load_class_file(FILE* classfile, struct VMCLASS* class);
 

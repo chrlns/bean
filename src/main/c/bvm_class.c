@@ -675,6 +675,9 @@ FILE* find_class_file(const char* class)
     // Then we try all classpaths for the given class file
     // (currently there is only one classpath (and "."))
     file = fopen(class_file, "rb");
+#ifdef DEBUG
+    printf("Trying '%s'\n", class_file);
+#endif
     if (file != NULL) {
         xam_free(class_file);
         return file;
@@ -683,8 +686,11 @@ FILE* find_class_file(const char* class)
     char* class_file_path = xam_alloc(sizeof(char) *
         (strlen(class_file) + strlen(VM.LibraryPath) + 1));
     strcpy(class_file_path, VM.LibraryPath);
-    strncat(class_file_path, class_file, sizeof(class_file));
+    strncat(class_file_path, class_file, strlen(class_file));
     file = fopen(class_file_path, "rb");
+#ifdef DEBUG
+    printf("Trying '%s'\n", class_file_path);
+#endif    
 
     // If we found it, we return the FILE handle to it
     xam_free(class_file);

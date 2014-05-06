@@ -25,7 +25,7 @@ struct VM VM;
 unsigned int (*BufferToInt) (unsigned char[4]);
 unsigned short (*BufferToShort) (unsigned char[2]);
 
-int XamInit(void)
+int init_vm(void)
 {
     dbgmsg("Initializing Bean Java VM...");
 
@@ -48,12 +48,16 @@ int main(int argc, char *argv[])
 {
     char* main_class = NULL;
 
+    init_vm();
+
     /* Parsing command line options */
     if (argc > 1) {
         for (int n = 1; n < argc; n++) {
             if (argv[n][0] == '-') {
                 if (strcmp(argv[n], "-cp") == 0) {
                     VM.LibraryPath = argv[++n];
+                } else {
+                    printf("Unknown argument '%s'\n", argv[n]);
                 }
             } else {
                 /* Could be the name of the startup class */
@@ -73,11 +77,6 @@ int main(int argc, char *argv[])
     if (class_file == NULL) {
         printf("Could not open main class: %s\n", main_class);
         return 1;
-    }
-
-    /* Initalizing virtual machine... */
-    if (VM.Initialized == false) {
-        XamInit();
     }
 
     /* Creating init processes... */

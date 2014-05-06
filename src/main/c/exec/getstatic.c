@@ -65,7 +65,7 @@ void do_GETSTATIC(struct VMTHREAD *thread)
 
 	// We have to make sure that the given class and field type are
 	// already loaded. If not they must be loaded now.
-        struct VMCLASS* class = FindClassByName(className->Text);
+    struct VMCLASS* class = FindClassByName(className->Text);
 
 	// Push the scalar type value or object reference onto the stack
 }

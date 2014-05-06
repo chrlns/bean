@@ -22,6 +22,15 @@ void do_NEW(struct VMTHREAD *thread)
 {
     dbgmsg("NEW");
 
-    uint16_t index;
-    index = Get2ByteOperand(current_frame(thread));
+    struct stackframe_t* frame = current_frame(thread);
+    uint16_t index = Get2ByteOperand(frame);
+    struct CONSTANT_CLASS_INFO *class_info = (struct CONSTAND_CLASS_INFO*)
+    	frame->constants[index - 1];
+    struct CONSTANT_UTF8_INFO *class_name = (struct CONSTANT_UTF8_INFO*)
+    	frame->constants[class_info->NameIndex - 1];
+#ifdef DEBUG
+    printf("\tClass name = %s\n", class_name->Text);
+#endif
+    struct vmobject_t* obj = (struct vmobject_t *)xam_malloc(sizeof(struct vmobject_t));
+    stack_push(&(frame->operandStack), obj);
 }
