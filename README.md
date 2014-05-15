@@ -11,6 +11,8 @@ Some statements:
  - No extensive security features
  - No HW-threads (e.g. POSIX)
 
+The target platform is the [Arduino Zero](http://arduino.cc/en/Main/ArduinoBoardZero) board with an Atmel ATSAMD21G (48 MHz, 32 KBytes RAM). At least as soon as I get one...
+
 Usage
 -----
 
