@@ -15,10 +15,10 @@
  *  limitations under the License.
  */
 
-#ifndef _XAM_PROCESS_H_
-#define _XAM_PROCESS_H_
+#ifndef _THREAD_H_
+#define _THREAD_H_
 
-#include "bvm_class.h"
+#include <classloaderass.h"
 #include "bvm_stack.h"
 #include "bvm_io.h"
 
@@ -37,19 +37,21 @@
 #define current_frame(thread) \
 	((struct stackframe_t*)thread->frameStack.top->data)
 
-struct VMTHREAD
+typedef struct
 {
-	struct VMCLASS*     RunningClass;    /* Pointer to the currently running class.*/
-	struct METHOD_INFO* RunningMethod;   /* Pointer to the currently run. method. */
-	struct VMTHREAD*    Parent;          /* Ref. to a parent thread. Can be NULL. */
-	unsigned char       Priority;        /* Priority of this thread. */
-	unsigned char       PriorityCurrent; /* Current priority (timeslice) */
-	unsigned char       Status;
-	struct stack_t      frameStack;      /* Top of this stack contains current stackframe */
-};
+    struct VMCLASS*     RunningClass;    /* Pointer to the currently running class.*/
+    struct METHOD_INFO* RunningMethod;   /* Pointer to the currently run. method. */
+    struct VMTHREAD*    Parent;          /* Ref. to a parent thread. Can be NULL. */
+    unsigned char       Priority;        /* Priority of this thread. */
+    unsigned char       PriorityCurrent; /* Current priority (timeslice) */
+    unsigned char       Status;
+    struct stack_t      frameStack;      /* Top of this stack contains current stackframe */
+} Thread;
 
-void exec_process(void);
 int  exec_thread(struct VMTHREAD*);
 int  start_process(FILE*);
+
+Thread* Thread_next(VM* vm);
+void Thread_exec(Thread* thread);
 
 #endif

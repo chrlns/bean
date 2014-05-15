@@ -19,7 +19,7 @@
 #define STRUCT_METHOD_INFO
 
 #include <stdint.h>
-#include "bvm_class.h"
+#include "classloader.h"
 #include "bvm_stack.h"
 
 /* A method, but without running information */
@@ -38,7 +38,7 @@ struct method_info_t
 #ifndef STRUCT_METHOD
 #define STRUCT_METHOD
 
-#include "bvm_class.h"
+#include "classloader.h"
 #include "bvm_stack.h"
 
 /* Identifies a running method (method "instance", old: METHOD_FQID) */

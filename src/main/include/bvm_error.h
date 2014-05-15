@@ -18,7 +18,7 @@
 #ifndef _XAM_ERROR_H_
 #define _XAM_ERROR_H_
 
-#include "bvm.h"
+#include "vm.h"
 
 enum ExceptionType
 {

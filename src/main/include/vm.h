@@ -15,8 +15,8 @@
  *  limitations under the License.
  */
 
-#ifndef _XAM_H_
-#define _XAM_H_
+#ifndef _VM_H_
+#define _VM_H_
 
 #ifndef DEBUG
 #define NDEBUG
@@ -27,7 +27,7 @@
 #endif
 
 #include "bvm_method.h"
-#include "bvm_process.h"
+#include "process.h"
 
 /* These are the only stdc-lib includes */
 #include <assert.h>     /* If NDEBUG is defined "assert" is ignored */
@@ -65,8 +65,9 @@ struct MONITOR
   struct MONITOR*  Next;
 };
 
-struct VM
-{
+typedef struct {
+    bool         alive;
+    Classloader* classloader;
   char*             ClassPath;
   char*             LibraryPath;
 
@@ -78,15 +79,12 @@ struct VM
                                           the Main Thread. */
   unsigned char     ThreadNum;
   struct MONITOR*   Monitors;          /* Monitors */
-  struct VMCLASS**  LocalClasses;      /* Pointer to the non public classes. */
-  unsigned int      LocalClassesNum;   /* Number of local loaded classes. */
 
   unsigned int*     MemoryHeap;        /* Array of int (pointern) representing the
                                           GC-Heap of the application. */
   bool              DoCollectGarbage;  /* This is true if the Garbage Collector must
                                           be called. */
-};                                     /* Nucleus can set this var = true before
-                                          swapping or it lacks of memory. */
+} VM;
 
 extern struct VM VM;
 extern unsigned int   (*BufferToInt)(unsigned char[4]);

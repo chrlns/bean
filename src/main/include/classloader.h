@@ -15,8 +15,8 @@
  *  limitations under the License.
  */
 
-#ifndef _XAM_CLASS_H_
-#define _XAM_CLASS_H_
+#ifndef _CLASSLOADER_H_
+#define _CLASSLOADER_H_
 
 #include <stdint.h>
 #include <stdio.h>
@@ -216,27 +216,6 @@ struct FIELD_INFO
 };
 
 /* Represents a Java class */
-struct VMCLASS
-{
-    uint16_t                AccessFlags;
-    struct ATTRIBUTE_INFO*  Attributes;
-    uint16_t                AttributesNum;
-    struct CONSTANTPOOL*    ConstantPool;       // Is indexed from 1 to ConstantPoolNum-1
-    uint16_t                ConstantPoolNum;
-    struct FIELD_INFO*      Fields;
-    uint16_t                FieldsNum;
-    uint32_t                InstanceCounter;    // Counts the number of instances that use this class.
-                                                // If that count is 0, the Garbage Collector can free this class.
-    uint16_t*               Interfaces;
-    uint16_t                InterfacesNum;
-    uint16_t                MainMethodIndex;    // 0 means no method, >0 index in the Methods array.
-    struct method_info_t*   Methods;
-    uint16_t                MethodsNum;
-    const char*             QualifiedName;      // Full qualified name
-    uint16_t                SuperClassIndex;
-    uint16_t                ThisClassIndex;
-    struct VERSION          Version;
-};
 
 struct vmobject_t {
     struct VMCLASS*    class;
@@ -245,5 +224,13 @@ struct vmobject_t {
 };
 
 bool load_class_file(FILE* classfile, struct VMCLASS* class);
+
+typedef struct Classloader {
+    Class* loaded_classes;
+    int    loaded_classes_num;
+};
+
+Classloader* Classloader_new(void);
+void Classloader_destroy(Classloader* cl);
 
 #endif

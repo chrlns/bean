@@ -15,40 +15,34 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <classloader.h>
+#include <vm.h>
 #include <bvm_process.h>
 
-/* Global */
-struct VM VM;
-
-/* Function pointers */
-unsigned int (*BufferToInt) (unsigned char[4]);
-unsigned short (*BufferToShort) (unsigned char[2]);
-
-int init_vm(void)
-{
-    dbgmsg("Initializing Bean Java VM...");
-
-    /* Set some function pointer... */
-    BufferToInt = &BufferToInt_LittleEndian;
-    BufferToShort = &BufferToShort_LittleEndian;
-
-    VM.Initialized = true;
-    VM.LocalClassesNum = 0;
-    VM.LibraryPath = "/usr/share/classpath";
-
-    /* Initialize Monitors */
-    VM.Monitors = NULL;
-
-    return true;
+/*
+ * Constructor for VM. 
+ * Creates, initializes and returns a new VM instance.
+ */
+VM* VM_new() {
+    VM* vm = (VM*)malloc(sizeof(VM));
+    
+    vm->alive = true;
+    vm->classloader = Classloader_new();
+    
+    return vm;
 }
 
+/*
+ * Destroys the VM instance and frees its resources.
+ */
+void VM_destroy(VM* vm) {
+    Classloader_destroy(vm->classloader);
+    free(vm);
+}
 
 int main(int argc, char *argv[])
 {
     char* main_class = NULL;
-
-    init_vm();
 
     /* Parsing command line options */
     if (argc > 1) {
@@ -78,6 +72,9 @@ int main(int argc, char *argv[])
         printf("Could not open main class: %s\n", main_class);
         return 1;
     }
+    
+    /* Create new VM instance */
+    VM* vm = VM_new();
 
     /* Creating init processes... */
     if (start_process(class_file) == false) {
@@ -86,17 +83,11 @@ int main(int argc, char *argv[])
     }
 
     dbgmsg("Start!");
-    VM.Running = true;
-
-    /* While using green thread model this method returns only when
-     * the process ends. */
-    exec_process();
+    while (vm->alive) {
+        Thread* t = Thread_next(vm);
+        Thread_exec(t);
+    }
 
     dbgmsg("Shutdown virtual machine...");
-    return true;
-}
-
-bool XamSignal(unsigned int signal)
-{
     return 0;
 }

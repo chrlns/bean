@@ -133,18 +133,22 @@ struct VMTHREAD *next_thread(void)
 }
 
 /* This method decides which thread is to be executed ("Green Threads") */
-void exec_process(void)
+Thread* Thread_next(void)
 {
-    struct VMTHREAD *thread = NULL;
+    Thread *thread = NULL;
 
     while (VM.Running) {
         // Get next thread to be executed
         thread = next_thread();
         assert(thread != NULL);
-
-        // Run the thread code until timeslice is over
-        for (; thread->PriorityCurrent > 0; thread->PriorityCurrent >>= 1) {
-            exec_thread(thread);
-        }
     }
+    
+    return thread;
+}
+
+void Thread_exec(Thread* thread) {
+    // Run the thread code until timeslice is over
+    for (; thread->PriorityCurrent > 0; thread->PriorityCurrent >>= 1) {
+        exec_thread(thread);
+    }   
 }
