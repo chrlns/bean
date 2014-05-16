@@ -21,7 +21,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "bvm_types.h"
-#include "bvm_stack.h"
+#include "stack.h"
 
 #define JAVAMAGIC 0xCAFEBABE
 

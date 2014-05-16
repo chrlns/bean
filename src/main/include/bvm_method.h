@@ -20,7 +20,7 @@
 
 #include <stdint.h>
 #include "classloader.h"
-#include "bvm_stack.h"
+#include "stack.h"
 
 /* A method, but without running information */
 struct method_info_t
@@ -39,7 +39,7 @@ struct method_info_t
 #define STRUCT_METHOD
 
 #include "classloader.h"
-#include "bvm_stack.h"
+#include "stack.h"
 
 /* Identifies a running method (method "instance", old: METHOD_FQID) */
 struct method_t

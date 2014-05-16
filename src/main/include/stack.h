@@ -15,50 +15,30 @@
  *  limitations under the License.
  */
 
-#ifndef _XAM_STACK_H_
-#define _XAM_STACK_H_
+#ifndef _STACK_H_
+#define _STACK_H_
 
 #include <stdint.h>
 #include "bvm_types.h"
 #include "bvm_method.h"
 
-struct stack_element_t
+typedef struct
 {
     void*                   data; /* data structure */
     struct stack_element_t* next; /* ptr to next element */
-};
+} StackElement;
 
-struct stack_t
+typedef struct
 {
     unsigned int limit;   /* maximum number of elements */
     unsigned int size;    /* current number of elements */
-    struct stack_element_t* top;
-};
+    StackElement* top;
+} Stack;
 
-/* This stackframe is attached to every method invocation. */
-struct stackframe_t
-{
-    /* Local variable array */
-    struct varframe_t* localVars;
-    int16_t            localVarsLen;
 
-    /* Operand stack */
-    struct stack_t operandStack;
-    int16_t        operandStackSize; /* Max. size of the operand stack */
-
-    /* Reference to the constant pool */
-    struct CONSTANTPOOL* constants;
-
-    /* Pointer to the current running opcode. */
-    unsigned char* instPtr;
-
-    /* Invoked method */
-    struct method_t* method;
-};
-
-void stack_init(struct stack_t* stack, unsigned int limit);
-void stack_free(struct stack_t* stack);
-int stack_pop(struct stack_t* stack, void** data);
-int stack_push(struct stack_t* stack, void* data);
+Stack* Stack_new(unsigned int limit);
+void Stack_destroy(Stack* stack);
+int Stack_pop(Stack* stack, void** data);
+int Stack_push(Stack* stack, void* data);
 
 #endif

@@ -37,6 +37,27 @@
 #define current_frame(thread) \
 	((struct stackframe_t*)thread->frameStack.top->data)
 
+/* This stackframe is attached to every method invocation. */
+typedef struct
+{
+    /* Local variable array */
+    struct varframe_t* localVars;
+    int16_t            localVarsLen;
+
+    /* Operand stack */
+    struct stack_t operandStack;
+    int16_t        operandStackSize; /* Max. size of the operand stack */
+
+    /* Reference to the constant pool */
+    struct CONSTANTPOOL* constants;
+
+    /* Pointer to the current running opcode. */
+    unsigned char* instPtr;
+
+    /* Invoked method */
+    struct method_t* method;
+} Stackframe;
+
 typedef struct
 {
     struct VMCLASS*     RunningClass;    /* Pointer to the currently running class.*/
@@ -45,7 +66,7 @@ typedef struct
     unsigned char       Priority;        /* Priority of this thread. */
     unsigned char       PriorityCurrent; /* Current priority (timeslice) */
     unsigned char       Status;
-    struct stack_t      frameStack;      /* Top of this stack contains current stackframe */
+    StackFrame          frameStack;      /* Top of this stack contains current stackframe */
 } Thread;
 
 int  exec_thread(struct VMTHREAD*);
