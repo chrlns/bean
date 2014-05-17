@@ -15,10 +15,8 @@
  *  limitations under the License.
  */
 
-#ifndef _XAM_IO_H_
-#define _XAM_IO_H_
-
-#include "bvm_error.h"
+#ifndef _PLATFORM_H_
+#define _PLATFORM_H_
 
 // The following byte order defines are GCC specific defines
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
@@ -37,25 +35,5 @@
 #error "Endianess not defined!"
 #endif
 #endif
-
-typedef struct
-{
-  bool           Allocated;
-  unsigned char* Buffer;
-  unsigned int   Length;
-  unsigned int   Pointer;
-} IOHandle;
-
-typedef struct
-{
-  char*           filename;
-  unsigned char*  filebuffer;
-  unsigned int    filebuffer_len;
-} IOIdentifier;
-
-void      IOClose(IOHandle* io);
-bool      IOEnd(IOHandle* io);
-IOHandle* IOOpen(IOIdentifier id);
-int       IORead(unsigned char* buffer, int count, IOHandle* io);
 
 #endif

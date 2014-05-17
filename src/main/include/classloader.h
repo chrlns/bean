@@ -20,8 +20,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
-#include "bvm_types.h"
-#include "stack.h"
+#include <class.h>
 
 #define JAVAMAGIC 0xCAFEBABE
 
@@ -215,13 +214,12 @@ struct FIELD_INFO
     struct ATTRIBUTE_INFO *Attributes;
 };
 
-/* Represents a Java class */
-
-struct vmobject_t {
-    struct VMCLASS*    class;
-    struct varframe_t* fields;
-    uint16_t           fields_num;
-};
+/* Represents a Java object */
+typedef struct {
+    Class*    class;
+    VarFrame* fields;
+    uint16_t  fields_num;
+} Object;
 
 bool load_class_file(FILE* classfile, struct VMCLASS* class);
 

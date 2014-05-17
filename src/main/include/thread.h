@@ -18,9 +18,8 @@
 #ifndef _THREAD_H_
 #define _THREAD_H_
 
-#include <classloaderass.h"
-#include "bvm_stack.h"
-#include "bvm_io.h"
+#include <classloader.h>
+#include <stack.h>
 
 #define PROCESS_STATUS_FREE     0
 #define PROCESS_STATUS_SLEEPING 1

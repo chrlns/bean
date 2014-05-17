@@ -26,7 +26,7 @@
 	printf("DEBUG: %s\n", msg);
 #endif
 
-#include "bvm_method.h"
+#include "method.h"
 #include "process.h"
 
 /* These are the only stdc-lib includes */

@@ -15,10 +15,10 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <thread.h>
 
 /* Push the null object reference onto the operand stack. */
-void do_ACONST_NULL(struct VMTHREAD *thread)
+void do_ACONST_NULL(Thread* thread)
 {
     dbgmsg("ACONST_NULL");
 }

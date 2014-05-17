@@ -15,26 +15,4 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
-#include <bvm_error.h>
-
-const char *ExceptionText[] = {
-    "Unknown",
-    "IO",
-    "OutOfMemory",
-    "NoSuchMethod",
-    "StackOverflow",
-    "StackUnderflow"
-};
-
-bool RaiseException(enum ExceptionType exceptionType, const char *method,
-                    const char *file, int line)
-{
-    printf("\n%sException has occurred in method %s:%s:%d!\n",
-           ExceptionText[exceptionType], method, file, line);
-
-    /* Exit this Process */
-    exit((int) exceptionType);
-
-    return false;
-}
+#include <vm.h>

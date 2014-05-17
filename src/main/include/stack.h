@@ -19,8 +19,8 @@
 #define _STACK_H_
 
 #include <stdint.h>
-#include "bvm_types.h"
-#include "bvm_method.h"
+#include "types.h"
+#include "method.h"
 
 typedef struct
 {

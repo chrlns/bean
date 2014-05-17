@@ -15,12 +15,12 @@
  *  limitations under the License.
  */
 
-#ifndef STRUCT_METHOD_INFO
-#define STRUCT_METHOD_INFO
+#ifndef _METHOD_H_
+#define _METHOD_H_
 
 #include <stdint.h>
-#include "classloader.h"
-#include "stack.h"
+#include <classloader.h>
+#include <thread.h>
 
 /* A method, but without running information */
 struct method_info_t
@@ -31,21 +31,7 @@ struct method_info_t
 	uint16_t AttributesNum;
 	struct ATTRIBUTE_INFO*      Attributes;
 	struct ATTRIBUTE_INFO_CODE* CodeInfo;   /* Pointer to the Code Attribute */
-	struct stackframe_t StackFrameRef;      /* Original stack frame */
+	Stackframe* StackFrameRef;      /* Original stack frame */
 };
-#endif
 
-#ifndef STRUCT_METHOD
-#define STRUCT_METHOD
-
-#include "classloader.h"
-#include "stack.h"
-
-/* Identifies a running method (method "instance", old: METHOD_FQID) */
-struct method_t
-{
-    struct VMCLASS*      class;         /* Pointer to a class */
-    struct stackframe_t* frame;         /* Pointer to a StackFrame-copy of this method */
-    struct method_info_t*  method_info; /* Pointer to the METHOD_INFO that describes this method */
-};
 #endif

@@ -15,8 +15,8 @@
  *  limitations under the License.
  */
 
-#ifndef _XAM_TYPES_H_
-#define _XAM_TYPES_H_
+#ifndef _TYPES_H_
+#define _TYPES_H_
 
 #include <stdint.h>
 
@@ -43,10 +43,10 @@ union __varframe_data
 };
 
 /* Frame for references on the operand stack frame */
-struct varframe_t
+typedef struct
 {
 	uint8_t type;
 	union __varframe_data data;
-};
+} VarFrame;
 
 #endif
