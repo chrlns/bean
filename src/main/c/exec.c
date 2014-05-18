@@ -16,20 +16,20 @@
  */
 
 #include <stdint.h>
-#include <bvm.h>
-#include <bvm_opcode.h>
+#include <thread.h>
+#include <opcode.h>
 
 bool isAccessFlag(struct method_info_t* method, uint16_t accFlag)
 {
     return (method->AccessFlags & accFlag) == accFlag;
 }
 
-uint8_t Get1ByteOperand(struct stackframe_t * frame)
+uint8_t Get1ByteOperand(Stackframe* frame)
 {
     return *(++frame->instPtr);
 }
 
-uint16_t Get2ByteOperand(struct stackframe_t * frame)
+uint16_t Get2ByteOperand(Stackframe* frame)
 {
     uint16_t operand = 0x0000;
 
