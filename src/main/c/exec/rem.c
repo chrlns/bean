@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,30 +15,30 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
-void do_IREM(struct VMTHREAD *thread)
+void do_IREM(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIREM\n");
 #endif
 }
 
-void do_LREM(struct VMTHREAD *thread)
+void do_LREM(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tLREM\n");
 #endif
 }
 
-void do_FREM(struct VMTHREAD *thread)
+void do_FREM(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tFREM\n");
 #endif
 }
 
-void do_DREM(struct VMTHREAD *thread)
+void do_DREM(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tDREM\n");

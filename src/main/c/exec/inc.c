@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
-void do_IINC_WIDE(struct VMTHREAD *thread, int index, int value)
+void do_IINC_WIDE(Thread *thread, int index, int value)
 {
     /* Increment variable in local variable array */
 }
@@ -26,7 +26,7 @@ void do_IINC_WIDE(struct VMTHREAD *thread, int index, int value)
  * Increments the variable specified by the first operand (index)
  * by the int value of the seconds operand.
  */
-void do_IINC(struct VMTHREAD *thread)
+void do_IINC(Thread *thread)
 {
     dbgmsg("IINC");
 

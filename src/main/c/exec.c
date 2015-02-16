@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 #include <thread.h>
 #include <opcode.h>
 
-bool isAccessFlag(struct method_info_t* method, uint16_t accFlag)
+bool isAccessFlag(Method* method, uint16_t accFlag)
 {
     return (method->AccessFlags & accFlag) == accFlag;
 }
@@ -40,7 +40,7 @@ uint16_t Get2ByteOperand(Stackframe* frame)
     return operand;
 }
 
-uint32_t Get4ByteOperand(struct stackframe_t * frame)
+uint32_t Get4ByteOperand(Stackframe * frame)
 {
     uint32_t operand = 0x00000000;
 
@@ -51,10 +51,10 @@ uint32_t Get4ByteOperand(struct stackframe_t * frame)
     return operand;
 }
 
-int exec_thread(struct VMTHREAD *thread)
+int exec_thread(Thread *thread)
 {
-    struct stackframe_t *frame =
-        (struct stackframe_t *) thread->frameStack.top->data;
+    Stackframe *frame =
+        (Stackframe *) thread->frameStack.top->data;
 #ifdef DEBUG
     assert(frame != NULL);
     printf("Opcode %x (%p)\tClass %p\n",

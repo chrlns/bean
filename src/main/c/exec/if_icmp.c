@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,48 +15,48 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
-void IF_ICMP(struct VMTHREAD *thread, bool(*cmpfnc) (int, int))
+void IF_ICMP(Thread *thread, bool(*cmpfnc) (int, int))
 {
 }
 
-void do_IF_ICMPLE(struct VMTHREAD *thread)
+void do_IF_ICMPLE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIF_ICMPLE\n");
 #endif
 }
 
-void do_IF_ICMPGT(struct VMTHREAD *thread)
+void do_IF_ICMPGT(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIF_ICMPGT\n");
 #endif
 }
 
-void do_IF_ICMPGE(struct VMTHREAD *thread)
+void do_IF_ICMPGE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIF_ICMPGE\n");
 #endif
 }
 
-void do_IF_ICMPLT(struct VMTHREAD *thread)
+void do_IF_ICMPLT(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIF_ICMPLT\n");
 #endif
 }
 
-void do_IF_ICMPNE(struct VMTHREAD *thread)
+void do_IF_ICMPNE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tICMPNE\n");
 #endif
 }
 
-void do_IF_ICMPEQ(struct VMTHREAD *thread)
+void do_IF_ICMPEQ(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tNOP\n");

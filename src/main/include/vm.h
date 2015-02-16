@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,17 +26,18 @@
 	printf("DEBUG: %s\n", msg);
 #endif
 
-#include "method.h"
-#include "process.h"
-
-/* These are the only stdc-lib includes */
 #include <assert.h>     /* If NDEBUG is defined "assert" is ignored */
 #include <stdio.h>
 #include <stdlib.h>     /* Necessary for malloc, realloc, exit, etc. */
 #include <string.h>     /* Necessary for strcmp() */
 #include <stdint.h>     /* Necessary for exact int types, e.g. int64_t */
 
-bool isAccessFlag(struct method_info_t* method, uint16_t accFlag);
+#include <thread.h>
+#include <class.h>
+
+
+#define isAccessFlag(method, accFlag) \
+    (method->AccessFlags & accFlag) == accFlag
 
 #define true  1
 #define false 0
@@ -57,37 +58,35 @@ bool isAccessFlag(struct method_info_t* method, uint16_t accFlag);
 #define SIGKILL   9   /* Program is being terminated in short */
 #define SIGCMPCT  66  /* Program should call Garbage Collector to compact. */
 
-struct MONITOR
-{
-  struct VMTHREAD* ThreadRef;
-  void*            ObjectRef;
+struct MONITOR {
+    Thread* ThreadRef;
+    void* ObjectRef;
 
-  struct MONITOR*  Next;
+    struct MONITOR* Next;
 };
 
-typedef struct {
-    bool         alive;
+typedef struct VM {
+    bool alive;
     Classloader* classloader;
-  char*             ClassPath;
-  char*             LibraryPath;
+    char* ClassPath;
+    char* LibraryPath;
 
-  bool              Initialized; /* Has the VM been initialized? */
-  bool              Running;     /* Is the VM running? */
+    bool Initialized; /* Has the VM been initialized? */
+    bool Running; /* Is the VM running? */
 
-  struct VMCLASS**  PublicClasses;     /* Holds the Public Classes */
-  struct VMTHREAD*  Threads;           /* Threads of this application. Thread[0] is
+    Class** PublicClasses; /* Holds the Public Classes */
+    Thread* Threads; /* Threads of this application. Thread[0] is
                                           the Main Thread. */
-  unsigned char     ThreadNum;
-  struct MONITOR*   Monitors;          /* Monitors */
+    unsigned char ThreadNum;
+    struct MONITOR* Monitors; /* Monitors */
 
-  unsigned int*     MemoryHeap;        /* Array of int (pointern) representing the
+    unsigned int* MemoryHeap; /* Array of int (pointern) representing the
                                           GC-Heap of the application. */
-  bool              DoCollectGarbage;  /* This is true if the Garbage Collector must
+    bool DoCollectGarbage; /* This is true if the Garbage Collector must
                                           be called. */
 } VM;
 
-extern struct VM VM;
-extern unsigned int   (*BufferToInt)(unsigned char[4]);
+extern unsigned int (*BufferToInt)(unsigned char[4]);
 extern unsigned short (*BufferToShort)(unsigned char[2]);
 
 unsigned int BufferToInt_LittleEndian(unsigned char[4]);
@@ -97,8 +96,8 @@ unsigned short BufferToShort_BigEndian(unsigned char[2]);
 
 char* compose_path(char* className, char* basePath);
 
-uint8_t  Get1ByteOperand(struct stackframe_t*);
-uint16_t Get2ByteOperand(struct stackframe_t*);
-uint32_t  Get4ByteOperand(struct stackframe_t*);
+uint8_t Get1ByteOperand(Stackframe*);
+uint16_t Get2ByteOperand(Stackframe*);
+uint32_t Get4ByteOperand(Stackframe*);
 
 #endif

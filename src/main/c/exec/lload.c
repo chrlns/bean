@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
-void do_LLOADi(struct VMTHREAD *thread, int index)
+void do_LLOADi(Thread *thread, int index)
 {
 #ifdef DEBUG
     printf("\tNOP\n");
 #endif
 }
 
-void do_LLOAD(struct VMTHREAD *thread)
+void do_LLOAD(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tNOP\n");

@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,9 +18,14 @@
 #ifndef _CLASS_H_
 #define _CLASS_H_
 
+#include <stdint.h>
+#include <stdio.h>
+#include <types.h>
+
+#include <method.h>
 #include <classloader.h>
 
-typedef struct {
+typedef struct Class {
     uint16_t                AccessFlags;
     struct ATTRIBUTE_INFO*  Attributes;
     uint16_t                AttributesNum;
@@ -33,7 +38,7 @@ typedef struct {
     uint16_t*               Interfaces;
     uint16_t                InterfacesNum;
     uint16_t                MainMethodIndex;    // 0 means no method, >0 index in the Methods array.
-    struct method_info_t*   Methods;
+    Method*   Methods;
     uint16_t                MethodsNum;
     const char*             QualifiedName;      // Full qualified name
     uint16_t                SuperClassIndex;
@@ -41,4 +46,5 @@ typedef struct {
     struct VERSION          Version;    
 } Class;
 
+#define _CLASS_H__COMPLETED_
 #endif

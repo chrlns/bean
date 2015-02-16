@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 #include <bvm_mem.h>
 
 /* Enter monitor for object */
-void do_MONITORENTER(struct VMTHREAD *thread)
+void do_MONITORENTER(Thread *thread)
 {
     dbgmsg("MONITORENTER");
 
@@ -86,7 +86,7 @@ void do_MONITORENTER(struct VMTHREAD *thread)
 }
 
 /* Exit monitor for object */
-void do_MONITOREXIT(struct VMTHREAD *thread)
+void do_MONITOREXIT(Thread *thread)
 {
     struct MONITOR *monitor;
     struct MONITOR *monitorTmp;

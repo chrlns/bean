@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 #include <bvm_opcode.h>
 #include <bvm_mem.h>
 
@@ -28,7 +28,7 @@
  * The interpreter then returns control to the invoker of the method,
  * reinstating the frame of the invoker.
  */
-void do_RETURN(struct VMTHREAD *thread)
+void do_RETURN(Thread *thread)
 {
     dbgmsg("RETURN");
 /*
@@ -58,26 +58,26 @@ void do_RETURN(struct VMTHREAD *thread)
 	xam_free(stackFrame);*/
 }
 
-void do_ARETURN(struct VMTHREAD *thread)
+void do_ARETURN(Thread *thread)
 {
 }
 
-void do_DRETURN(struct VMTHREAD *thread)
+void do_DRETURN(Thread *thread)
 {
 }
 
-void do_FRETURN(struct VMTHREAD *thread)
+void do_FRETURN(Thread *thread)
 {
 }
 
-void do_LRETURN(struct VMTHREAD *thread)
+void do_LRETURN(Thread *thread)
 {
 }
 
-void do_IRETURN(struct VMTHREAD *thread)
+void do_IRETURN(Thread *thread)
 {
 }
 
-void do_RET(struct VMTHREAD *thread)
+void do_RET(Thread *thread)
 {
 }

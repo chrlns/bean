@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 #include <bvm_link.h>
 #include <bvm_mem.h>
 
-void do_INVOKEINTERFACE(struct VMTHREAD *thread)
+void do_INVOKEINTERFACE(Thread *thread)
 {
     dbgmsg("INVOKEINTERFACE not implemented");
     current_frame(thread)->instPtr++;
@@ -29,7 +29,7 @@ void do_INVOKEINTERFACE(struct VMTHREAD *thread)
  * Invoke instance method; dispatch based on runtime class type
  * (virtual method invokation).
  */
-void do_INVOKEVIRTUAL(struct VMTHREAD *thread)
+void do_INVOKEVIRTUAL(Thread *thread)
 {
     dbgmsg("INVOKEVIRTUAL");
 }
@@ -38,7 +38,7 @@ void do_INVOKEVIRTUAL(struct VMTHREAD *thread)
  * Invoke instance method; special handling for superclass, private,
  * and instance initialization method invocations.
  */
-void do_INVOKESPECIAL(struct VMTHREAD *thread)
+void do_INVOKESPECIAL(Thread *thread)
 {
     dbgmsg("INVOKESPECIAL not implemented")
         current_frame(thread)->instPtr++;
@@ -48,7 +48,7 @@ void do_INVOKESPECIAL(struct VMTHREAD *thread)
  * Invoke static class method.
  * The invoked method must be declared as static and must not be abstract.
  */
-void do_INVOKESTATIC(struct VMTHREAD *thread)
+void do_INVOKESTATIC(Thread *thread)
 {
     dbgmsg("INVOKESTATIC");
 
@@ -57,9 +57,9 @@ void do_INVOKESTATIC(struct VMTHREAD *thread)
     uint16_t nargs = 0;         // TODO: Parse method descriptor
 
     /* Create a new frame for the invoking method */
-    struct stackframe_t *new_frame =
-        xam_alloc(sizeof(struct stackframe_t));
-    struct stackframe_t *cur_frame = current_frame(thread);
+    Stackframe *new_frame =
+        xam_alloc(sizeof(Stackframe));
+    Stackframe *cur_frame = current_frame(thread);
 
     new_frame->method = dlink(thread, index, NULL);
 

@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,9 +15,7 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
-#include <bvm_error.h>
-#include <bvm_mem.h>
+#include <vm.h>
 
 /**
  * Pops all elements of the given stack.
@@ -71,7 +69,7 @@ int Stack_push(Stack* stack, void* data)
     if (stack->size == stack->limit) {
         return 1;  /* Stack overflow */
     } else {
-        StackElement* new =  malloc(sizeof(StackElement));
+        StackElement* new = malloc(sizeof(StackElement));
         new->data = data;
         new->next = stack->top;
         stack->top = new;

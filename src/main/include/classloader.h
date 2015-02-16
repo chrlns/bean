@@ -214,6 +214,7 @@ struct FIELD_INFO
     struct ATTRIBUTE_INFO *Attributes;
 };
 
+#ifdef _CLASS_H__COMPLETED_
 /* Represents a Java object */
 typedef struct {
     Class*    class;
@@ -230,5 +231,6 @@ typedef struct Classloader {
 
 Classloader* Classloader_new(void);
 void Classloader_destroy(Classloader* cl);
+#endif
 
 #endif

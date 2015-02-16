@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,44 +15,44 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
-void do_I2S(struct VMTHREAD *thread)
+void do_I2S(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tI2S\n");
 #endif
 }
 
-void do_I2L(struct VMTHREAD *thread)
+void do_I2L(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tI2L\n");
 #endif
 }
 
-void do_I2C(struct VMTHREAD *thread)
+void do_I2C(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tI2C\n");
 #endif
 }
 
-void do_I2B(struct VMTHREAD *thread)
+void do_I2B(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tI2B\n");
 #endif
 }
 
-void do_I2D(struct VMTHREAD *thread)
+void do_I2D(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tI2D\n");
 #endif
 }
 
-void do_I2F(struct VMTHREAD *thread)
+void do_I2F(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tI2F\n");

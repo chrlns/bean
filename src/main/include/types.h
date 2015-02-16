@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ union __varframe_data
 };
 
 /* Frame for references on the operand stack frame */
-typedef struct
+typedef struct VarFrame
 {
 	uint8_t type;
 	union __varframe_data data;

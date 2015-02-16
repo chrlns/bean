@@ -93,6 +93,7 @@
                         <artifactId>nar-maven-plugin</artifactId>
                         <configuration>
                             <c>
+                                <name>clang</name>
                                 <options>
                                     <option>-DDEBUG</option>
                                     <option>-std=c99</option>

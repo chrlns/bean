@@ -15,10 +15,32 @@
  *  limitations under the License.
  */
 
+#ifndef _STACKFRAME_H_
+#define _STACKFRAME_H_
+
+#include <classloader.h>
+#include <stack.h>
 #include <vm.h>
 
-/* Get length of array */
-void do_ARRAYLENGTH(Thread *thread)
+/* This stackframe is attached to every method invocation. */
+typedef struct Stackframe
 {
-    dbgmsg("ARRAYLENGTH");
-}
+    /* Local variable array */
+    struct varframe_t* localVars;
+    int16_t            localVarsLen;
+
+    /* Operand stack */
+    Stack   operandStack;
+    int16_t operandStackSize; /* Max. size of the operand stack */
+
+    /* Reference to the constant pool */
+    struct CONSTANTPOOL* constants;
+
+    /* Pointer to the current running opcode. */
+    unsigned char* instPtr;
+
+    /* Invoked method */
+    struct method_t* method;
+} Stackframe;
+
+#endif

@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
 /* Branch if reference is NULL */
-void do_IFNULL(struct VMTHREAD *thread)
+void do_IFNULL(Thread *thread)
 {
     dbgmsg("IFNULL");
 
     struct varframe_t *ref;
     uint16_t offset;
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Pop reference from operand stack */
     stack_pop(&(frame->operandStack), (void **) &ref);

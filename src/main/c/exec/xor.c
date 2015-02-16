@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,18 +15,18 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 #include <bvm_mem.h>
 
 /* Boolean XOR int */
-void do_IXOR(struct VMTHREAD *thread)
+void do_IXOR(Thread *thread)
 {
     dbgmsg("IXOR");
 
     int *value1;
     int *value2;
     int *result = xam_alloc(sizeof(int));
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Pop two int values from operand stack */
     stack_pop(&(frame->operandStack), (void **) &value1);
@@ -39,14 +39,14 @@ void do_IXOR(struct VMTHREAD *thread)
     stack_push(&(frame->operandStack), result);
 }
 
-void do_LXOR(struct VMTHREAD *thread)
+void do_LXOR(Thread *thread)
 {
     dbgmsg("LXOR");
 
     int64_t *value1;
     int64_t *value2;
     int64_t *result = xam_alloc(sizeof(int64_t));
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Pop two long values from operand stack */
     stack_pop(&(frame->operandStack), (void **) &value1);

@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,23 +15,23 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 #include <bvm_class.h>
 #include <bvm_io.h>
 #include <bvm_link.h>
 #include <bvm_mem.h>
 
-bool IsNative(struct VMTHREAD * thread, unsigned short methodIndex,
+bool IsNative(Thread * thread, unsigned short methodIndex,
               struct LINKFLAGS * flags);
 
 /**
  * Finds, loads and initializes a new class specified by the
  * full qualified name.
  */
-struct VMCLASS *FindClassByName(char* qualifiedName)
+Class *FindClassByName(char* qualifiedName)
 {
     IOIdentifier fileID;
-    struct VMCLASS *class = NULL;
+    Class *class = NULL;
     int n;
 
     /* Search for already loaded class */
@@ -51,12 +51,12 @@ struct VMCLASS *FindClassByName(char* qualifiedName)
     }
 
     VM.LocalClassesNum++;
-    VM.LocalClasses = (struct VMCLASS **) xam_realloc(VM.LocalClasses,
-                                                      sizeof(struct VMCLASS
+    VM.LocalClasses = (Class **) xam_realloc(VM.LocalClasses,
+                                                      sizeof(Class
                                                              *) *
                                                       VM.LocalClassesNum);
 
-    class = (struct VMCLASS *) xam_alloc(sizeof(struct VMCLASS));
+    class = (Class *) xam_alloc(sizeof(Class));
     VM.LocalClasses[VM.LocalClassesNum - 1] = class;
 
     if (load_class_file(class_file, class) == false) {
@@ -68,7 +68,7 @@ struct VMCLASS *FindClassByName(char* qualifiedName)
     return class;
 }
 
-struct VMCLASS *FindClassByNameIndex(struct VMCLASS *localClass,
+Class *FindClassByNameIndex(Class *localClass,
                                      unsigned short nameIndex)
 {
     return NULL;
@@ -76,7 +76,7 @@ struct VMCLASS *FindClassByNameIndex(struct VMCLASS *localClass,
 
 /* This method searches in the local constant pool for a method and returns the index
      of the method in the MethodLookupTable. */
-struct method_t* find_method_name(struct VMCLASS *vmclass,
+struct method_t* find_method_name(Class *vmclass,
                                 const char *qualifiedName)
 {
     unsigned short n, nameIndex;
@@ -115,7 +115,7 @@ struct method_t* find_method_name(struct VMCLASS *vmclass,
     return NULL;
 }
 
-struct method_t* find_method_nameidx(struct VMCLASS *vmclass,
+struct method_t* find_method_nameidx(Class *vmclass,
                                    short methodNameIndex)
 {
     unsigned short n;
@@ -137,12 +137,12 @@ struct method_t* find_method_nameidx(struct VMCLASS *vmclass,
  * This method tries to find a method by parsing the string identifier
  * and looking for method in local classes.
  */
-struct method_t *find_method_idx(struct VMCLASS *vmclass,
-                               struct VMTHREAD *thread,
+struct method_t *find_method_idx(Class *vmclass,
+                               Thread *thread,
                                uint16_t methodIndex,
                                struct LINKFLAGS *flags)
 {
-    struct VMCLASS *methodClass;
+    Class *methodClass;
     struct method_t* methodInvoked;
     unsigned short classIndex, classNameIndex, nameTypeIndex,
         methodNameIndex;
@@ -219,7 +219,7 @@ struct method_t *find_method_idx(struct VMCLASS *vmclass,
 }
 
 /* Dynamically finds a method to invoke */
-struct method_t* dlink(struct VMTHREAD *thread, unsigned short methodIndex,
+struct method_t* dlink(Thread *thread, unsigned short methodIndex,
                      struct LINKFLAGS *flags)
 {
     if (IsNative(thread, methodIndex, flags) == false) {

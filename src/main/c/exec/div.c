@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,18 +15,18 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 #include <bvm_mem.h>
 
 /* Integer division */
-void do_IDIV(struct VMTHREAD *thread)
+void do_IDIV(Thread *thread)
 {
     dbgmsg("IDIV");
 
     int *value1;
     int *value2;
     int *result = xam_alloc(sizeof(int));
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     stack_pop(&(frame->operandStack), (void **) &value2);
     stack_pop(&(frame->operandStack), (void **) &value1);
@@ -37,14 +37,14 @@ void do_IDIV(struct VMTHREAD *thread)
 }
 
 /* Long integer division */
-void do_LDIV(struct VMTHREAD *thread)
+void do_LDIV(Thread *thread)
 {
     dbgmsg("LDIV");
 
     int64_t *value1;
     int64_t *value2;
     int64_t *result = xam_alloc(sizeof(int64_t));
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     stack_pop(&(frame->operandStack), (void **) &value2);
     stack_pop(&(frame->operandStack), (void **) &value1);
@@ -55,14 +55,14 @@ void do_LDIV(struct VMTHREAD *thread)
 }
 
 /* Float division */
-void do_FDIV(struct VMTHREAD *thread)
+void do_FDIV(Thread *thread)
 {
     dbgmsg("FDIV");
 
     float *value1;
     float *value2;
     float *result = xam_alloc(sizeof(float));
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     stack_pop(&(frame->operandStack), (void **) &value2);
     stack_pop(&(frame->operandStack), (void **) &value1);
@@ -73,14 +73,14 @@ void do_FDIV(struct VMTHREAD *thread)
 }
 
 /* Double division */
-void do_DDIV(struct VMTHREAD *thread)
+void do_DDIV(Thread *thread)
 {
     dbgmsg("DDIV");
 
     double *value1;
     double *value2;
     double *result = xam_alloc(sizeof(double));
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     stack_pop(&(frame->operandStack), (void **) &value2);
     stack_pop(&(frame->operandStack), (void **) &value1);

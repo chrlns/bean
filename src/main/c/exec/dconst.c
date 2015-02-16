@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,14 +15,14 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
-void do_DCONSTi(struct VMTHREAD *thread, double constant)
+void do_DCONSTi(Thread *thread, double constant)
 {
     dbgmsg("DCONSTi");
 }
 
-void do_DCONST(struct VMTHREAD *thread)
+void do_DCONST(Thread *thread)
 {
     dbgmsg("DCONST");
 }

@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,128 +15,128 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
-void do_ISTORE(struct VMTHREAD *thread)
+void do_ISTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tISTORE\n");
 #endif
 }
 
-void do_LSTORE(struct VMTHREAD *thread)
+void do_LSTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tLSTORE\n");
 #endif
 }
 
-void do_LSTOREi(struct VMTHREAD *thread, int index)
+void do_LSTOREi(Thread *thread, int index)
 {
 #ifdef DEBUG
     printf("\tLSTOREi\n");
 #endif
 }
 
-void do_ISTOREi(struct VMTHREAD *thread, int index)
+void do_ISTOREi(Thread *thread, int index)
 {
 #ifdef DEBUG
     printf("\tISTOREi\n");
 #endif
 }
 
-void do_FSTOREi(struct VMTHREAD *thread, int index)
+void do_FSTOREi(Thread *thread, int index)
 {
 #ifdef DEBUG
     printf("\tFSTOREi\n");
 #endif
 }
 
-void do_DSTOREi(struct VMTHREAD *thread, int index)
+void do_DSTOREi(Thread *thread, int index)
 {
 #ifdef DEBUG
     printf("\tDSTOREi\n");
 #endif
 }
 
-void do_ASTOREi(struct VMTHREAD *thread, int index)
+void do_ASTOREi(Thread *thread, int index)
 {
 #ifdef DEBUG
     printf("\tASTOREi\n");
 #endif
 }
 
-void do_FSTORE(struct VMTHREAD *thread)
+void do_FSTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tFSTORE\n");
 #endif
 }
 
-void do_IASTORE(struct VMTHREAD *thread)
+void do_IASTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIASTORE\n");
 #endif
 }
 
-void do_FASTORE(struct VMTHREAD *thread)
+void do_FASTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tFASTORE\n");
 #endif
 }
 
-void do_DASTORE(struct VMTHREAD *thread)
+void do_DASTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tDASTORE\n");
 #endif
 }
 
-void do_AASTORE(struct VMTHREAD *thread)
+void do_AASTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tAASTORE\n");
 #endif
 }
 
-void do_LASTORE(struct VMTHREAD *thread)
+void do_LASTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tLASTORE\n");
 #endif
 }
 
-void do_BASTORE(struct VMTHREAD *thread)
+void do_BASTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tBASTORE\n");
 #endif
 }
 
-void do_CASTORE(struct VMTHREAD *thread)
+void do_CASTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tCASTORE\n");
 #endif
 }
 
-void do_SASTORE(struct VMTHREAD *thread)
+void do_SASTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tSASTORE\n");
 #endif
 }
 
-void do_DSTORE(struct VMTHREAD *thread)
+void do_DSTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tDSTORE\n");
 #endif
 }
 
-void do_ASTORE(struct VMTHREAD *thread)
+void do_ASTORE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tASTORE\n");

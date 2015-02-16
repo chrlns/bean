@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,18 +20,16 @@
 
 #include <stdint.h>
 #include <classloader.h>
-#include <thread.h>
 
 /* A method, but without running information */
-struct method_info_t
-{
-	uint16_t AccessFlags;
-	uint16_t NameIndex;
-	uint16_t DescriptorIndex;
-	uint16_t AttributesNum;
-	struct ATTRIBUTE_INFO*      Attributes;
-	struct ATTRIBUTE_INFO_CODE* CodeInfo;   /* Pointer to the Code Attribute */
-	Stackframe* StackFrameRef;      /* Original stack frame */
-};
+typedef struct Method {
+    uint16_t AccessFlags;
+    uint16_t NameIndex;
+    uint16_t DescriptorIndex;
+    uint16_t AttributesNum;
+    struct ATTRIBUTE_INFO* Attributes;
+    struct ATTRIBUTE_INFO_CODE* CodeInfo; /* Pointer to the Code Attribute */
+    uint16_t operandStackSize;
+} Method;
 
 #endif

@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,15 +15,13 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
-#include <bvm_io.h>
-#include <bvm_error.h>
-#include <bvm_mem.h>
+#include <vm.h>
+
 
 bool ReadAttributeInfo(struct ATTRIBUTE_INFO *, FILE*);
-bool ReadMethodInfo(struct VMCLASS *, FILE*, int, int);
+bool ReadMethodInfo(Class *, FILE*, int, int);
 
-bool load_class_file(FILE* classfile, struct VMCLASS *class)
+bool load_class_file(FILE* classfile, Class *class)
 {
     short n, m;
     int attributeCodeIndex = 0;
@@ -512,7 +510,7 @@ bool ReadAttributeInfo(struct ATTRIBUTE_INFO * attributeInfo,
     return true;
 }
 
-bool ReadMethodInfo(struct VMCLASS * vmclass, FILE* classfile,
+bool ReadMethodInfo(Class * vmclass, FILE* classfile,
                     int mainIndex, int attributeCodeIndex)
 {
     register short n, m, i;
@@ -529,7 +527,7 @@ bool ReadMethodInfo(struct VMCLASS * vmclass, FILE* classfile,
 
     /* Read methods */
     vmclass->Methods =
-        (struct method_info_t *) xam_alloc(sizeof(struct method_info_t) *
+        (Method *) xam_alloc(sizeof(Method) *
                                          vmclass->MethodsNum);
 
     if (vmclass->Methods == NULL) {

@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ struct LINKFLAGS
   unsigned int IsNative    : 1; /* Invoked method is natively handled by the VM. */
 };
 
-struct method_t* dlink(struct VMTHREAD*, unsigned short, struct LINKFLAGS*);
-struct method_t* find_method_name(struct VMCLASS*, const char*);
+struct method_t* dlink(Thread*, unsigned short, struct LINKFLAGS*);
+struct method_t* find_method_name(Class*, const char*);
 
 #endif

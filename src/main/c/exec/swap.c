@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
 /* Swap the top two operand stack values */
-void do_SWAP(struct VMTHREAD *thread)
+void do_SWAP(Thread *thread)
 {
     dbgmsg("SWAP");
 
     void *value0;
     void *value1;
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Pop two values from operand stack */
     stack_pop(&(frame->operandStack), &value0);

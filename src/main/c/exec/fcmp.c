@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
-void do_FCMPG(struct VMTHREAD *thread)
+void do_FCMPG(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tFCMPG\n");
 #endif
 }
 
-void do_FCMPL(struct VMTHREAD *thread)
+void do_FCMPL(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tFCMPL\n");

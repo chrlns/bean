@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,15 +15,15 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
 /* Boolean AND int */
-void do_IAND(struct VMTHREAD *thread)
+void do_IAND(Thread *thread)
 {
     dbgmsg("IAND");
     int *value1;
     int *value2;
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Pop two int values from operand stack */
     stack_pop(&(frame->operandStack), (void **) &value1);
@@ -36,12 +36,12 @@ void do_IAND(struct VMTHREAD *thread)
     stack_push(&(frame->operandStack), &result);
 }
 
-void do_LAND(struct VMTHREAD *thread)
+void do_LAND(Thread *thread)
 {
     dbgmsg("LAND");
     int64_t *value1;
     int64_t *value2;
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Pop two long values from operand stack */
     stack_pop(&(frame->operandStack), (void **) &value1);

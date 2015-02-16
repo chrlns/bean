@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 #include <bvm_mem.h>
 
 /* Pushs an item from the runtime constant pool onto the operand stack. */
-void do_LDC(struct VMTHREAD *thread)
+void do_LDC(Thread *thread)
 {
     dbgmsg("LDC");
 
@@ -54,10 +54,10 @@ void do_LDC(struct VMTHREAD *thread)
     stack_push(&(current_frame(thread)->operandStack), value);
 }
 
-void do_LDC_W(struct VMTHREAD *thread)
+void do_LDC_W(Thread *thread)
 {
 }
 
-void do_LDC2_W(struct VMTHREAD *thread)
+void do_LDC2_W(Thread *thread)
 {
 }

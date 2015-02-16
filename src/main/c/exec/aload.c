@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,11 +15,10 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
-#include <bvm_mem.h>
+#include <vm.h>
 
 /* Load reference from local variable. */
-void do_ALOAD(struct VMTHREAD *thread)
+void do_ALOAD(Thread *thread)
 {
     /*struct OperandStackFrame obj; */
 
@@ -30,9 +29,9 @@ void do_ALOAD(struct VMTHREAD *thread)
 
 /* Pushes object reference from local vars [0] onto the stack
    var[0] is always the reference to the local class (this). */
-void do_ALOADi(struct VMTHREAD *thread, uint8_t localVarIndex)
+void do_ALOADi(Thread *thread, uint8_t localVarIndex)
 {
-    /*struct stackframe_t* stackframe = (struct stackframe_t*)thread->methodStack.top;
+    /*Stackframe* stackframe = (Stackframe*)thread->methodStack.top;
        struct varframe_t* localVar = xam_alloc(sizeof(struct varframe_t));
 
        #ifdef DEBUG
@@ -49,34 +48,34 @@ void do_ALOADi(struct VMTHREAD *thread, uint8_t localVarIndex)
 //      stack_push(&(thread->operandStack), localVar);
 }
 
-void do_IALOAD(struct VMTHREAD *thread)
+void do_IALOAD(Thread *thread)
 {
 }
 
-void do_LALOAD(struct VMTHREAD *thread)
+void do_LALOAD(Thread *thread)
 {
 }
 
-void do_FALOAD(struct VMTHREAD *thread)
+void do_FALOAD(Thread *thread)
 {
 }
 
-void do_DALOAD(struct VMTHREAD *thread)
+void do_DALOAD(Thread *thread)
 {
 }
 
-void do_AALOAD(struct VMTHREAD *thread)
+void do_AALOAD(Thread *thread)
 {
 }
 
-void do_BALOAD(struct VMTHREAD *thread)
+void do_BALOAD(Thread *thread)
 {
 }
 
-void do_CALOAD(struct VMTHREAD *thread)
+void do_CALOAD(Thread *thread)
 {
 }
 
-void do_SALOAD(struct VMTHREAD *thread)
+void do_SALOAD(Thread *thread)
 {
 }

@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,13 +22,13 @@
 #include "types.h"
 #include "method.h"
 
-typedef struct
+typedef struct StackElement
 {
     void*                   data; /* data structure */
     struct stack_element_t* next; /* ptr to next element */
 } StackElement;
 
-typedef struct
+typedef struct Stack
 {
     unsigned int limit;   /* maximum number of elements */
     unsigned int size;    /* current number of elements */

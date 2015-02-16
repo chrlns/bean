@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,8 +18,9 @@
 #ifndef _THREAD_H_
 #define _THREAD_H_
 
-#include <classloader.h>
+#include <class.h>
 #include <stack.h>
+#include <vm.h>
 
 #define PROCESS_STATUS_FREE     0
 #define PROCESS_STATUS_SLEEPING 1
@@ -34,41 +35,20 @@
 #define THREAD_PRIORITY_IDLE        0
 
 #define current_frame(thread) \
-	((struct stackframe_t*)thread->frameStack.top->data)
+	((Stackframe*)thread->frameStack.top->data)
 
-/* This stackframe is attached to every method invocation. */
-typedef struct
+typedef struct Thread
 {
-    /* Local variable array */
-    struct varframe_t* localVars;
-    int16_t            localVarsLen;
-
-    /* Operand stack */
-    struct stack_t operandStack;
-    int16_t        operandStackSize; /* Max. size of the operand stack */
-
-    /* Reference to the constant pool */
-    struct CONSTANTPOOL* constants;
-
-    /* Pointer to the current running opcode. */
-    unsigned char* instPtr;
-
-    /* Invoked method */
-    struct method_t* method;
-} Stackframe;
-
-typedef struct
-{
-    struct VMCLASS*     RunningClass;    /* Pointer to the currently running class.*/
+    Class*              RunningClass;    /* Pointer to the currently running class.*/
     struct METHOD_INFO* RunningMethod;   /* Pointer to the currently run. method. */
-    struct VMTHREAD*    Parent;          /* Ref. to a parent thread. Can be NULL. */
+    struct Thread*      Parent;          /* Ref. to a parent thread. Can be NULL. */
     unsigned char       Priority;        /* Priority of this thread. */
     unsigned char       PriorityCurrent; /* Current priority (timeslice) */
     unsigned char       Status;
-    StackFrame          frameStack;      /* Top of this stack contains current stackframe */
+    Stack               frameStack;      /* Top of this stack contains current stackframe */
 } Thread;
 
-int  exec_thread(struct VMTHREAD*);
+int  exec_thread(Thread*);
 int  start_process(FILE*);
 
 Thread* Thread_next(VM* vm);

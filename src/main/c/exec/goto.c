@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
 /* Branch always */
-void do_GOTO(struct VMTHREAD *thread)
+void do_GOTO(Thread *thread)
 {
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
     int16_t opcode = Get1ByteOperand(current_frame(thread));
     dbgmsg("GOTO");
 
@@ -30,9 +30,9 @@ void do_GOTO(struct VMTHREAD *thread)
 }
 
 /* Branch always (far jump) */
-void do_GOTO_W(struct VMTHREAD *thread)
+void do_GOTO_W(Thread *thread)
 {
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
     int32_t opcode = Get4ByteOperand(current_frame(thread));
     dbgmsg("GOTO_W");
 

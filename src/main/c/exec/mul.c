@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 #include <bvm_mem.h>
 
 /* Integer multiplication */
-void do_IMUL(struct VMTHREAD *thread)
+void do_IMUL(Thread *thread)
 {
     int *value1;
     int *value2;
@@ -35,7 +35,7 @@ void do_IMUL(struct VMTHREAD *thread)
 }
 
 /* Long integer multiplication */
-void do_LMUL(struct VMTHREAD *thread)
+void do_LMUL(Thread *thread)
 {
     int64_t *value1;
     int64_t *value2;
@@ -51,7 +51,7 @@ void do_LMUL(struct VMTHREAD *thread)
 }
 
 /* Float multiplication */
-void do_FMUL(struct VMTHREAD *thread)
+void do_FMUL(Thread *thread)
 {
     float *value1;
     float *value2;
@@ -67,7 +67,7 @@ void do_FMUL(struct VMTHREAD *thread)
 }
 
 /* Double multiplication */
-void do_DMUL(struct VMTHREAD *thread)
+void do_DMUL(Thread *thread)
 {
     double *value1;
     double *value2;

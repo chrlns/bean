@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
 /* Negates the double value on top of the operand stack. */
-void do_DNEG(struct VMTHREAD *thread)
+void do_DNEG(Thread *thread)
 {
     dbgmsg("DNEG");
 
@@ -29,7 +29,7 @@ void do_DNEG(struct VMTHREAD *thread)
 }
 
 /* Negates the float value on top of the operand stack. */
-void do_FNEG(struct VMTHREAD *thread)
+void do_FNEG(Thread *thread)
 {
     dbgmsg("FNEG");
 
@@ -40,7 +40,7 @@ void do_FNEG(struct VMTHREAD *thread)
 }
 
 /* Negates the int value on top of the operand stack. */
-void do_INEG(struct VMTHREAD *thread)
+void do_INEG(Thread *thread)
 {
     dbgmsg("INEG");
 
@@ -50,7 +50,7 @@ void do_INEG(struct VMTHREAD *thread)
 }
 
 /* Negates the long value on top of the operand stack. */
-void do_LNEG(struct VMTHREAD *thread)
+void do_LNEG(Thread *thread)
 {
     dbgmsg("LNEG");
 

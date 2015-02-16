@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,14 +15,14 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
-void IF(struct VMTHREAD *thread, bool(*cmpfnc) (int, int))
+void IF(Thread *thread, bool(*cmpfnc) (int, int))
 {
 }
 
 /* Branch if int comparison with zero succeeds */
-void do_IFLE(struct VMTHREAD *thread)
+void do_IFLE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIFLE\n");
@@ -30,7 +30,7 @@ void do_IFLE(struct VMTHREAD *thread)
 }
 
 /* Branch if int comparison with zero succeeds */
-void do_IFGT(struct VMTHREAD *thread)
+void do_IFGT(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIFGT\n");
@@ -38,7 +38,7 @@ void do_IFGT(struct VMTHREAD *thread)
 }
 
 /* Branch if int comparison with zero succeeds */
-void do_IFGE(struct VMTHREAD *thread)
+void do_IFGE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIFGE\n");
@@ -46,7 +46,7 @@ void do_IFGE(struct VMTHREAD *thread)
 }
 
 /* Branch if int comparison with zero succeeds */
-void do_IFLT(struct VMTHREAD *thread)
+void do_IFLT(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIFLT\n");
@@ -54,7 +54,7 @@ void do_IFLT(struct VMTHREAD *thread)
 }
 
 /* Branch if int comparison with zero succeeds */
-void do_IFNE(struct VMTHREAD *thread)
+void do_IFNE(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIFNE\n");
@@ -62,7 +62,7 @@ void do_IFNE(struct VMTHREAD *thread)
 }
 
 /* Branch if int comparison with zero succeeds */
-void do_IFEQ(struct VMTHREAD *thread)
+void do_IFEQ(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tIFEQ\n");

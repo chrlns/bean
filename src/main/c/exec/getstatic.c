@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
 /* Get static field from class */
-void do_GETSTATIC(struct VMTHREAD *thread)
+void do_GETSTATIC(Thread *thread)
 {
     struct CONSTANT_CLASS_INFO *classInfo = NULL;
     struct CONSTANTPOOL *constant = NULL;
@@ -29,7 +29,7 @@ void do_GETSTATIC(struct VMTHREAD *thread)
     struct CONSTANT_UTF8_INFO *descName = NULL;
 
     uint16_t operand = 0;
-    struct stackframe_t* frame = current_frame(thread);
+    Stackframe* frame = current_frame(thread);
     assert(frame != NULL);
 
     operand = Get2ByteOperand(frame);
@@ -65,7 +65,7 @@ void do_GETSTATIC(struct VMTHREAD *thread)
 
 	// We have to make sure that the given class and field type are
 	// already loaded. If not they must be loaded now.
-    struct VMCLASS* class = FindClassByName(className->Text);
+    Class* class = FindClassByName(className->Text);
 
 	// Push the scalar type value or object reference onto the stack
 }

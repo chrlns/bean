@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
 /* Boolean OR int */
-void do_IOR(struct VMTHREAD *thread)
+void do_IOR(Thread *thread)
 {
     dbgmsg("IOR");
 
@@ -37,7 +37,7 @@ void do_IOR(struct VMTHREAD *thread)
     stack_push(&(current_frame(thread)->operandStack), &result);
 }
 
-void do_LOR(struct VMTHREAD *thread)
+void do_LOR(Thread *thread)
 {
     dbgmsg("LOR");
 

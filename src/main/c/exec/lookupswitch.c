@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
 /* Access jump table by key match and jump */
-void do_LOOKUPSWITCH(struct VMTHREAD *thread)
+void do_LOOKUPSWITCH(Thread *thread)
 {
 #ifdef DEBUG
     printf("\tLOOKUPSWITCH\n");

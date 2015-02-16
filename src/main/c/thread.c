@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,14 +15,14 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 #include <bvm_class.h>
 #include <bvm_mem.h>
 #include <bvm_process.h>
 #include <bvm_link.h>
 
 
-int init_thread(struct VMTHREAD *thread)
+int init_thread(Thread *thread)
 {
     thread->Priority = THREAD_PRIORITY_NORMAL;
     stack_init(&(thread->frameStack), 32); // FIXME What's the appropriate size?
@@ -30,7 +30,7 @@ int init_thread(struct VMTHREAD *thread)
 }
 
 void stackframe_init(
-    struct stackframe_t *frame,
+    Stackframe *frame,
     struct method_t* method,
     struct CONSTANTPOOL* constants)
 {
@@ -43,16 +43,16 @@ void stackframe_init(
     assert(frame->method != NULL);
 }
 
-struct VMCLASS* new_class_alloc()
+Class* new_class_alloc()
 {
     /* Create class struct */
     VM.LocalClassesNum++;
     VM.LocalClasses =
-        (struct VMCLASS **) xam_realloc(VM.LocalClasses,
-                                        sizeof(struct VMCLASS *) *
+        (Class **) xam_realloc(VM.LocalClasses,
+                                        sizeof(Class *) *
                                         VM.LocalClassesNum);
     VM.LocalClasses[VM.LocalClassesNum - 1] =
-        (struct VMCLASS *) xam_alloc(sizeof(struct VMCLASS));
+        (Class *) xam_alloc(sizeof(Class));
 
     return VM.LocalClasses[VM.LocalClassesNum - 1];
 }
@@ -65,12 +65,12 @@ int start_process(FILE* class_file)
     /* Create main thread */
     VM.ThreadNum++;
     VM.Threads =
-        (struct VMTHREAD *) xam_realloc(0, sizeof(struct VMTHREAD));
+        (Thread *) xam_realloc(0, sizeof(Thread));
 
     /* Initialize main thread */
     init_thread(&VM.Threads[0]);
 
-    struct VMCLASS *new_class = new_class_alloc();
+    Class *new_class = new_class_alloc();
 
     if (load_class_file(class_file, new_class) == false) {
         return false;
@@ -97,8 +97,8 @@ int start_process(FILE* class_file)
                               __FILE__, __LINE__);
     }
     // Create stackframe for main method
-    struct stackframe_t *stackframe =
-        xam_alloc(sizeof(struct stackframe_t));
+    Stackframe *stackframe =
+        xam_alloc(sizeof(Stackframe));
     stackframe_init(stackframe,
                     mainMethod,
                     VM.LocalClasses[VM.LocalClassesNum - 1]->ConstantPool);
@@ -111,7 +111,7 @@ int start_process(FILE* class_file)
     return true;
 }
 
-struct VMTHREAD *next_thread(void)
+Thread *next_thread(void)
 {
     // Search for threads with unused timeslices
     for (int n = 0; n < VM.ThreadNum; n++) {

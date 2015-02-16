@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 
 /* Extend local variables index by additional bytes
  * This instruction needs support by the following other opcodes:
  * iload, fload, aload, lload, dload, istore, fstore, astore, lstore, dstore, or ret (Type 1)
  * iinc (Type 2) */
-void do_WIDE(struct VMTHREAD *thread)
+void do_WIDE(Thread *thread)
 {
     dbgmsg("WIDE");
 }

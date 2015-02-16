@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 #include <bvm_mem.h>
 
-void do_ISHL(struct VMTHREAD *thread)
+void do_ISHL(Thread *thread)
 {
     dbgmsg("ISHL");
 
     int *value1;
     int *value2;
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
     stack_pop(&(frame->operandStack), (void **) &value2);
@@ -38,13 +38,13 @@ void do_ISHL(struct VMTHREAD *thread)
     xam_free(value2);
 }
 
-void do_LSHL(struct VMTHREAD *thread)
+void do_LSHL(Thread *thread)
 {
     dbgmsg("LSHL");
 
     int64_t *value1;
     int *value2;
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
     stack_pop(&(frame->operandStack), (void **) &value2);
@@ -58,13 +58,13 @@ void do_LSHL(struct VMTHREAD *thread)
     xam_free(value2);
 }
 
-void do_ISHR(struct VMTHREAD *thread)
+void do_ISHR(Thread *thread)
 {
     dbgmsg("ISHR");
 
     int *value1;
     int *value2;
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
     stack_pop(&(frame->operandStack), (void **) &value2);
@@ -78,13 +78,13 @@ void do_ISHR(struct VMTHREAD *thread)
     xam_free(value2);
 }
 
-void do_LSHR(struct VMTHREAD *thread)
+void do_LSHR(Thread *thread)
 {
     dbgmsg("LSHR");
 
     int64_t *value1;
     int *value2;
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
     stack_pop(&(frame->operandStack), (void **) &value2);
@@ -99,13 +99,13 @@ void do_LSHR(struct VMTHREAD *thread)
 }
 
 /* Logical shift right */
-void do_IUSHR(struct VMTHREAD *thread)
+void do_IUSHR(Thread *thread)
 {
     dbgmsg("IUSHR");
 
     int *value1;
     int *value2;
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
     stack_pop(&(frame->operandStack), (void **) &value2);
@@ -123,13 +123,13 @@ void do_IUSHR(struct VMTHREAD *thread)
 }
 
 /* Logical shift right */
-void do_LUSHR(struct VMTHREAD *thread)
+void do_LUSHR(Thread *thread)
 {
     dbgmsg("LUSHR");
 
     int64_t *value1;
     int *value2;
-    struct stackframe_t *frame = current_frame(thread);
+    Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
     stack_pop(&(frame->operandStack), (void **) &value2);

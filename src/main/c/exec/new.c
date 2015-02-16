@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2014 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,15 +15,15 @@
  *  limitations under the License.
  */
 
-#include <bvm.h>
+#include <vm.h>
 #include <bvm_mem.h>
 
 /* Create new object */
-void do_NEW(struct VMTHREAD *thread)
+void do_NEW(Thread *thread)
 {
     dbgmsg("NEW");
 
-    struct stackframe_t* frame = current_frame(thread);
+    Stackframe* frame = current_frame(thread);
     uint16_t index = Get2ByteOperand(frame);
     struct CONSTANT_CLASS_INFO *class_info = (struct CONSTANT_CLASS_INFO*)
     	frame->constants[index - 1].Data;
