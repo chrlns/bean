@@ -15,8 +15,12 @@
  *  limitations under the License.
  */
 
-#include <thread.h>
+#include <stdlib.h>
 
+#include <debug.h>
+#include <stack.h>
+#include <stackframe.h>
+#include <thread.h>
 
 void do_IADD(Thread* thread)
 {
@@ -45,7 +49,7 @@ void do_LADD(Thread* thread)
     Stackframe* frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (int64_t *) frame->operandStack.top->data;
 
     /* Subtracting */
@@ -64,7 +68,7 @@ void do_FADD(Thread* thread)
     Stackframe* frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (float *) frame->operandStack.top->data;
 
     /* Subtracting */
@@ -83,7 +87,7 @@ void do_DADD(Thread* thread)
     Stackframe* frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (double *) frame->operandStack.top->data;
 
     /* Subtracting */
@@ -103,7 +107,7 @@ void do_ISUB(Thread* thread)
     Stackframe* frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (int *) frame->operandStack.top->data;
 
     /* Subtracting */
@@ -123,7 +127,7 @@ void do_LSUB(Thread* thread)
     Stackframe* frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (int64_t *) frame->operandStack.top->data;
 
     /* Subtracting */
@@ -143,7 +147,7 @@ void do_FSUB(Thread* thread)
     Stackframe* frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (float *) frame->operandStack.top->data;
 
     /* Subtracting */
@@ -163,7 +167,7 @@ void do_DSUB(Thread* thread)
     Stackframe* frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (double *) frame->operandStack.top->data;
 
     /* Subtracting */

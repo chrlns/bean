@@ -23,7 +23,7 @@
 #include <types.h>
 
 #include <method.h>
-#include <classloader.h>
+#include <classfile.h>
 
 typedef struct Class {
     uint16_t                AccessFlags;
@@ -43,8 +43,7 @@ typedef struct Class {
     const char*             QualifiedName;      // Full qualified name
     uint16_t                SuperClassIndex;
     uint16_t                ThisClassIndex;
-    struct VERSION          Version;    
+    struct VERSION          Version;
 } Class;
 
-#define _CLASS_H__COMPLETED_
 #endif

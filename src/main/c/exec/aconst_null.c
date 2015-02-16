@@ -15,6 +15,7 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <thread.h>
 
 /* Push the null object reference onto the operand stack. */

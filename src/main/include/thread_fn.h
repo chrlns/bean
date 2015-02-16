@@ -15,31 +15,18 @@
  *  limitations under the License.
  */
 
-#ifndef _STACK_H_
-#define _STACK_H_
+#ifndef _THREAD_FN_H_
+#define _THREAD_FN_H_
 
-#include <stdint.h>
-#include <types.h>
+#include <stdio.h>
 
-#include <method.h>
+#include <vm.h>
+#include <thread.h>
 
-typedef struct StackElement
-{
-    void*                   data; /* data structure */
-    struct stack_element_t* next; /* ptr to next element */
-} StackElement;
+int  exec_thread(Thread*);
+int  start_process(FILE*);
 
-typedef struct Stack
-{
-    unsigned int limit;   /* maximum number of elements */
-    unsigned int size;    /* current number of elements */
-    StackElement* top;
-} Stack;
-
-
-Stack* Stack_new(unsigned int limit);
-void Stack_destroy(Stack* stack);
-int Stack_pop(Stack* stack, void** data);
-int Stack_push(Stack* stack, void* data);
+Thread* Thread_next(VM* vm);
+void Thread_exec(Thread* thread);
 
 #endif

@@ -20,7 +20,6 @@
 
 #include <class.h>
 #include <stack.h>
-#include <vm.h>
 
 #define PROCESS_STATUS_FREE     0
 #define PROCESS_STATUS_SLEEPING 1
@@ -47,11 +46,5 @@ typedef struct Thread
     unsigned char       Status;
     Stack               frameStack;      /* Top of this stack contains current stackframe */
 } Thread;
-
-int  exec_thread(Thread*);
-int  start_process(FILE*);
-
-Thread* Thread_next(VM* vm);
-void Thread_exec(Thread* thread);
 
 #endif

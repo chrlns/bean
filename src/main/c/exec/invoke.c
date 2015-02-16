@@ -15,9 +15,10 @@
  *  limitations under the License.
  */
 
+#include <stdlib.h>
+
+#include <debug.h>
 #include <vm.h>
-#include <bvm_link.h>
-#include <bvm_mem.h>
 
 void do_INVOKEINTERFACE(Thread *thread)
 {
@@ -58,7 +59,7 @@ void do_INVOKESTATIC(Thread *thread)
 
     /* Create a new frame for the invoking method */
     Stackframe *new_frame =
-        xam_alloc(sizeof(Stackframe));
+        malloc(sizeof(Stackframe));
     Stackframe *cur_frame = current_frame(thread);
 
     new_frame->method = dlink(thread, index, NULL);

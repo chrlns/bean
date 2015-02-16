@@ -15,31 +15,15 @@
  *  limitations under the License.
  */
 
-#ifndef _STACK_H_
-#define _STACK_H_
+#ifndef _DEBUG_H_
+#define _DEBUG_H_
 
-#include <stdint.h>
-#include <types.h>
-
-#include <method.h>
-
-typedef struct StackElement
-{
-    void*                   data; /* data structure */
-    struct stack_element_t* next; /* ptr to next element */
-} StackElement;
-
-typedef struct Stack
-{
-    unsigned int limit;   /* maximum number of elements */
-    unsigned int size;    /* current number of elements */
-    StackElement* top;
-} Stack;
-
-
-Stack* Stack_new(unsigned int limit);
-void Stack_destroy(Stack* stack);
-int Stack_pop(Stack* stack, void** data);
-int Stack_push(Stack* stack, void* data);
+#ifndef DEBUG
+#define NDEBUG
+#define dbgmsg(msg)
+#else
+#define dbgmsg(msg) \
+	printf("DEBUG: %s\n", msg);
+#endif
 
 #endif

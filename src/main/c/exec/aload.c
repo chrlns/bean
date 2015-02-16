@@ -15,6 +15,8 @@
  *  limitations under the License.
  */
 
+#include <stdlib.h>
+
 #include <vm.h>
 
 /* Load reference from local variable. */

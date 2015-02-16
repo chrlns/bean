@@ -15,6 +15,7 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
 
 /* Create new array of reference */

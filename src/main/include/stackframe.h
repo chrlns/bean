@@ -18,9 +18,9 @@
 #ifndef _STACKFRAME_H_
 #define _STACKFRAME_H_
 
-#include <classloader.h>
+#include <classfile.h>
 #include <stack.h>
-#include <vm.h>
+//#include <vm.h>
 
 /* This stackframe is attached to every method invocation. */
 typedef struct Stackframe

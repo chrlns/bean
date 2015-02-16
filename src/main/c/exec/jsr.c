@@ -15,9 +15,9 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
+#include <stack.h>
 #include <vm.h>
-#include <bvm_mem.h>
-#include <bvm_types.h>
 
 void JSR(Thread *thread, uint32_t offset)
 {
@@ -31,7 +31,7 @@ void JSR(Thread *thread, uint32_t offset)
     /* Push the return address onto the stack */
     frame->data.ptr = current_frame(thread)->instPtr + offset;
     frame->type = JAVATYPE_RETADDR;     /* Return address */
-    stack_push(&(current_frame(thread)->operandStack), frame);
+    Stack_push(&(current_frame(thread)->operandStack), frame);
 }
 
 void do_JSR_W(Thread *thread)

@@ -15,6 +15,7 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
 
 /* Get length of array */

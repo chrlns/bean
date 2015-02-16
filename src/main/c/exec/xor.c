@@ -15,8 +15,8 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
-#include <bvm_mem.h>
 
 /* Boolean XOR int */
 void do_IXOR(Thread *thread)
@@ -29,14 +29,14 @@ void do_IXOR(Thread *thread)
     Stackframe *frame = current_frame(thread);
 
     /* Pop two int values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value1);
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value1);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
 
     /* Perform bitwise exclusive OR operation */
     *result = (*value1) ^ (*value2);
 
     /* Push result onto the operand stack */
-    stack_push(&(frame->operandStack), result);
+    Stack_push(&(frame->operandStack), result);
 }
 
 void do_LXOR(Thread *thread)
@@ -49,8 +49,8 @@ void do_LXOR(Thread *thread)
     Stackframe *frame = current_frame(thread);
 
     /* Pop two long values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value1);
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value1);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
 
     /* Perform bitwise exclusive OR operation */
     *result = (*value1) ^ (*value2);

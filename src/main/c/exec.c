@@ -16,13 +16,10 @@
  */
 
 #include <stdint.h>
-#include <thread.h>
-#include <opcode.h>
 
-bool isAccessFlag(Method* method, uint16_t accFlag)
-{
-    return (method->AccessFlags & accFlag) == accFlag;
-}
+#include <debug.h>
+#include <thread.h>
+#include <bytecode.h>
 
 uint8_t Get1ByteOperand(Stackframe* frame)
 {

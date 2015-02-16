@@ -19,7 +19,7 @@
 #define _METHOD_H_
 
 #include <stdint.h>
-#include <classloader.h>
+#include <classfile.h>
 
 /* A method, but without running information */
 typedef struct Method {

@@ -18,14 +18,6 @@
 #ifndef _VM_H_
 #define _VM_H_
 
-#ifndef DEBUG
-#define NDEBUG
-#define dbgmsg(msg)
-#else
-#define dbgmsg(msg) \
-	printf("DEBUG: %s\n", msg);
-#endif
-
 #include <assert.h>     /* If NDEBUG is defined "assert" is ignored */
 #include <stdio.h>
 #include <stdlib.h>     /* Necessary for malloc, realloc, exit, etc. */
@@ -34,6 +26,8 @@
 
 #include <thread.h>
 #include <class.h>
+#include <stackframe.h>
+#include <classloader.h>
 
 
 #define isAccessFlag(method, accFlag) \

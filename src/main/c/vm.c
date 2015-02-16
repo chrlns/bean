@@ -17,18 +17,17 @@
 
 #include <class.h>
 #include <vm.h>
-#include <bvm_process.h>
 
 /*
- * Constructor for VM. 
+ * Constructor for VM.
  * Creates, initializes and returns a new VM instance.
  */
 VM* VM_new() {
     VM* vm = (VM*)malloc(sizeof(VM));
-    
+
     vm->alive = true;
     vm->classloader = Classloader_new();
-    
+
     return vm;
 }
 
@@ -72,7 +71,7 @@ int main(int argc, char *argv[])
         printf("Could not open main class: %s\n", main_class);
         return 1;
     }
-    
+
     /* Create new VM instance */
     VM* vm = VM_new();
 
