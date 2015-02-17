@@ -15,23 +15,23 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
-#include <bvm_mem.h>
 
 /* Integer multiplication */
 void do_IMUL(Thread *thread)
 {
     int *value1;
     int *value2;
-    int *result = xam_alloc(sizeof(int));
+    int *result = malloc(sizeof(int));
     dbgmsg("IMUL");
 
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
 
     *result = (*value1) * (*value2);
 
-    stack_push(&(current_frame(thread)->operandStack), result);
+    Stack_push(&(current_frame(thread)->operandStack), result);
 }
 
 /* Long integer multiplication */
@@ -39,15 +39,15 @@ void do_LMUL(Thread *thread)
 {
     int64_t *value1;
     int64_t *value2;
-    int64_t *result = xam_alloc(sizeof(int64_t));
+    int64_t *result = malloc(sizeof(int64_t));
     dbgmsg("LMUL");
 
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
 
     *result = (*value1) * (*value2);
 
-    stack_push(&(current_frame(thread)->operandStack), result);
+    Stack_push(&(current_frame(thread)->operandStack), result);
 }
 
 /* Float multiplication */
@@ -55,15 +55,15 @@ void do_FMUL(Thread *thread)
 {
     float *value1;
     float *value2;
-    float *result = xam_alloc(sizeof(float));
+    float *result = malloc(sizeof(float));
     dbgmsg("FMUL");
 
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
 
     *result = (*value1) * (*value2);
 
-    stack_push(&(current_frame(thread)->operandStack), result);
+    Stack_push(&(current_frame(thread)->operandStack), result);
 }
 
 /* Double multiplication */
@@ -71,13 +71,13 @@ void do_DMUL(Thread *thread)
 {
     double *value1;
     double *value2;
-    double *result = xam_alloc(sizeof(double));
+    double *result = malloc(sizeof(double));
     dbgmsg("DMUL");
 
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
 
     *result = (*value1) * (*value2);
 
-    stack_push(&(current_frame(thread)->operandStack), result);
+    Stack_push(&(current_frame(thread)->operandStack), result);
 }

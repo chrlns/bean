@@ -15,9 +15,8 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
-#include <bvm_opcode.h>
-#include <bvm_mem.h>
 
 /*
  * The current method must have return type void. If the current method
@@ -36,9 +35,9 @@ void do_RETURN(Thread *thread)
 	struct INVOKESTACKFRAME* invokeStackFrame;
 
 	// Pop stackframe of current method
-	//stack_pop(&(current_frame(thread)->methodStack), (void**)&stackFrame); MethodStackPop(&thread->Stack);
+	//Stack_pop(&(current_frame(thread)->methodStack), (void**)&stackFrame); MethodStackPop(&thread->Stack);
 	//InvokeStackPop(&thread->Stack, &invokeStackFrame);
-	//stack_pop(&(current_frame(thread)->invokeStack), (void**)&invokeStackFrame);
+	//Stack_pop(&(current_frame(thread)->invokeStack), (void**)&invokeStackFrame);
 
 	if(invokeStackFrame->method == NULL) {
 		dbgmsg("Execution has ended!");
@@ -55,7 +54,7 @@ void do_RETURN(Thread *thread)
 	thread->RunningMethod      = invokeStackFrame->method->Method;
 	//thread->InstructionPointer = invokeStackFrame->instruction_ptr;
 
-	xam_free(stackFrame);*/
+	free(stackFrame);*/
 }
 
 void do_ARETURN(Thread *thread)

@@ -15,6 +15,7 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
 
 /* Branch if reference is NULL */
@@ -22,12 +23,12 @@ void do_IFNULL(Thread *thread)
 {
     dbgmsg("IFNULL");
 
-    struct varframe_t *ref;
+    Varframe *ref;
     uint16_t offset;
     Stackframe *frame = current_frame(thread);
 
     /* Pop reference from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &ref);
+    Stack_pop(&(frame->operandStack), (void **) &ref);
 
     /* Get branch offset */
     offset = Get2ByteOperand(current_frame(thread));

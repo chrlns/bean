@@ -20,12 +20,14 @@
 
 #include <stdint.h>
 #include <stdio.h>
+
 #include <class.h>
+#include <types.h>
 
 /* Represents a Java object */
 typedef struct {
     Class*    class;
-    VarFrame* fields;
+    Varframe* fields;
     uint16_t  fields_num;
 } Object;
 

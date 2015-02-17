@@ -15,9 +15,13 @@
  *  limitations under the License.
  */
 
+#include <assert.h>
+#include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 #include <debug.h>
+#include <stackframe.h>
 #include <thread.h>
 #include <bytecode.h>
 

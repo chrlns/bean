@@ -52,7 +52,7 @@ Class* new_class_alloc()
                                         sizeof(Class *) *
                                         VM.LocalClassesNum);
     VM.LocalClasses[VM.LocalClassesNum - 1] =
-        (Class *) xam_alloc(sizeof(Class));
+        (Class *) malloc(sizeof(Class));
 
     return VM.LocalClasses[VM.LocalClassesNum - 1];
 }
@@ -98,13 +98,13 @@ int start_process(FILE* class_file)
     }
     // Create stackframe for main method
     Stackframe *stackframe =
-        xam_alloc(sizeof(Stackframe));
+        malloc(sizeof(Stackframe));
     stackframe_init(stackframe,
                     mainMethod,
                     VM.LocalClasses[VM.LocalClassesNum - 1]->ConstantPool);
 
     // and push it onto thread's invocation stack
-    int ret = stack_push(&VM.Threads[0].frameStack, stackframe);
+    int ret = Stack_push(&VM.Threads[0].frameStack, stackframe);
     assert(0 == ret); // check for unexpected stack overflow
     assert(1 == VM.Threads[0].frameStack.size);
 

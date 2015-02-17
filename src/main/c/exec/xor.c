@@ -25,7 +25,7 @@ void do_IXOR(Thread *thread)
 
     int *value1;
     int *value2;
-    int *result = xam_alloc(sizeof(int));
+    int *result = malloc(sizeof(int));
     Stackframe *frame = current_frame(thread);
 
     /* Pop two int values from operand stack */
@@ -45,7 +45,7 @@ void do_LXOR(Thread *thread)
 
     int64_t *value1;
     int64_t *value2;
-    int64_t *result = xam_alloc(sizeof(int64_t));
+    int64_t *result = malloc(sizeof(int64_t));
     Stackframe *frame = current_frame(thread);
 
     /* Pop two long values from operand stack */
@@ -56,5 +56,5 @@ void do_LXOR(Thread *thread)
     *result = (*value1) ^ (*value2);
 
     /* Push result onto the operand stack */
-    stack_push(&(frame->operandStack), result);
+    Stack_push(&(frame->operandStack), result);
 }

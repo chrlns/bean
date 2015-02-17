@@ -15,8 +15,9 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
+#include <platform.h>
 #include <vm.h>
-
 
 bool ReadAttributeInfo(struct ATTRIBUTE_INFO *, FILE*);
 bool ReadMethodInfo(Class *, FILE*, int, int);
@@ -42,10 +43,11 @@ bool load_class_file(FILE* classfile, Class *class)
 
         /* Read Magic */
         fread(buffer4, 1, 4, classfile);
-        if (buffer4[0] != 0xCA || buffer4[1] != 0xFE || buffer4[2] != 0xBA || buffer4[3] != 0xBE) {     /*
-                                                                                                           printf("Class file has invalid magic! Read: %x %x %x %x\n", buffer4[0], buffer4[1], buffer4[2], buffer4[3]); */
-            return RaiseException(ExceptionUnknown, "LoadJavaClass",
-                                  __FILE__, __LINE__);
+        if (buffer4[0] != 0xCA || buffer4[1] != 0xFE || buffer4[2] != 0xBA || buffer4[3] != 0xBE) {
+#ifdef DEBUG
+            printf("Class file has invalid magic! Read: %x %x %x %x\n", buffer4[0], buffer4[1], buffer4[2], buffer4[3]);
+#endif
+            return false;
         }
 
         /* Read minor version */
@@ -69,7 +71,7 @@ bool load_class_file(FILE* classfile, Class *class)
 
         /* Allocate memory for constant pool */
         class->ConstantPool =
-            (struct CONSTANTPOOL *) xam_alloc(class->ConstantPoolNum *
+            (struct CONSTANTPOOL *) malloc(class->ConstantPoolNum *
                                               sizeof(struct CONSTANTPOOL));
 
         /* Read constants from pool */
@@ -86,7 +88,7 @@ bool load_class_file(FILE* classfile, Class *class)
                 {
                     /* Allocating memory for REF_INFO */
                     class->ConstantPool[n - 1].Data =
-                        xam_alloc(sizeof(struct CONSTANT_REF_INFO));
+                        malloc(sizeof(struct CONSTANT_REF_INFO));
 
                     /* Read class index */
                     fread(buffer2, 1, 2, classfile);
@@ -107,7 +109,7 @@ bool load_class_file(FILE* classfile, Class *class)
                 {
                     /* Allocating memory for CLASS_INFO */
                     class->ConstantPool[n - 1].Data =
-                        xam_alloc(sizeof(struct CONSTANT_CLASS_INFO));
+                        malloc(sizeof(struct CONSTANT_CLASS_INFO));
 
                     /* Read name index */
                     fread(buffer2, 1, 2, classfile);
@@ -127,7 +129,7 @@ BufferToShort(buffer2);
                 {
                     /* Allocating memory for REF_INFO */
                     class->ConstantPool[n - 1].Data =
-                        xam_alloc(sizeof(struct CONSTANT_REF_INFO));
+                        malloc(sizeof(struct CONSTANT_REF_INFO));
 
                     /* Read class index */
                     fread(buffer2, 1, 2, classfile);
@@ -150,7 +152,7 @@ BufferToShort(buffer2);
                 {
                     /* Allocating memory for REF_INFO */
                     class->ConstantPool[n - 1].Data =
-                        xam_alloc(sizeof(struct CONSTANT_REF_INFO));
+                        malloc(sizeof(struct CONSTANT_REF_INFO));
 
                     /* Read class index */
                     fread(buffer2, 1, 2, classfile);
@@ -173,7 +175,7 @@ BufferToShort(buffer2);
                 {
                     /* Allocating memory for STRING_INFO */
                     class->ConstantPool[n - 1].Data =
-                        xam_alloc(sizeof(struct CONSTANT_STRING_INFO));
+                        malloc(sizeof(struct CONSTANT_STRING_INFO));
 
                     /* Read string index */
                     fread(buffer2, 1, 2, classfile);
@@ -189,7 +191,7 @@ BufferToShort(buffer2);
             case CONSTANTPOOL_INTEGER:
                 {
                     class->ConstantPool[n - 1].Data =
-                        xam_alloc(sizeof(struct CONSTANT_INTEGER_INFO));
+                        malloc(sizeof(struct CONSTANT_INTEGER_INFO));
 
                     /* Read integer */
                     fread(buffer4, 1, 4, classfile);
@@ -248,7 +250,7 @@ BufferToInt(buffer4);
                 {
                     /* Allocating memory for NAMEANDTYPE_INFO */
                     class->ConstantPool[n - 1].Data =
-                        xam_alloc(sizeof(struct CONSTANT_NAMETYPE_INFO));
+                        malloc(sizeof(struct CONSTANT_NAMETYPE_INFO));
 
                     /* Read name index */
                     fread(buffer2, 1, 2, classfile);
@@ -284,7 +286,7 @@ BufferToShort(buffer2);
                     /* Allocating memory for string */
                     ((struct CONSTANT_UTF8_INFO *)
                      class->ConstantPool[n - 1].Data)->Text = (char *)
-                        xam_alloc(((struct CONSTANT_UTF8_INFO *) class->
+                        malloc(((struct CONSTANT_UTF8_INFO *) class->
                                    ConstantPool[n -
                                                 1].Data)->Length *
                                   sizeof(char) + 1);
@@ -351,7 +353,7 @@ BufferToShort(buffer2);
 
         /* Read interface indices */
         class->Interfaces =
-            (unsigned short *) xam_alloc(sizeof(unsigned short) *
+            (unsigned short *) malloc(sizeof(unsigned short) *
                                          class->InterfacesNum);
         for (n = 0; n < class->InterfacesNum; n++) {
             fread(buffer2, 1, 2, classfile);
@@ -364,7 +366,7 @@ BufferToShort(buffer2);
 
         /* Read fields */
         class->Fields =
-            (struct FIELD_INFO *) xam_alloc(sizeof(struct FIELD_INFO) *
+            (struct FIELD_INFO *) malloc(sizeof(struct FIELD_INFO) *
                                             class->FieldsNum);
         for (n = 0; n < class->FieldsNum; n++) {
             /* Read access flags */
@@ -385,7 +387,7 @@ BufferToShort(buffer2);
 
             /* Read attributes */
             class->Fields[n].Attributes = (struct ATTRIBUTE_INFO *)
-                xam_alloc(sizeof(struct ATTRIBUTE_INFO) *
+                malloc(sizeof(struct ATTRIBUTE_INFO) *
                           class->Fields[n].AttributesNum);
             for (m = 0; m < class->Fields[n].AttributesNum; m++) {
                 /* Read attribute name index */
@@ -400,7 +402,7 @@ BufferToShort(buffer2);
 
                 /* Allocate space for infos */
                 class->Fields[n].Attributes[m].Info =
-                    (unsigned char *) xam_alloc(class->
+                    (unsigned char *) malloc(class->
                                                 Fields[n].Attributes
                                                 [m].AttributeLength);
                 fread(class->Fields[n].Attributes[m].Info, 1,
@@ -418,7 +420,7 @@ BufferToShort(buffer2);
 
         /* Read attributes */
         class->Attributes = (struct ATTRIBUTE_INFO *)
-            xam_alloc(sizeof(struct ATTRIBUTE_INFO) *
+            malloc(sizeof(struct ATTRIBUTE_INFO) *
                       class->AttributesNum);
         for (m = 0; m < class->AttributesNum; m++) {
             /* Read attribute name index */
@@ -432,7 +434,7 @@ BufferToShort(buffer2);
 
             /* Allocate space for infos */
             class->Attributes[m].Info = (unsigned char *)
-                xam_alloc(sizeof(struct ATTRIBUTE_INFO) *
+                malloc(sizeof(struct ATTRIBUTE_INFO) *
                           class->Attributes[m].AttributeLength);
             fread(class->Attributes[m].Info, 1,
                    class->Attributes[m].AttributeLength, classfile);
@@ -441,14 +443,11 @@ BufferToShort(buffer2);
 #ifdef DEBUG
         printf("IO-Error: %u\n", ferror(classfile));
 #endif
-        return RaiseException(ExceptionIO, "LoadJavaClass", __FILE__,
-                              __LINE__);
+        return false;
     }
 
     if (!feof(classfile)) {
         printf("Class not wellformed: unused data at end of file!\n");
-       // fclose(classfile);
-       // return false;
     }
 
     fclose(classfile);
@@ -488,7 +487,7 @@ bool ReadAttributeInfo(struct ATTRIBUTE_INFO * attributeInfo,
 
     /* Allocate space for infos */
     attributeInfo->Info =
-        (unsigned char *) xam_alloc(sizeof(unsigned char) *
+        (unsigned char *) malloc(sizeof(unsigned char) *
                                     attributeInfo->AttributeLength);
 
     if (attributeInfo->Info == NULL) {
@@ -527,7 +526,7 @@ bool ReadMethodInfo(Class * vmclass, FILE* classfile,
 
     /* Read methods */
     vmclass->Methods =
-        (Method *) xam_alloc(sizeof(Method) *
+        (Method *) malloc(sizeof(Method) *
                                          vmclass->MethodsNum);
 
     if (vmclass->Methods == NULL) {
@@ -555,7 +554,7 @@ bool ReadMethodInfo(Class * vmclass, FILE* classfile,
 
         /* Read attributes */
         vmclass->Methods[n].Attributes = (struct ATTRIBUTE_INFO *)
-            xam_alloc(sizeof(struct ATTRIBUTE_INFO) *
+            malloc(sizeof(struct ATTRIBUTE_INFO) *
                       vmclass->Methods[n].AttributesNum);
 
         for (m = 0; m < vmclass->Methods[n].AttributesNum; m++) {
@@ -570,7 +569,7 @@ bool ReadMethodInfo(Class * vmclass, FILE* classfile,
 
                 vmclass->Methods[n].CodeInfo =
                     (struct ATTRIBUTE_INFO_CODE *)
-                    xam_alloc(sizeof(struct ATTRIBUTE_INFO_CODE));
+                    malloc(sizeof(struct ATTRIBUTE_INFO_CODE));
                 vmclass->Methods[n].CodeInfo->AttributeNameIndex =
                     attributeCodeIndex;
 
@@ -579,16 +578,16 @@ bool ReadMethodInfo(Class * vmclass, FILE* classfile,
                     = vmclass->Methods[n].Attributes[m].AttributeLength;
 
                 /* Read Max Stack (2 Byte) */
-                vmclass->Methods[n].StackFrameRef.operandStackSize =
+                vmclass->Methods[n].operandStackSize =
                     BufferToShort(vmclass->Methods[n].Attributes[m].Info +
                                   0);
 
                 /* Allocate operand stack */
                 /*vmclass->Methods[n].StackFrameRef.OperandStack
-                   = (struct OperandStackFrame*)xam_alloc(sizeof(struct OperandStackFrame) * vmclass->Methods[n].StackFrameRef.OperandStackSize);
+                   = (struct OperandStackFrame*)malloc(sizeof(struct OperandStackFrame) * vmclass->Methods[n].StackFrameRef.OperandStackSize);
                  */
                 /* Read Max Locals (2 Byte) */
-                vmclass->Methods[n].StackFrameRef.localVarsLen
+                vmclass->Methods[n].localVarsLen
                     =
                     BufferToShort(vmclass->Methods[n].Attributes[m].Info +
                                   2);
@@ -608,7 +607,7 @@ bool ReadMethodInfo(Class * vmclass, FILE* classfile,
 
                 /* Code */
                 vmclass->Methods[n].CodeInfo->Code =
-                    xam_alloc(sizeof(unsigned char) *
+                    malloc(sizeof(unsigned char) *
                               vmclass->Methods[n].CodeInfo->CodeLength);
                 for (i = 0;
                      i <
@@ -646,7 +645,7 @@ bool ReadMethodInfo(Class * vmclass, FILE* classfile,
                 /* Attribute Infos */
                 vmclass->Methods[n].CodeInfo->Attributes
                     = (struct ATTRIBUTE_INFO *)
-                    xam_alloc(sizeof(struct ATTRIBUTE_INFO) *
+                    malloc(sizeof(struct ATTRIBUTE_INFO) *
                               vmclass->Methods[n].CodeInfo->AttributesNum);
             }
         }
@@ -664,7 +663,7 @@ FILE* find_class_file(const char* class)
 
     // Argument class is the Java class name with slashes as separator
     // instead of points, e.g. "java/lang/System".
-    char* class_file = xam_alloc(sizeof(char) * (strlen(class) + 7));
+    char* class_file = malloc(sizeof(char) * (strlen(class) + 7));
     strcpy(class_file, class);
 
     // At first we add ".class"
@@ -677,13 +676,14 @@ FILE* find_class_file(const char* class)
     printf("Trying '%s'\n", class_file);
 #endif
     if (file != NULL) {
-        xam_free(class_file);
+        free(class_file);
         return file;
     }
 
-    char* class_file_path = xam_alloc(sizeof(char) *
-        (strlen(class_file) + strlen(VM.LibraryPath) + 1));
-    strcpy(class_file_path, VM.LibraryPath);
+    // FIXME
+    char* class_file_path = malloc(sizeof(char) *
+        (strlen(class_file) + /*strlen(VM.LibraryPath) +*/ 1));
+    //strcpy(class_file_path, VM.LibraryPath);
     strncat(class_file_path, class_file, strlen(class_file));
     file = fopen(class_file_path, "rb");
 #ifdef DEBUG
@@ -691,6 +691,6 @@ FILE* find_class_file(const char* class)
 #endif    
 
     // If we found it, we return the FILE handle to it
-    xam_free(class_file);
+    free(class_file);
     return file;
 }

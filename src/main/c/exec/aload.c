@@ -34,7 +34,7 @@ void do_ALOAD(Thread *thread)
 void do_ALOADi(Thread *thread, uint8_t localVarIndex)
 {
     /*Stackframe* stackframe = (Stackframe*)thread->methodStack.top;
-       struct varframe_t* localVar = xam_alloc(sizeof(struct varframe_t));
+       Varframe* localVar = malloc(sizeof(Varframe));
 
        #ifdef DEBUG
        printf("\tALOAD_%u\n", localVarIndex);
@@ -47,7 +47,7 @@ void do_ALOADi(Thread *thread, uint8_t localVarIndex)
 //      *localVar = stackframe->localVars[localVarIndex];
 
     /* Push value to operand stack */
-//      stack_push(&(thread->operandStack), localVar);
+//      Stack_push(&(thread->operandStack), localVar);
 }
 
 void do_IALOAD(Thread *thread)

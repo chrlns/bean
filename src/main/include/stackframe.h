@@ -20,14 +20,14 @@
 
 #include <classfile.h>
 #include <stack.h>
-//#include <vm.h>
+#include <types.h>
 
 /* This stackframe is attached to every method invocation. */
 typedef struct Stackframe
 {
     /* Local variable array */
-    struct varframe_t* localVars;
-    int16_t            localVarsLen;
+    Varframe* localVars;
+    int16_t   localVarsLen;
 
     /* Operand stack */
     Stack   operandStack;

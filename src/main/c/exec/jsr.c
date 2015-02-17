@@ -21,8 +21,8 @@
 
 void JSR(Thread *thread, uint32_t offset)
 {
-    struct varframe_t *frame =
-        (struct varframe_t *) xam_alloc(sizeof(struct varframe_t));
+    Varframe *frame =
+        (Varframe *) malloc(sizeof(Varframe));
 
     /* At the beginning of this function the thread->InstructionPointer
        points to the last branchbyte, so we have to correct this... */

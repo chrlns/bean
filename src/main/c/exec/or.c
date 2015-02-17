@@ -27,14 +27,14 @@ void do_IOR(Thread *thread)
     int result;
 
     /* Pop two int values from operand stack */
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
 
     /* Perform bitwise OR operation */
     result = (*value1) | (*value2);
 
     /* Push result onto the operand stack */
-    stack_push(&(current_frame(thread)->operandStack), &result);
+    Stack_push(&(current_frame(thread)->operandStack), &result);
 }
 
 void do_LOR(Thread *thread)
@@ -46,12 +46,12 @@ void do_LOR(Thread *thread)
     int64_t result;
 
     /* Pop two long values from operand stack */
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
-    stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value1);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) &value2);
 
     /* Perform bitwise exclusive OR operation */
     result = (*value1) | (*value2);
 
     /* Push result onto the operand stack */
-    stack_push(&(current_frame(thread)->operandStack), &result);
+    Stack_push(&(current_frame(thread)->operandStack), &result);
 }

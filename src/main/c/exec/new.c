@@ -15,8 +15,8 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
-#include <bvm_mem.h>
 
 /* Create new object */
 void do_NEW(Thread *thread)
@@ -32,6 +32,6 @@ void do_NEW(Thread *thread)
 #ifdef DEBUG
     printf("\tClass name = %s\n", class_name->Text);
 #endif
-    struct vmobject_t* obj = (struct vmobject_t *)xam_alloc(sizeof(struct vmobject_t));
-    stack_push(&(frame->operandStack), obj);
+    struct vmobject_t* obj = (struct vmobject_t *)malloc(sizeof(struct vmobject_t));
+    Stack_push(&(frame->operandStack), obj);
 }

@@ -15,8 +15,8 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
-#include <bvm_mem.h>
 
 /* Enter monitor for object */
 void do_MONITORENTER(Thread *thread)
@@ -25,11 +25,11 @@ void do_MONITORENTER(Thread *thread)
 
     struct MONITOR *monitor;
     struct MONITOR *monitorTmp;
-    struct varframe_t *obj = (struct varframe_t *)
-        xam_alloc(sizeof(struct varframe_t));
+    Varframe *obj = (Varframe *)
+        malloc(sizeof(Varframe));
 
     /* Get object reference from operand stack */
-    stack_pop(&(current_frame(thread)->operandStack), (void **) obj);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) obj);
 
     /* Check if object reference is NULL */
     if (obj->data.ptr == NULL) {
@@ -46,7 +46,7 @@ void do_MONITORENTER(Thread *thread)
                                                            and we add a new one... */
                     monitorTmp = monitor->Next; /* Store reference to next element */
                     monitor->Next = (struct MONITOR *)
-                        xam_alloc(sizeof(struct MONITOR));
+                        malloc(sizeof(struct MONITOR));
                     monitor = monitor->Next;
 
                     /* Edit the new monitor */
@@ -71,7 +71,7 @@ void do_MONITORENTER(Thread *thread)
            - List loop runs to its end */
         if (monitor == NULL) {
             /* No monitor for the object was found, so we create one... */
-            monitor = (struct MONITOR *) xam_alloc(sizeof(struct MONITOR));
+            monitor = (struct MONITOR *) malloc(sizeof(struct MONITOR));
             monitor->Next = NULL;
             monitor->ThreadRef = thread;
             monitor->ObjectRef = obj->data.ptr; /* is pointer correct here? */
@@ -90,13 +90,13 @@ void do_MONITOREXIT(Thread *thread)
 {
     struct MONITOR *monitor;
     struct MONITOR *monitorTmp;
-    struct varframe_t *obj = (struct varframe_t *)
-        xam_alloc(sizeof(struct varframe_t));
+    Varframe *obj = (Varframe *)
+        malloc(sizeof(Varframe));
 
     dbgmsg("MONITOREXIT");
 
     /* Get object reference from operand stack */
-    stack_pop(&(current_frame(thread)->operandStack), (void **) obj);
+    Stack_pop(&(current_frame(thread)->operandStack), (void **) obj);
 
     /* Check if object reference is NULL */
     if (obj->data.ptr == NULL) {        /* is pointer correct here? */
@@ -114,7 +114,7 @@ void do_MONITOREXIT(Thread *thread)
                 } else {
                     monitorTmp->Next = monitor->Next;
                 }
-                xam_free(monitor);
+                free(monitor);
 
                 current_frame(thread)->instPtr++;
                 return;

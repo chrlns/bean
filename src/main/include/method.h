@@ -30,6 +30,7 @@ typedef struct Method {
     struct ATTRIBUTE_INFO* Attributes;
     struct ATTRIBUTE_INFO_CODE* CodeInfo; /* Pointer to the Code Attribute */
     uint16_t operandStackSize;
+    uint16_t localVarsLen;
 } Method;
 
 #endif

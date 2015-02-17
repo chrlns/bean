@@ -16,6 +16,8 @@
  */
 
 #include <class.h>
+#include <debug.h>
+#include <thread_fn.h>
 #include <vm.h>
 
 /*

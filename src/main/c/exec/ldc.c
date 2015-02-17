@@ -15,8 +15,8 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
-#include <bvm_mem.h>
 
 /* Pushs an item from the runtime constant pool onto the operand stack. */
 void do_LDC(Thread *thread)
@@ -24,8 +24,7 @@ void do_LDC(Thread *thread)
     dbgmsg("LDC");
 
     struct CONSTANTPOOL *item = NULL;
-    struct varframe_t *value =
-        (struct varframe_t *) xam_alloc(sizeof(struct varframe_t));
+    Varframe *value = (Varframe *)malloc(sizeof(Varframe));
 
     current_frame(thread)->instPtr++;
     item =
@@ -33,25 +32,25 @@ void do_LDC(Thread *thread)
         ConstantPool[*current_frame(thread)->instPtr - 1];
 
     switch (item->Tag) {
-    case CONSTANTPOOL_INTEGER:
+        case CONSTANTPOOL_INTEGER:
         {
             /*value->Value.SignedInt = (int32_t)((struct CONSTANT_INTEGER_INFO*)item->Data)->Value; */
             break;
         }
-    case CONSTANTPOOL_FLOAT:
+        case CONSTANTPOOL_FLOAT:
         {
             /*value->Value.Float = (float)((struct CONSTANT_FLOAT_INFO*)item->Data)->Value; */
             break;
         }
-    case CONSTANTPOOL_STRING:
+        case CONSTANTPOOL_STRING:
         {
             /*value->Value.pointer = item->Data; *//* Pointer to a string info. */
             break;
-        }
+            }
     }
 
     /* Push value onto the stack */
-    stack_push(&(current_frame(thread)->operandStack), value);
+    Stack_push(&(current_frame(thread)->operandStack), value);
 }
 
 void do_LDC_W(Thread *thread)

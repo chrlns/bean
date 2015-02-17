@@ -15,8 +15,10 @@
  *  limitations under the License.
  */
 
+#include <stdlib.h>
+
+#include <debug.h>
 #include <vm.h>
-#include <bvm_mem.h>
 
 /* Integer division */
 void do_IDIV(Thread *thread)
@@ -25,15 +27,15 @@ void do_IDIV(Thread *thread)
 
     int *value1;
     int *value2;
-    int *result = xam_alloc(sizeof(int));
+    int *result = malloc(sizeof(int));
     Stackframe *frame = current_frame(thread);
 
-    stack_pop(&(frame->operandStack), (void **) &value2);
-    stack_pop(&(frame->operandStack), (void **) &value1);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value1);
 
     *result = *value1 / *value2;
 
-    stack_push(&(frame->operandStack), result);
+    Stack_push(&(frame->operandStack), result);
 }
 
 /* Long integer division */
@@ -43,15 +45,15 @@ void do_LDIV(Thread *thread)
 
     int64_t *value1;
     int64_t *value2;
-    int64_t *result = xam_alloc(sizeof(int64_t));
+    int64_t *result = malloc(sizeof(int64_t));
     Stackframe *frame = current_frame(thread);
 
-    stack_pop(&(frame->operandStack), (void **) &value2);
-    stack_pop(&(frame->operandStack), (void **) &value1);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value1);
 
     *result = *value1 / *value2;
 
-    stack_push(&(frame->operandStack), result);
+    Stack_push(&(frame->operandStack), result);
 }
 
 /* Float division */
@@ -61,15 +63,15 @@ void do_FDIV(Thread *thread)
 
     float *value1;
     float *value2;
-    float *result = xam_alloc(sizeof(float));
+    float *result = malloc(sizeof(float));
     Stackframe *frame = current_frame(thread);
 
-    stack_pop(&(frame->operandStack), (void **) &value2);
-    stack_pop(&(frame->operandStack), (void **) &value1);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value1);
 
     *result = *value1 / *value2;
 
-    stack_push(&(frame->operandStack), result);
+    Stack_push(&(frame->operandStack), result);
 }
 
 /* Double division */
@@ -79,13 +81,13 @@ void do_DDIV(Thread *thread)
 
     double *value1;
     double *value2;
-    double *result = xam_alloc(sizeof(double));
+    double *result = malloc(sizeof(double));
     Stackframe *frame = current_frame(thread);
 
-    stack_pop(&(frame->operandStack), (void **) &value2);
-    stack_pop(&(frame->operandStack), (void **) &value1);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value1);
 
     *result = *value1 / *value2;
 
-    stack_push(&(frame->operandStack), result);
+    Stack_push(&(frame->operandStack), result);
 }

@@ -18,6 +18,7 @@
 #include <stdlib.h>
 
 #include <debug.h>
+#include <linker.h>
 #include <vm.h>
 
 void do_INVOKEINTERFACE(Thread *thread)
@@ -67,13 +68,13 @@ void do_INVOKESTATIC(Thread *thread)
     /* Operand stack contains nargs arguments for the called method
      * which form the contents of the new_frame's local var array */
     new_frame->localVarsLen = nargs;
-    new_frame->localVars = xam_alloc(sizeof(struct varframe_t) * nargs);
-    struct varframe_t *var;
+    new_frame->localVars = malloc(sizeof(Varframe) * nargs);
+    Varframe *var;
     for (int n = 0; n < nargs; n++) {
         // TODO: Add handling for long and double
-        stack_pop(&(cur_frame->operandStack), (void **) &var);
+        Stack_pop(&(cur_frame->operandStack), (void **) &var);
     }
 
     /* Push the new frame onto the frame stack */
-    stack_push(&(thread->frameStack), (void *) new_frame);
+    Stack_push(&(thread->frameStack), (void *) new_frame);
 }

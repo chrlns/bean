@@ -27,7 +27,7 @@ void do_ISHL(Thread *thread)
     Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (int *) frame->operandStack.top->data;
 
     /* Shifting n bits left, where n are the lower 5bits of value2 */
@@ -35,7 +35,7 @@ void do_ISHL(Thread *thread)
 
     /* As we're modifying the stack top directly, we do not need to push
      * the result back. But we should free value2. */
-    xam_free(value2);
+    free(value2);
 }
 
 void do_LSHL(Thread *thread)
@@ -47,7 +47,7 @@ void do_LSHL(Thread *thread)
     Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (int64_t *) frame->operandStack.top->data;
 
     /* Shifting n bits left, where n are the lower 6bits of value2 */
@@ -55,7 +55,7 @@ void do_LSHL(Thread *thread)
 
     /* As we're modifying the stack top directly, we do not need to push
      * the result back. But we should free value2. */
-    xam_free(value2);
+    free(value2);
 }
 
 void do_ISHR(Thread *thread)
@@ -67,7 +67,7 @@ void do_ISHR(Thread *thread)
     Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (int *) frame->operandStack.top->data;
 
     /* Shifting n bits left, where n are the lower 5bits of value2 */
@@ -75,7 +75,7 @@ void do_ISHR(Thread *thread)
 
     /* As we're modifying the stack top directly, we do not need to push
      * the result back. But we should free value2. */
-    xam_free(value2);
+    free(value2);
 }
 
 void do_LSHR(Thread *thread)
@@ -87,7 +87,7 @@ void do_LSHR(Thread *thread)
     Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (int64_t *) frame->operandStack.top->data;
 
     /* Shifting n bits left, where n are the lower 6bits of value2 */
@@ -95,7 +95,7 @@ void do_LSHR(Thread *thread)
 
     /* As we're modifying the stack top directly, we do not need to push
      * the result back. But we should free value2. */
-    xam_free(value2);
+    free(value2);
 }
 
 /* Logical shift right */
@@ -108,7 +108,7 @@ void do_IUSHR(Thread *thread)
     Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (int *) frame->operandStack.top->data;
 
     if (*value1 > 0) {
@@ -119,7 +119,7 @@ void do_IUSHR(Thread *thread)
 
     /* As we're modifying the stack top directly, we do not need to push
      * the result back. But we should free value2. */
-    xam_free(value2);
+    free(value2);
 }
 
 /* Logical shift right */
@@ -132,7 +132,7 @@ void do_LUSHR(Thread *thread)
     Stackframe *frame = current_frame(thread);
 
     /* Retrieving values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
     value1 = (int64_t *) frame->operandStack.top->data;
 
     if (*value1 > 0) {
@@ -143,5 +143,5 @@ void do_LUSHR(Thread *thread)
 
     /* As we're modifying the stack top directly, we do not need to push
      * the result back. But we should free value2. */
-    xam_free(value2);
+    free(value2);
 }

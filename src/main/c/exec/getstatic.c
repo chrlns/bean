@@ -15,11 +15,12 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
+#include <linker.h>
 #include <vm.h>
 
 /* Get static field from class */
-void do_GETSTATIC(Thread *thread)
-{
+void do_GETSTATIC(Thread *thread) {
     struct CONSTANT_CLASS_INFO *classInfo = NULL;
     struct CONSTANTPOOL *constant = NULL;
     struct CONSTANT_NAMETYPE_INFO *nameTypeInfo = NULL;
@@ -36,36 +37,36 @@ void do_GETSTATIC(Thread *thread)
 
     dbgmsg("GETSTATIC");
 
-    constant = (struct CONSTANTPOOL *)&(frame->constants[operand - 1]);
+    constant = (struct CONSTANTPOOL *) &(frame->constants[operand - 1]);
 
     assert(constant != NULL);
     assert(constant->Tag == CONSTANTPOOL_FIELDREF);
     assert(constant->Data != NULL);
 
-    refInfo   = (struct CONSTANT_REF_INFO *)constant->Data;
+    refInfo = (struct CONSTANT_REF_INFO *) constant->Data;
     classInfo = (struct CONSTANT_CLASS_INFO *)
-        frame->constants[refInfo->ClassIndex - 1].Data;
+            frame->constants[refInfo->ClassIndex - 1].Data;
     nameTypeInfo = (struct CONSTANT_NAMETYPE_INFO *)
-        frame->constants[refInfo->NameAndTypeIndex - 1].Data;
+            frame->constants[refInfo->NameAndTypeIndex - 1].Data;
 
-    className = (struct CONSTANT_UTF8_INFO *)frame->constants[classInfo->NameIndex - 1].Data;
+    className = (struct CONSTANT_UTF8_INFO *) frame->constants[classInfo->NameIndex - 1].Data;
 #ifdef DEBUG
-	printf("\tClass name = %s\n", className->Text);
+    printf("\tClass name = %s\n", className->Text);
 #endif
 
-    typeName = (struct CONSTANT_UTF8_INFO *)frame->constants[nameTypeInfo->NameIndex - 1].Data;
+    typeName = (struct CONSTANT_UTF8_INFO *) frame->constants[nameTypeInfo->NameIndex - 1].Data;
 #ifdef DEBUG
-	printf("\tField name = %s\n", typeName->Text);
+    printf("\tField name = %s\n", typeName->Text);
 #endif
 
-    descName = (struct CONSTANT_UTF8_INFO *)frame->constants[nameTypeInfo->DescriptorIndex - 1].Data;
+    descName = (struct CONSTANT_UTF8_INFO *) frame->constants[nameTypeInfo->DescriptorIndex - 1].Data;
 #ifdef DEBUG
-	printf("\tField descriptor = %s\n", descName->Text);
+    printf("\tField descriptor = %s\n", descName->Text);
 #endif
 
-	// We have to make sure that the given class and field type are
-	// already loaded. If not they must be loaded now.
-    Class* class = FindClassByName(className->Text);
+    // We have to make sure that the given class and field type are
+    // already loaded. If not they must be loaded now.
+    Class* class = find_class_by_name(className->Text);
 
-	// Push the scalar type value or object reference onto the stack
+    // Push the scalar type value or object reference onto the stack
 }

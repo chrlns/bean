@@ -15,11 +15,11 @@
  *  limitations under the License.
  */
 
-#ifndef _XAM_LINK_H_
-#define _XAM_LINK_H_
+#ifndef _LINKER_H_
+#define _LINKER_H_
 
-#include "bvm_class.h"
-#include "bvm_process.h"
+#include <class.h>
+#include <thread.h>
 
 struct LINKFLAGS
 {
@@ -29,5 +29,7 @@ struct LINKFLAGS
 
 struct method_t* dlink(Thread*, unsigned short, struct LINKFLAGS*);
 struct method_t* find_method_name(Class*, const char*);
+
+Class* find_class_by_name(char* qualifiedName);
 
 #endif

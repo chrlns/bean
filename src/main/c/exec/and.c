@@ -27,14 +27,14 @@ void do_IAND(Thread *thread)
     Stackframe *frame = current_frame(thread);
 
     /* Pop two int values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value1);
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value1);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
 
     /* Perform bitwise AND operation */
     int result = (*value1) & (*value2);
 
     /* Push result onto the operand stack */
-    stack_push(&(frame->operandStack), &result);
+    Stack_push(&(frame->operandStack), &result);
 }
 
 void do_LAND(Thread *thread)
@@ -45,12 +45,12 @@ void do_LAND(Thread *thread)
     Stackframe *frame = current_frame(thread);
 
     /* Pop two long values from operand stack */
-    stack_pop(&(frame->operandStack), (void **) &value1);
-    stack_pop(&(frame->operandStack), (void **) &value2);
+    Stack_pop(&(frame->operandStack), (void **) &value1);
+    Stack_pop(&(frame->operandStack), (void **) &value2);
 
     /* Perform bitwise exclusive OR operation */
     int64_t result = (*value1) & (*value2);
 
     /* Push result onto the operand stack */
-    stack_push(&(frame->operandStack), &result);
+    Stack_push(&(frame->operandStack), &result);
 }

@@ -27,10 +27,10 @@ void do_SWAP(Thread *thread)
     Stackframe *frame = current_frame(thread);
 
     /* Pop two values from operand stack */
-    stack_pop(&(frame->operandStack), &value0);
-    stack_pop(&(frame->operandStack), &value1);
+    Stack_pop(&(frame->operandStack), &value0);
+    Stack_pop(&(frame->operandStack), &value1);
 
     /* Push the two values swapped to the stack again */
-    stack_push(&(frame->operandStack), value0);
-    stack_push(&(frame->operandStack), value1);
+    Stack_push(&(frame->operandStack), value0);
+    Stack_push(&(frame->operandStack), value1);
 }

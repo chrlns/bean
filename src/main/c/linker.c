@@ -15,11 +15,8 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
-#include <bvm_class.h>
-#include <bvm_io.h>
-#include <bvm_link.h>
-#include <bvm_mem.h>
 
 bool IsNative(Thread * thread, unsigned short methodIndex,
               struct LINKFLAGS * flags);
@@ -28,9 +25,9 @@ bool IsNative(Thread * thread, unsigned short methodIndex,
  * Finds, loads and initializes a new class specified by the
  * full qualified name.
  */
-Class *FindClassByName(char* qualifiedName)
+Class* find_class_by_name(char* qualifiedName)
 {
-    IOIdentifier fileID;
+    FILE* fileID;
     Class *class = NULL;
     int n;
 
@@ -56,7 +53,7 @@ Class *FindClassByName(char* qualifiedName)
                                                              *) *
                                                       VM.LocalClassesNum);
 
-    class = (Class *) xam_alloc(sizeof(Class));
+    class = (Class *) malloc(sizeof(Class));
     VM.LocalClasses[VM.LocalClassesNum - 1] = class;
 
     if (load_class_file(class_file, class) == false) {
@@ -96,7 +93,7 @@ struct method_t* find_method_name(Class *vmclass,
             (qualifiedName,
              ((struct CONSTANT_UTF8_INFO *)
               vmclass->ConstantPool[nameIndex].Data)->Text) == 0) {
-            method = (struct method_t*)xam_alloc(sizeof(struct method_t));
+            method = (struct method_t*)malloc(sizeof(struct method_t));
             method->method_info = &(vmclass->Methods[n]);
             method->class = vmclass;
 
@@ -123,7 +120,7 @@ struct method_t* find_method_nameidx(Class *vmclass,
 
     for (n = 0; n < vmclass->MethodsNum; n++) {
         if (vmclass->Methods[n].NameIndex == methodNameIndex + 1) {     /* +1 ? */
-            method = (struct method_t *) xam_alloc(sizeof(struct method_t));
+            method = (struct method_t *) malloc(sizeof(struct method_t));
             method->method_info = &(vmclass->Methods[n]);
             method->class = vmclass;
             return method;
@@ -195,14 +192,14 @@ struct method_t *find_method_idx(Class *vmclass,
 //          methodConstructor = FindMethodByName(methodClass, "<init>");
 
             /* Push StackFrames */
-//          stack_push(&thread->methodStack, clone_stackframe(&methodInvoked->Method->StackFrameRef));
-//          stack_push(&thread->methodStack, clone_stackframe(&methodConstructor->Method->StackFrameRef));
+//          Stack_push(&thread->methodStack, clone_stackframe(&methodInvoked->Method->StackFrameRef));
+//          Stack_push(&thread->methodStack, clone_stackframe(&methodConstructor->Method->StackFrameRef));
 
             /* The constructor must return to the invoked method, so we edit the return values... */
 //          invokeStackFrame->method                    = methodInvoked;
 //          invokeStackFrame->instruction_ptr = methodInvoked->Method->CodeInfo->Code;
             /* InvokeStackPush */
-//          stack_push(&thread->invokeStack, invokeStackFrame);
+//          Stack_push(&thread->invokeStack, invokeStackFrame);
 
 //          return methodConstructor;
             dbgmsg("Not implemented");

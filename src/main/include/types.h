@@ -18,6 +18,7 @@
 #ifndef _TYPES_H_
 #define _TYPES_H_
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #define JAVATYPE_REFERENCE  0x00
@@ -26,27 +27,24 @@
 #define JAVATYPE_INT        0x03
 #define JAVATYPE_BYTE       0x04
 
-typedef unsigned char   bool;
-typedef int32_t           Boolean;    /* Java Type Boolean */
-typedef char   StringUTF8;
-typedef short  StringUTF16;
+typedef int32_t Boolean; /* Java Type Boolean */
+typedef char StringUTF8;
+typedef short StringUTF16;
 
-union __varframe_data
-{
-	Boolean BooleanValue;
-	uint8_t   ByteValue;
-	float FloatValue;
-	int16_t   SignedInt16Value;
-	int32_t   SignedInt32Value;
-	uint32_t  UnsignedInt32Value;
-	void* ptr;
+union __varframe_data {
+    Boolean BooleanValue;
+    uint8_t ByteValue;
+    float FloatValue;
+    int16_t SignedInt16Value;
+    int32_t SignedInt32Value;
+    uint32_t UnsignedInt32Value;
+    void* ptr;
 };
 
 /* Frame for references on the operand stack frame */
-typedef struct VarFrame
-{
-	uint8_t type;
-	union __varframe_data data;
-} VarFrame;
+typedef struct Varframe {
+    uint8_t type;
+    union __varframe_data data;
+} Varframe;
 
 #endif
