@@ -37,6 +37,14 @@ Class* Class_new()
     return class;
 }
 
+Classloader* Classloader_new() {
+    return (Classloader*)malloc(sizeof(Classloader));
+}
+
+void Classloader_destroy(Classloader* ptr) {
+    free(ptr);
+}
+
 bool load_class_file(FILE* classfile, Class *class)
 {
     short n, m;

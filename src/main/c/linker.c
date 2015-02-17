@@ -23,7 +23,9 @@
 extern VM* vm;
 
 bool IsNative(Thread * thread, unsigned short methodIndex,
-              struct LINKFLAGS * flags);
+              struct LINKFLAGS * flags) {
+    return false; // FIXME
+}
 
 /**
  * Finds, loads and initializes a new class specified by the

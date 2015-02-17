@@ -31,6 +31,7 @@
 #define bswp16(x) (x)
 #define bswp32(x) (x)
 #define bswp64(x) (x)
+
 #else
 #error "Endianess not defined!"
 #endif

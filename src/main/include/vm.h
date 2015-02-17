@@ -80,13 +80,8 @@ typedef struct VM {
                                           be called. */
 } VM;
 
-extern unsigned int (*BufferToInt)(unsigned char[4]);
-extern unsigned short (*BufferToShort)(unsigned char[2]);
-
-unsigned int BufferToInt_LittleEndian(unsigned char[4]);
-unsigned int BufferToInt_BigEndian(unsigned char[4]);
-unsigned short BufferToShort_LittleEndian(unsigned char[2]);
-unsigned short BufferToShort_BigEndian(unsigned char[2]);
+unsigned int BufferToInt(unsigned char[4]);
+unsigned short BufferToShort(unsigned char[2]);
 
 char* compose_path(char* className, char* basePath);
 

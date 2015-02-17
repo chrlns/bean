@@ -17,8 +17,9 @@
 
 #include <vm.h>
 
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 /* Works only for reading bigendian and saving in littleendian */
-unsigned int BufferToInt_LittleEndian(unsigned char buffer[4])
+unsigned int BufferToInt(unsigned char buffer[4])
 {
     register unsigned int var = 0;
 
@@ -32,9 +33,11 @@ unsigned int BufferToInt_LittleEndian(unsigned char buffer[4])
 
     return var;
 }
+#endif
 
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 /* Works only for reading bigendian and saving in bigendian */
-unsigned int BufferToInt_BigEndian(unsigned char buffer[4])
+unsigned int BufferToInt(unsigned char buffer[4])
 {
     register unsigned int var = 0;
 
@@ -48,9 +51,11 @@ unsigned int BufferToInt_BigEndian(unsigned char buffer[4])
 
     return var;
 }
+#endif
 
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 /* Works only for reading bigendian (Java) and saving in littleendian */
-unsigned short BufferToShort_LittleEndian(unsigned char buffer[2])
+unsigned short BufferToShort(unsigned char buffer[2])
 {
     register unsigned short var = 0;
 
@@ -60,9 +65,11 @@ unsigned short BufferToShort_LittleEndian(unsigned char buffer[2])
 
     return var;
 }
+#endif
 
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 /* Works only for reading bigendian (Java) and saving in bigendian */
-unsigned short BufferToShort_BigEndian(unsigned char buffer[2])
+unsigned short BufferToShort(unsigned char buffer[2])
 {
     register unsigned short var = 0;
 
@@ -72,6 +79,7 @@ unsigned short BufferToShort_BigEndian(unsigned char buffer[2])
 
     return var;
 }
+#endif
 
 /*
  * Creates a complete system path using a classname (without extension) and the
