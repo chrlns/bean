@@ -17,6 +17,7 @@
 
 #include <classloader.h>
 #include <debug.h>
+#include <linker.h>
 #include <vm.h>
 
 extern VM* vm;
@@ -62,11 +63,9 @@ Class *FindClassByNameIndex(Class *localClass,
 
 /* This method searches in the local constant pool for a method and returns the index
      of the method in the MethodLookupTable. */
-Method* find_method_name(Class *vmclass,
-                                const char *qualifiedName)
+Method* find_method_name(Class *vmclass, const char *qualifiedName)
 {
     unsigned short n, nameIndex;
-    Method* method;
 
 #ifdef DEBUG
     printf("Link: finding method %s...", qualifiedName);
@@ -78,41 +77,21 @@ Method* find_method_name(Class *vmclass,
 
     for (n = 0; n < vmclass->MethodsNum; n++) {
         nameIndex = vmclass->Methods[n].NameIndex - 1;  /* Constant Pool index starts with 1, so we must subtract one */
-        if (strcmp
-            (qualifiedName,
-             ((struct CONSTANT_UTF8_INFO *)
-              vmclass->ConstantPool[nameIndex].Data)->Text) == 0) {
-            method = (Method*)malloc(sizeof(Method));
-            method->method_info = &(vmclass->Methods[n]);
-            method->class = vmclass;
-
-#ifdef DEBUG
-            printf("Found!\n");
-#endif
-
-            return method;
+        if (strcmp(qualifiedName, ((struct CONSTANT_UTF8_INFO *)vmclass->ConstantPool[nameIndex].Data)->Text) == 0) {
+            dbgmsg("Found method.");
+            return &(vmclass->Methods[n]);
         }
     }
 
-#ifdef DEBUG
-    printf("NOT found!\n");
-#endif
-
+    dbgmsg("Method not found!");
     return NULL;
 }
 
-Method* find_method_nameidx(Class *vmclass,
-                                   short methodNameIndex)
+Method* find_method_nameidx(Class *vmclass, short methodNameIndex)
 {
-    unsigned short n;
-    Method* method;
-
-    for (n = 0; n < vmclass->MethodsNum; n++) {
+    for (uint16_t n = 0; n < vmclass->MethodsNum; n++) {
         if (vmclass->Methods[n].NameIndex == methodNameIndex + 1) {     /* +1 ? */
-            method = (Method *) malloc(sizeof(Method));
-            method->method_info = &(vmclass->Methods[n]);
-            method->class = vmclass;
-            return method;
+            return &(vmclass->Methods[n]);
         }
     }
 
@@ -167,7 +146,7 @@ Method *find_method_idx(Class *vmclass,
     if (classIndex + 1 == vmclass->ThisClassIndex) {
         return find_method_nameidx(vmclass, methodNameIndex);
     } else {
-        methodClass = FindClassByName(className);
+        methodClass = find_class_by_name(className);
         methodInvoked = find_method_name(methodClass, methodName);      /* Search for method to be invoked */
 
         if (methodInvoked == NULL) {

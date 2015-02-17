@@ -15,7 +15,7 @@
  *  limitations under the License.
  */
 
-#include <debug.hg>
+#include <debug.h>
 #include <vm.h>
 
 /* Extend local variables index by additional bytes

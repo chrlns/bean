@@ -16,24 +16,30 @@
  */
 
 #include <debug.h>
+#include <linker.h>
+#include <stack.h>
+#include <stackframe.h>
 #include <thread.h>
+#include <thread_fn.h>
 #include <vm.h>
+
+extern VM* vm;
 
 int init_thread(Thread *thread)
 {
-    thread->Priority = THREAD_PRIORITY_NORMAL;
-    Stack_init(&(thread->frameStack), 32); // FIXME What's the appropriate size?
+    thread->Priority   = THREAD_PRIORITY_NORMAL;
+    thread->frameStack = Stack_new(32); // FIXME What's the appropriate size?
     return true;
 }
 
-void stackframe_init(
+void Stackframe_init(
     Stackframe *frame,
     Method* method,
     struct CONSTANTPOOL* constants)
 {
     frame->constants = constants;
     frame->method    = method;
-    frame->instPtr   = method->method_info->CodeInfo->Code;
+    frame->instPtr   = method->CodeInfo->Code;
 
     assert(frame->constants != NULL);
     assert(frame->instPtr != NULL);
@@ -46,23 +52,20 @@ int start_process(FILE* class_file)
     Method* clinitMethod = NULL;
 
     /* Create main thread */
-    VM.ThreadNum++;
-    VM.Threads =
-        (Thread *) xam_realloc(0, sizeof(Thread));
+    vm->ThreadNum++;
+    vm->Threads = (Thread *)realloc(0, sizeof(Thread));
 
     /* Initialize main thread */
-    init_thread(&VM.Threads[0]);
+    init_thread(&vm->Threads[0]);
 
-    Class *new_class = new_class_alloc();
+    Class* new_class = Class_new();
 
     if (load_class_file(class_file, new_class) == false) {
         return false;
     }
 
     /* Search for class constructor */
-    clinitMethod =
-        find_method_name(VM.LocalClasses[VM.LocalClassesNum - 1],
-                         "<clinit>");
+    clinitMethod = find_method_name(new_class, "<clinit>");
     if (clinitMethod == NULL) {
         dbgmsg("No class constructor found!\n");
     } else {
@@ -72,47 +75,43 @@ int start_process(FILE* class_file)
     }
 
     /* Search for main method */
-    mainMethod =
-        find_method_name(VM.LocalClasses[VM.LocalClassesNum - 1], "main");
+    mainMethod = find_method_name(new_class, "main");
     if (mainMethod == NULL) {
         dbgmsg("No main method found!\n");
-        return RaiseException(ExceptionNoSuchMethod, "StartProcess",
-                              __FILE__, __LINE__);
+        return false;
     }
     // Create stackframe for main method
-    Stackframe *stackframe =
-        malloc(sizeof(Stackframe));
-    stackframe_init(stackframe,
-                    mainMethod,
-                    VM.LocalClasses[VM.LocalClassesNum - 1]->ConstantPool);
+    Stackframe *stackframe = malloc(sizeof(Stackframe));
+    Stackframe_init(stackframe, mainMethod, new_class->ConstantPool);
 
     // and push it onto thread's invocation stack
-    int ret = Stack_push(&VM.Threads[0].frameStack, stackframe);
+    int ret = Stack_push(vm->Threads[0].frameStack, stackframe);
     assert(0 == ret); // check for unexpected stack overflow
-    assert(1 == VM.Threads[0].frameStack.size);
+    assert(1 == vm->Threads[0].frameStack->size);
 
     return true;
 }
 
-Thread *next_thread(void)
+/* Look at the thread priorities and select the next ready thread */
+Thread* Thread_next_ready(void)
 {
     // Search for threads with unused timeslices
-    for (int n = 0; n < VM.ThreadNum; n++) {
-        if (VM.Threads[n].PriorityCurrent != 0) {
-            return &VM.Threads[n];
+    for (int n = 0; n < vm->ThreadNum; n++) {
+        if (vm->Threads[n].PriorityCurrent != 0) {
+            return &vm->Threads[n];
         }
     }
 
     // Reset all priorities...
-    for (int n = 0; n < VM.ThreadNum; n++) {
+    for (int n = 0; n < vm->ThreadNum; n++) {
 #ifdef DEBUG
-        printf("[DEBUG] Setting Thread %u priority to %u\n", n, VM.Threads[n].Priority);
+        printf("[DEBUG] Setting Thread %u priority to %u\n", n, vm->Threads[n].Priority);
 #endif
-        VM.Threads[n].PriorityCurrent = VM.Threads[n].Priority;
+        vm->Threads[n].PriorityCurrent = vm->Threads[n].Priority;
     }
 
     //... and try again
-    return next_thread();
+    return Thread_next_ready();
 }
 
 /* This method decides which thread is to be executed ("Green Threads") */
@@ -120,9 +119,9 @@ Thread* Thread_next(void)
 {
     Thread *thread = NULL;
 
-    while (VM.Running) {
+    while (vm->Running) {
         // Get next thread to be executed
-        thread = next_thread();
+        thread = Thread_next_ready();
         assert(thread != NULL);
     }
     

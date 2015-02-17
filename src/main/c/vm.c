@@ -47,12 +47,15 @@ int main(int argc, char *argv[])
 {
     char* main_class = NULL;
 
+    /* Create new VM instance */
+    vm = VM_new();    
+    
     /* Parsing command line options */
     if (argc > 1) {
         for (int n = 1; n < argc; n++) {
             if (argv[n][0] == '-') {
                 if (strcmp(argv[n], "-cp") == 0) {
-                    VM.LibraryPath = argv[++n];
+                    vm->LibraryPath = argv[++n];
                 } else {
                     printf("Unknown argument '%s'\n", argv[n]);
                 }
@@ -75,9 +78,6 @@ int main(int argc, char *argv[])
         printf("Could not open main class: %s\n", main_class);
         return 1;
     }
-
-    /* Create new VM instance */
-    vm = VM_new();
 
     /* Creating init processes... */
     if (start_process(class_file) == false) {

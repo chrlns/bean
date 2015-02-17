@@ -54,8 +54,8 @@ uint32_t Get4ByteOperand(Stackframe * frame)
 
 int exec_thread(Thread *thread)
 {
-    Stackframe *frame =
-        (Stackframe *) thread->frameStack.top->data;
+    Stackframe* frame = current_frame(thread);
+    
 #ifdef DEBUG
     assert(frame != NULL);
     printf("Opcode %x (%p)\tClass %p\n",

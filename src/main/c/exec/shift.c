@@ -15,8 +15,8 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
-#include <bvm_mem.h>
 
 void do_ISHL(Thread *thread)
 {

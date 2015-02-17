@@ -34,7 +34,7 @@
 #define THREAD_PRIORITY_IDLE        0
 
 #define current_frame(thread) \
-	((Stackframe*)thread->frameStack.top->data)
+	((Stackframe*)thread->frameStack->top->data)
 
 typedef struct Thread
 {
@@ -44,7 +44,7 @@ typedef struct Thread
     unsigned char       Priority;        /* Priority of this thread. */
     unsigned char       PriorityCurrent; /* Current priority (timeslice) */
     unsigned char       Status;
-    Stack               frameStack;      /* Top of this stack contains current stackframe */
+    Stack*              frameStack;      /* Top of this stack contains current stackframe */
 } Thread;
 
 #endif

@@ -76,5 +76,5 @@ void do_INVOKESTATIC(Thread *thread)
     }
 
     /* Push the new frame onto the frame stack */
-    Stack_push(&(thread->frameStack), (void *) new_frame);
+    Stack_push(thread->frameStack, (void *) new_frame);
 }

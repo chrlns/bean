@@ -15,47 +15,42 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
 
 /* Negates the double value on top of the operand stack. */
-void do_DNEG(Thread *thread)
-{
+void do_DNEG(Thread *thread) {
     dbgmsg("DNEG");
 
-    double *value =
-        (double *) current_frame(thread)->operandStack.top->data;
+    double *value = (double *) current_frame(thread)->operandStack.top->data;
 
-    *value = -(*value);         /* Negate the value */
+    *value = -(*value); /* Negate the value */
 }
 
 /* Negates the float value on top of the operand stack. */
-void do_FNEG(Thread *thread)
-{
+void do_FNEG(Thread *thread) {
     dbgmsg("FNEG");
 
-    float *value =
-        (float *) current_frame(thread)->operandStack.top->data;;
+    float *value = (float *) current_frame(thread)->operandStack.top->data;
+    ;
 
-    *value = -(*value);         /* Negate the value */
+    *value = -(*value); /* Negate the value */
 }
 
 /* Negates the int value on top of the operand stack. */
-void do_INEG(Thread *thread)
-{
+void do_INEG(Thread *thread) {
     dbgmsg("INEG");
 
-    int *value = (int *) current_frame(thread)->operandStack.top->data;
+    int32_t *value = (int32_t*) current_frame(thread)->operandStack.top->data;
 
-    *value = -(*value);         /* Negate the value */
+    *value = -(*value); /* Negate the value */
 }
 
 /* Negates the long value on top of the operand stack. */
-void do_LNEG(Thread *thread)
-{
+void do_LNEG(Thread *thread) {
     dbgmsg("LNEG");
 
-    int64_t *value =
-        (int64_t *) current_frame(thread)->operandStack.top->data;
+    int64_t *value = (int64_t *) current_frame(thread)->operandStack.top->data;
 
-    *value = -(*value);         /* Negate the value */
+    *value = -(*value); /* Negate the value */
 }

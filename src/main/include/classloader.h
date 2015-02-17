@@ -32,6 +32,7 @@ typedef struct {
 } Object;
 
 bool load_class_file(FILE* classfile, Class* clazz);
+FILE* find_class_file(const char* class);
 
 typedef struct Classloader {
     Class* loaded_classes;

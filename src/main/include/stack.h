@@ -25,8 +25,8 @@
 
 typedef struct StackElement
 {
-    void*                   data; /* data structure */
-    struct stack_element_t* next; /* ptr to next element */
+    void*                data; /* data structure */
+    struct StackElement* next; /* ptr to next element */
 } StackElement;
 
 typedef struct Stack

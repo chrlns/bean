@@ -66,7 +66,7 @@ void do_GETSTATIC(Thread *thread) {
 
     // We have to make sure that the given class and field type are
     // already loaded. If not they must be loaded now.
-    Class* class = find_class_by_name(className->Text);
+    //Class* class = find_class_by_name(className->Text);
 
     // Push the scalar type value or object reference onto the stack
 }
