@@ -40,7 +40,7 @@ typedef struct Stackframe
     unsigned char* instPtr;
 
     /* Invoked method */
-    struct method_t* method;
+    Method* method;
 } Stackframe;
 
 #endif

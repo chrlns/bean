@@ -18,6 +18,8 @@
 #include <debug.h>
 #include <vm.h>
 
+extern VM* vm;
+
 /* Enter monitor for object */
 void do_MONITORENTER(Thread *thread)
 {
@@ -38,7 +40,7 @@ void do_MONITORENTER(Thread *thread)
     } else {
         /* Check if there is a already existing monitor */
         /* monitor is != NULL at this point */
-        monitor = VM.Monitors;  /* List head */
+        monitor = vm->Monitors;  /* List head */
         while (monitor != NULL) {
             /* Does the monitor hold a lock on our object? */
             if (monitor->ObjectRef == obj->data.ptr) {  /* is pointer correct here? */
@@ -76,10 +78,10 @@ void do_MONITORENTER(Thread *thread)
             monitor->ThreadRef = thread;
             monitor->ObjectRef = obj->data.ptr; /* is pointer correct here? */
 
-            if (VM.Monitors == NULL) {
-                VM.Monitors = monitor;
+            if (vm->Monitors == NULL) {
+                vm->Monitors = monitor;
             } else {
-                VM.Monitors->Next = monitor;
+                vm->Monitors->Next = monitor;
             }
         }
     }
@@ -104,13 +106,13 @@ void do_MONITOREXIT(Thread *thread)
         return;
     }
 
-    monitor = VM.Monitors;
+    monitor = vm->Monitors;
     monitorTmp = NULL;
     while (monitor != NULL) {
         if (monitor->ObjectRef == obj->data.ptr) {      /* is pointer correct here? */
             if (monitor->ThreadRef == thread) {
                 if (monitorTmp == NULL) {
-                    VM.Monitors = monitor->Next;
+                    vm->Monitors = monitor->Next;
                 } else {
                     monitorTmp->Next = monitor->Next;
                 }

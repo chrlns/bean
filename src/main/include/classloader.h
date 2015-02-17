@@ -41,4 +41,6 @@ typedef struct Classloader {
 Classloader* Classloader_new(void);
 void Classloader_destroy(Classloader* cl);
 
+Class* Class_new(void);
+
 #endif

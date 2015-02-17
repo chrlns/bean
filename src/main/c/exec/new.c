@@ -32,6 +32,6 @@ void do_NEW(Thread *thread)
 #ifdef DEBUG
     printf("\tClass name = %s\n", class_name->Text);
 #endif
-    struct vmobject_t* obj = (struct vmobject_t *)malloc(sizeof(struct vmobject_t));
+    Object* obj = (struct vmobject_t *)malloc(sizeof(Object));
     Stack_push(&(frame->operandStack), obj);
 }

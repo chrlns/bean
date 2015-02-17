@@ -27,8 +27,8 @@ struct LINKFLAGS
   unsigned int IsNative    : 1; /* Invoked method is natively handled by the VM. */
 };
 
-struct method_t* dlink(Thread*, unsigned short, struct LINKFLAGS*);
-struct method_t* find_method_name(Class*, const char*);
+Method* dlink(Thread*, unsigned short, struct LINKFLAGS*);
+Method* find_method_name(Class*, const char*);
 
 Class* find_class_by_name(char* qualifiedName);
 

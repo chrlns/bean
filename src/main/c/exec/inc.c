@@ -15,6 +15,7 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
 
 void do_IINC_WIDE(Thread *thread, int index, int value)

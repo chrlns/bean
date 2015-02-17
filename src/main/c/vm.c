@@ -20,6 +20,8 @@
 #include <thread_fn.h>
 #include <vm.h>
 
+VM* vm;
+
 /*
  * Constructor for VM.
  * Creates, initializes and returns a new VM instance.
@@ -75,7 +77,7 @@ int main(int argc, char *argv[])
     }
 
     /* Create new VM instance */
-    VM* vm = VM_new();
+    vm = VM_new();
 
     /* Creating init processes... */
     if (start_process(class_file) == false) {

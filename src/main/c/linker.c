@@ -15,8 +15,11 @@
  *  limitations under the License.
  */
 
+#include <classloader.h>
 #include <debug.h>
 #include <vm.h>
+
+extern VM* vm;
 
 bool IsNative(Thread * thread, unsigned short methodIndex,
               struct LINKFLAGS * flags);
@@ -27,17 +30,11 @@ bool IsNative(Thread * thread, unsigned short methodIndex,
  */
 Class* find_class_by_name(char* qualifiedName)
 {
-    FILE* fileID;
-    Class *class = NULL;
-    int n;
-
     /* Search for already loaded class */
-    for (n = 0; n < VM.LocalClassesNum; n++) {
-        if (strcmp(qualifiedName, VM.LocalClasses[n]->QualifiedName) == 0) {
-#ifdef DEBUG
-            printf("Class already loaded.\n");
-#endif
-            return VM.LocalClasses[n];
+    for (int n = 0; n < vm->classloader->loaded_classes_num; n++) {
+        if (strcmp(qualifiedName, vm->classloader->loaded_classes[n].QualifiedName) == 0) {
+            dbgmsg("Class already loaded.");
+            return &vm->classloader->loaded_classes[n];
         }
     }
 
@@ -47,15 +44,7 @@ Class* find_class_by_name(char* qualifiedName)
         return NULL;
     }
 
-    VM.LocalClassesNum++;
-    VM.LocalClasses = (Class **) xam_realloc(VM.LocalClasses,
-                                                      sizeof(Class
-                                                             *) *
-                                                      VM.LocalClassesNum);
-
-    class = (Class *) malloc(sizeof(Class));
-    VM.LocalClasses[VM.LocalClassesNum - 1] = class;
-
+    Class* class = Class_new();
     if (load_class_file(class_file, class) == false) {
         return NULL;
     }
@@ -73,11 +62,11 @@ Class *FindClassByNameIndex(Class *localClass,
 
 /* This method searches in the local constant pool for a method and returns the index
      of the method in the MethodLookupTable. */
-struct method_t* find_method_name(Class *vmclass,
+Method* find_method_name(Class *vmclass,
                                 const char *qualifiedName)
 {
     unsigned short n, nameIndex;
-    struct method_t* method;
+    Method* method;
 
 #ifdef DEBUG
     printf("Link: finding method %s...", qualifiedName);
@@ -93,7 +82,7 @@ struct method_t* find_method_name(Class *vmclass,
             (qualifiedName,
              ((struct CONSTANT_UTF8_INFO *)
               vmclass->ConstantPool[nameIndex].Data)->Text) == 0) {
-            method = (struct method_t*)malloc(sizeof(struct method_t));
+            method = (Method*)malloc(sizeof(Method));
             method->method_info = &(vmclass->Methods[n]);
             method->class = vmclass;
 
@@ -112,15 +101,15 @@ struct method_t* find_method_name(Class *vmclass,
     return NULL;
 }
 
-struct method_t* find_method_nameidx(Class *vmclass,
+Method* find_method_nameidx(Class *vmclass,
                                    short methodNameIndex)
 {
     unsigned short n;
-    struct method_t* method;
+    Method* method;
 
     for (n = 0; n < vmclass->MethodsNum; n++) {
         if (vmclass->Methods[n].NameIndex == methodNameIndex + 1) {     /* +1 ? */
-            method = (struct method_t *) malloc(sizeof(struct method_t));
+            method = (Method *) malloc(sizeof(Method));
             method->method_info = &(vmclass->Methods[n]);
             method->class = vmclass;
             return method;
@@ -134,13 +123,13 @@ struct method_t* find_method_nameidx(Class *vmclass,
  * This method tries to find a method by parsing the string identifier
  * and looking for method in local classes.
  */
-struct method_t *find_method_idx(Class *vmclass,
+Method *find_method_idx(Class *vmclass,
                                Thread *thread,
                                uint16_t methodIndex,
                                struct LINKFLAGS *flags)
 {
     Class *methodClass;
-    struct method_t* methodInvoked;
+    Method* methodInvoked;
     unsigned short classIndex, classNameIndex, nameTypeIndex,
         methodNameIndex;
     char *className;
@@ -216,7 +205,7 @@ struct method_t *find_method_idx(Class *vmclass,
 }
 
 /* Dynamically finds a method to invoke */
-struct method_t* dlink(Thread *thread, unsigned short methodIndex,
+Method* dlink(Thread *thread, unsigned short methodIndex,
                      struct LINKFLAGS *flags)
 {
     if (IsNative(thread, methodIndex, flags) == false) {

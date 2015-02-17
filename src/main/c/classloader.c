@@ -19,8 +19,23 @@
 #include <platform.h>
 #include <vm.h>
 
+extern VM* vm;
+
 bool ReadAttributeInfo(struct ATTRIBUTE_INFO *, FILE*);
 bool ReadMethodInfo(Class *, FILE*, int, int);
+
+Class* Class_new()
+{
+    /* Create class struct */
+    vm->classloader->loaded_classes_num++;
+    vm->classloader->loaded_classes = (Class*)realloc(
+            vm->classloader->loaded_classes,
+            sizeof(Class) * vm->classloader->loaded_classes_num);
+
+    Class* class = &vm->classloader->loaded_classes[vm->classloader->loaded_classes_num - 1];
+
+    return class;
+}
 
 bool load_class_file(FILE* classfile, Class *class)
 {

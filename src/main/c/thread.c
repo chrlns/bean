@@ -15,23 +15,20 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
+#include <thread.h>
 #include <vm.h>
-#include <bvm_class.h>
-#include <bvm_mem.h>
-#include <bvm_process.h>
-#include <bvm_link.h>
-
 
 int init_thread(Thread *thread)
 {
     thread->Priority = THREAD_PRIORITY_NORMAL;
-    stack_init(&(thread->frameStack), 32); // FIXME What's the appropriate size?
+    Stack_init(&(thread->frameStack), 32); // FIXME What's the appropriate size?
     return true;
 }
 
 void stackframe_init(
     Stackframe *frame,
-    struct method_t* method,
+    Method* method,
     struct CONSTANTPOOL* constants)
 {
     frame->constants = constants;
@@ -43,24 +40,10 @@ void stackframe_init(
     assert(frame->method != NULL);
 }
 
-Class* new_class_alloc()
-{
-    /* Create class struct */
-    VM.LocalClassesNum++;
-    VM.LocalClasses =
-        (Class **) xam_realloc(VM.LocalClasses,
-                                        sizeof(Class *) *
-                                        VM.LocalClassesNum);
-    VM.LocalClasses[VM.LocalClassesNum - 1] =
-        (Class *) malloc(sizeof(Class));
-
-    return VM.LocalClasses[VM.LocalClassesNum - 1];
-}
-
 int start_process(FILE* class_file)
 {
-    struct method_t* mainMethod = NULL;
-    struct method_t* clinitMethod = NULL;
+    Method* mainMethod = NULL;
+    Method* clinitMethod = NULL;
 
     /* Create main thread */
     VM.ThreadNum++;
