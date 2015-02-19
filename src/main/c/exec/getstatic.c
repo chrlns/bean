@@ -69,4 +69,5 @@ void do_GETSTATIC(Thread *thread) {
     //Class* class = find_class_by_name(className->Text);
 
     // Push the scalar type value or object reference onto the stack
+    // FIXME
 }

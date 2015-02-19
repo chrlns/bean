@@ -40,12 +40,23 @@ void do_INVOKEVIRTUAL(Thread *thread)
     uint16_t idx = Get2ByteOperand(frame);
 
     // Constant representing name and type of the to be invoked method
-    struct CONSTANT_NAMETYPE_INFO* = nameTypeInfo = 
+    struct CONSTANT_NAMETYPE_INFO* nameTypeInfo =
         (struct CONSTANT_NAMETYPE_INFO*)frame->constants[idx - 1].Data;
-    struct CONSTANT_STRING_INFO* name = frame->constants[nameTypeInfo->NameIndex - 1];
-    struct CONSTANT_STRING_INFO* desc = frame->constants[nameTypeInfo->DescriptorIndex - 1];
-    
-    printf("Invoking %s\n", frame->constants[name->StringIndex]->Text);
+    struct CONSTANT_STRING_INFO* name = (struct CONSTANT_STRING_INFO*)frame->constants[nameTypeInfo->NameIndex - 1].Data;
+    struct CONSTANT_STRING_INFO* desc = (struct CONSTANT_STRING_INFO*)frame->constants[nameTypeInfo->DescriptorIndex - 1].Data;
+    struct CONSTANT_UTF8_INFO* nameStr = (struct CONSTANT_UTF8_INFO*)frame->constants[name->StringIndex - 1].Data;
+    struct CONSTANT_UTF8_INFO* descStr = (struct CONSTANT_UTF8_INFO*)frame->constants[desc->StringIndex - 1].Data;
+
+#ifdef DEBUG
+    printf("\tName %u: %s (%u chars)\n", name->StringIndex, nameStr->Text, nameStr->Length);
+    printf("\tDesc %u: %s (%u chars)\n", desc->StringIndex, descStr->Text, descStr->Length);
+#endif
+
+    // Pop nargs from operand stack
+
+    // Pop object reference from operand stack
+
+    // Invoke method
 }
 
 /*
