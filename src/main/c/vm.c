@@ -87,8 +87,8 @@ int main(int argc, char *argv[])
 
     dbgmsg("Start!");
     while (vm->alive) {
-        Thread* t = Thread_next(vm);
-        Thread_exec(t);
+        Thread* thread = Thread_next_ready();
+        Thread_exec(thread);
     }
 
     dbgmsg("Shutdown virtual machine...");

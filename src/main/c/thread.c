@@ -114,20 +114,6 @@ Thread* Thread_next_ready(void)
     return Thread_next_ready();
 }
 
-/* This method decides which thread is to be executed ("Green Threads") */
-Thread* Thread_next(void)
-{
-    Thread *thread = NULL;
-
-    while (vm->Running) {
-        // Get next thread to be executed
-        thread = Thread_next_ready();
-        assert(thread != NULL);
-    }
-    
-    return thread;
-}
-
 void Thread_exec(Thread* thread) {
     // Run the thread code until timeslice is over
     for (; thread->PriorityCurrent > 0; thread->PriorityCurrent >>= 1) {

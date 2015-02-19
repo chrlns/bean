@@ -19,44 +19,41 @@
 #include <vm.h>
 
 /* Pushs an item from the runtime constant pool onto the operand stack. */
-void do_LDC(Thread *thread)
-{
+void do_LDC(Thread *thread) {
     dbgmsg("LDC");
+    
+    Stackframe* frame = current_frame(thread);
+    Varframe *value = (Varframe*)malloc(sizeof (Varframe));
+    struct CONSTANTPOOL* item = &frame->constants[*(frame->instPtr)];
+    frame->instPtr++;
 
-    struct CONSTANTPOOL *item = NULL;
-    Varframe *value = (Varframe *)malloc(sizeof(Varframe));
-
-    current_frame(thread)->instPtr++;
-    item =
-        &thread->RunningClass->
-        ConstantPool[*current_frame(thread)->instPtr - 1];
-
+#ifdef DEBUG
+    printf("\tLDC Tag = %u\n", item->Tag);
+#endif
     switch (item->Tag) {
         case CONSTANTPOOL_INTEGER:
         {
-            /*value->Value.SignedInt = (int32_t)((struct CONSTANT_INTEGER_INFO*)item->Data)->Value; */
+            value->data.SignedInt32Value = (int32_t) ((struct CONSTANT_INTEGER_INFO*) item->Data)->Value;
             break;
         }
         case CONSTANTPOOL_FLOAT:
         {
-            /*value->Value.Float = (float)((struct CONSTANT_FLOAT_INFO*)item->Data)->Value; */
+            value->data.FloatValue = (float) ((struct CONSTANT_FLOAT_INFO*) item->Data)->Value;
             break;
         }
         case CONSTANTPOOL_STRING:
         {
-            /*value->Value.pointer = item->Data; *//* Pointer to a string info. */
+            value->data.ptr = item->Data; /* Pointer to a string info. */
             break;
-            }
+        }
     }
 
     /* Push value onto the stack */
     Stack_push(&(current_frame(thread)->operandStack), value);
 }
 
-void do_LDC_W(Thread *thread)
-{
+void do_LDC_W(Thread *thread) {
 }
 
-void do_LDC2_W(Thread *thread)
-{
+void do_LDC2_W(Thread *thread) {
 }

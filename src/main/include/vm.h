@@ -66,7 +66,6 @@ typedef struct VM {
     char* LibraryPath;
 
     bool Initialized; /* Has the VM been initialized? */
-    bool Running; /* Is the VM running? */
 
     Class** PublicClasses; /* Holds the Public Classes */
     Thread* Threads; /* Threads of this application. Thread[0] is

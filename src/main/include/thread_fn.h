@@ -26,7 +26,7 @@
 int  exec_thread(Thread*);
 int  start_process(FILE*);
 
-Thread* Thread_next();
+Thread* Thread_next_ready();
 void Thread_exec(Thread* thread);
 
 #endif
