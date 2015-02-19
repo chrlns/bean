@@ -17,6 +17,7 @@
 
 #include <stdlib.h>
 
+#include <classfile.h>
 #include <debug.h>
 #include <linker.h>
 #include <vm.h>
@@ -34,6 +35,17 @@ void do_INVOKEINTERFACE(Thread *thread)
 void do_INVOKEVIRTUAL(Thread *thread)
 {
     dbgmsg("INVOKEVIRTUAL");
+
+    Stackframe* frame = current_frame(thread);
+    uint16_t idx = Get2ByteOperand(frame);
+
+    // Constant representing name and type of the to be invoked method
+    struct CONSTANT_NAMETYPE_INFO* = nameTypeInfo = 
+        (struct CONSTANT_NAMETYPE_INFO*)frame->constants[idx - 1].Data;
+    struct CONSTANT_STRING_INFO* name = frame->constants[nameTypeInfo->NameIndex - 1];
+    struct CONSTANT_STRING_INFO* desc = frame->constants[nameTypeInfo->DescriptorIndex - 1];
+    
+    printf("Invoking %s\n", frame->constants[name->StringIndex]->Text);
 }
 
 /*
