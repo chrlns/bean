@@ -15,18 +15,13 @@
  *  limitations under the License.
  */
 
-package java.lang;
-
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+package java.io;
 
 /**
  *
  * @author Christian Lins
  */
-public class System {
-
-    public static final PrintStream out = new PrintStream(
-            new FileOutputStream(FileDescriptor.out));
+public final class FileDescriptor {
+    
+    public static final FileDescriptor out = new FileDescriptor();
 }

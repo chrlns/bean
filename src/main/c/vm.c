@@ -31,6 +31,7 @@ VM* VM_new() {
 
     vm->alive = true;
     vm->classloader = Classloader_new();
+    vm->classpath = "./";
 
     return vm;
 }
@@ -55,7 +56,7 @@ int main(int argc, char *argv[])
         for (int n = 1; n < argc; n++) {
             if (argv[n][0] == '-') {
                 if (strcmp(argv[n], "-cp") == 0) {
-                    vm->LibraryPath = argv[++n];
+                    vm->classpath = argv[++n];
                 } else {
                     printf("Unknown argument '%s'\n", argv[n]);
                 }

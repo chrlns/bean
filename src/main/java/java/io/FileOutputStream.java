@@ -15,18 +15,32 @@
  *  limitations under the License.
  */
 
-package java.lang;
-
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+package java.io;
 
 /**
  *
  * @author Christian Lins
  */
-public class System {
+public class FileOutputStream extends OutputStream {
+    
+    private boolean useStdOut = false;
+            
+    public FileOutputStream(FileDescriptor fd) {
+        if(FileDescriptor.out.equals(fd)) {
+            this.useStdOut = true;
+        }
+    }
 
-    public static final PrintStream out = new PrintStream(
-            new FileOutputStream(FileDescriptor.out));
+    /** This method is redirected to stdout by Bean JVM */
+    private native void writeToStdout(byte[] buf, int off, int len);
+    
+    public void write(int i) throws IOException {
+        if(this.useStdOut) {
+            writeToStdout(new byte[] {(byte)(0x000000FF & i)}, 0, 1);
+        }
+    }
+    
+    public void write(byte[] buf, int off, int len) throws IOException {
+        writeToStdout(buf, off, len);
+    }    
 }

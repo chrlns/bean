@@ -62,8 +62,7 @@ struct MONITOR {
 typedef struct VM {
     bool alive;
     Classloader* classloader;
-    char* ClassPath;
-    char* LibraryPath;
+    char* classpath;
 
     bool Initialized; /* Has the VM been initialized? */
 

@@ -682,8 +682,10 @@ bool ReadMethodInfo(Class * vmclass, FILE* classfile,
 
 FILE* find_class_file(const char* class)
 {
-    FILE* file;
-
+#ifdef DEBUG
+    printf("Using %s as classpath\n", vm->classpath);
+#endif
+    
     // Argument class is the Java class name with slashes as separator
     // instead of points, e.g. "java/lang/System".
     char* class_file = malloc(sizeof(char) * (strlen(class) + 7));
@@ -694,7 +696,7 @@ FILE* find_class_file(const char* class)
 
     // Then we try all classpaths for the given class file
     // (currently there is only one classpath (and "."))
-    file = fopen(class_file, "rb");
+    FILE* file = fopen(class_file, "rb");
 #ifdef DEBUG
     printf("Trying '%s'\n", class_file);
 #endif
@@ -705,8 +707,8 @@ FILE* find_class_file(const char* class)
 
     // FIXME
     char* class_file_path = malloc(sizeof(char) *
-        (strlen(class_file) + /*strlen(VM.LibraryPath) +*/ 1));
-    //strcpy(class_file_path, VM.LibraryPath);
+        (strlen(class_file) + strlen(vm->classpath) + 1));
+    strcpy(class_file_path, vm->classpath);
     strncat(class_file_path, class_file, strlen(class_file));
     file = fopen(class_file_path, "rb");
 #ifdef DEBUG

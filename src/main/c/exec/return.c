@@ -18,6 +18,8 @@
 #include <debug.h>
 #include <vm.h>
 
+extern VM* vm;
+
 /*
  * The current method must have return type void. If the current method
  * is a synchronized method, the monitor acquired or reentered on invocation
@@ -27,34 +29,26 @@
  * The interpreter then returns control to the invoker of the method,
  * reinstating the frame of the invoker.
  */
-void do_RETURN(Thread *thread)
-{
+void do_RETURN(Thread *thread) {
     dbgmsg("RETURN");
-/*
-	//struct STACKFRAME*       stackFrame;
-	struct INVOKESTACKFRAME* invokeStackFrame;
 
-	// Pop stackframe of current method
-	//Stack_pop(&(current_frame(thread)->methodStack), (void**)&stackFrame); MethodStackPop(&thread->Stack);
-	//InvokeStackPop(&thread->Stack, &invokeStackFrame);
-	//Stack_pop(&(current_frame(thread)->invokeStack), (void**)&invokeStackFrame);
+    Stackframe* frame;
 
-	if(invokeStackFrame->method == NULL) {
-		dbgmsg("Execution has ended!");
-	}
+    // Pop stackframe of current method
+    Stack_pop(thread->frameStack, (void**)&frame);
+    free(frame);
+    
+    if (thread->frameStack->size == 0) {
+        dbgmsg("Execution has ended!");
+        vm->alive = false;
+        return;
+    }
 
-	// Release monitor if existing
-	if(isAccessFlag(invokeStackFrame->method->Method, ACC_SYNCHRONIZED) == true) {
-		do_MONITOREXIT(thread);
-		current_frame(thread)->instPtr--;
-	}
-
-	// Set new method
-	thread->RunningClass       = invokeStackFrame->method->Class;
-	thread->RunningMethod      = invokeStackFrame->method->Method;
-	//thread->InstructionPointer = invokeStackFrame->instruction_ptr;
-
-	free(stackFrame);*/
+    // Release monitor if existing
+    /*if (isAccessFlag(invokeStackFrame->method->Method, ACC_SYNCHRONIZED) == true) {
+        do_MONITOREXIT(thread);
+        current_frame(thread)->instPtr--;
+    }*/
 }
 
 void do_ARETURN(Thread *thread)

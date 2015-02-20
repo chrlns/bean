@@ -46,6 +46,17 @@ void Stackframe_init(
     assert(frame->method != NULL);
 }
 
+int push_invokation_stackframe(Thread* thread, Class* class, Method* method) {
+    // Create stackframe for main method
+    Stackframe *stackframe = malloc(sizeof(Stackframe));
+    Stackframe_init(stackframe, method, class->ConstantPool);
+
+    // and push it onto thread's invocation stack
+    int ret = Stack_push(thread->frameStack, stackframe);
+    assert(0 == ret); // check for unexpected stack overflow
+    return ret;
+}
+
 int start_process(FILE* class_file)
 {
     Method* mainMethod = NULL;
@@ -64,30 +75,23 @@ int start_process(FILE* class_file)
         return false;
     }
 
-    /* Search for class constructor */
-    clinitMethod = find_method_name(new_class, "<clinit>");
-    if (clinitMethod == NULL) {
-        dbgmsg("No class constructor found!\n");
-    } else {
-        // Invoke class constructor using special INVOKE instruction
-        // TODO:
-        return false;
-    }
-
     /* Search for main method */
     mainMethod = find_method_name(new_class, "main");
     if (mainMethod == NULL) {
         dbgmsg("No main method found!\n");
         return false;
     }
-    // Create stackframe for main method
-    Stackframe *stackframe = malloc(sizeof(Stackframe));
-    Stackframe_init(stackframe, mainMethod, new_class->ConstantPool);
+    
+    push_invokation_stackframe(&(vm->Threads[0]), new_class, mainMethod);
 
-    // and push it onto thread's invocation stack
-    int ret = Stack_push(vm->Threads[0].frameStack, stackframe);
-    assert(0 == ret); // check for unexpected stack overflow
-    assert(1 == vm->Threads[0].frameStack->size);
+    /* Search for class constructor */
+    clinitMethod = find_method_name(new_class, "<clinit>");
+    if (clinitMethod == NULL) {
+        dbgmsg("No class constructor found. Continue with main.");
+    } else {
+        // Invoke class constructor using special INVOKE instruction
+        push_invokation_stackframe(&(vm->Threads[0]), new_class, clinitMethod);
+    }
 
     return true;
 }

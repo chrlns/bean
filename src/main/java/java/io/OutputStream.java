@@ -15,18 +15,23 @@
  *  limitations under the License.
  */
 
-package java.lang;
-
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+package java.io;
 
 /**
  *
  * @author Christian Lins
  */
-public class System {
-
-    public static final PrintStream out = new PrintStream(
-            new FileOutputStream(FileDescriptor.out));
+public abstract class OutputStream {
+    
+    public abstract void write(int i) throws IOException;
+    
+    public void write(byte[] b, int off, int len) throws IOException {
+        for(int n = off; n <= off + len; n++) {
+            write(b);
+        }
+    }
+    
+    public void write(byte[] b) throws IOException {
+        write(b, 0, b.length);
+    }
 }
