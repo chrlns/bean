@@ -22,4 +22,4 @@ To compile Bean you need Maven, a JDK and a GCC-compatible C compiler.
  
 To start Bean with the "Hello World" sample programm:
 
-    $ target/nar/.../bin/bean target/classes/Hello
+    $ target/nar/.../bin/bean -cp target/classes/ Hello

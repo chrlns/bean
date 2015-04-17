@@ -121,6 +121,10 @@ Thread* Thread_next_ready(void)
 void Thread_exec(Thread* thread) {
     // Run the thread code until timeslice is over
     for (; thread->PriorityCurrent > 0; thread->PriorityCurrent >>= 1) {
+        if (!vm->alive) {
+            dbgmsg("Thread_exec returned.");
+            return;
+        }
         exec_thread(thread);
     }   
 }

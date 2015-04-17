@@ -28,6 +28,15 @@ bool IsNative(Thread * thread, unsigned short methodIndex,
 }
 
 /**
+ * Parses an Method descriptor string.
+ * For example for method "Object m(int i, double d, Thread t) {..}" => 
+ * "(IDLjava/lang/Thread;)Ljava/lang/Object;"
+ */
+void Method_parseDescriptor(Method* method, const char* descriptor) {
+    
+}
+
+/**
  * Finds, loads and initializes a new class specified by the
  * full qualified name.
  */

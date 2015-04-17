@@ -15,25 +15,18 @@
  *  limitations under the License.
  */
 
-#ifndef _METHOD_H_
-#define _METHOD_H_
+package java.io;
 
-#include <stdint.h>
-#include <classfile.h>
-
-/* A method, but without running information */
-typedef struct Method {
-    uint16_t AccessFlags;
-    uint16_t NameIndex;
-    uint16_t DescriptorIndex;
-    uint16_t AttributesNum;
-    struct ATTRIBUTE_INFO* Attributes;
-    struct ATTRIBUTE_INFO_CODE* CodeInfo; /* Pointer to the Code Attribute */
-    uint16_t operandStackSize;
-    uint16_t localVarsLen;
+public class PrintStream {
     
-    // Parsed values from descriptor
-    uint16_t nargs; // Number of arguments
-} Method;
-
-#endif
+    protected OutputStream out; // FIXME Must go to FilterOutputStream
+    
+    public PrintStream(OutputStream out) {
+        this.out = out;
+    }
+    
+    public void println(String str) {
+        
+    }
+    
+}

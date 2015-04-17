@@ -51,12 +51,32 @@ void do_INVOKEVIRTUAL(Thread *thread)
     printf("\tName %u: %s (%u chars)\n", name->StringIndex, nameStr->Text, nameStr->Length);
     printf("\tDesc %u: %s (%u chars)\n", desc->StringIndex, descStr->Text, descStr->Length);
 #endif
+    
+    // Resolve class identified by nameStr->Text
+    Class* targetClass = find_class_by_name(nameStr->Text);
+    
+    // Find method in class
+    Method* targetMethod = find_method_name(targetClass, descStr->Text);
 
+    uint16_t nargs = 0;         // TODO: Parse method descriptor
+    
     // Pop nargs from operand stack
-
+    /* Operand stack contains nargs arguments for the called method
+     * which form the contents of the new_frame's local var array */
+    //new_frame->localVarsLen = nargs;
+    //new_frame->localVars = malloc(sizeof(Varframe) * nargs);
+    Varframe *var;
+    for (int n = 0; n < nargs; n++) {
+        // TODO: Add handling for long and double
+        Stack_pop(&(frame->operandStack), (void **) &var);
+    }
+    
     // Pop object reference from operand stack
+    void* objRef;
+    Stack_pop(&(frame->operandStack), &objRef);
 
-    // Invoke method
+    // Invoke method by constructing a new Stackframe and push it onto the 
+    // Thread's frameStack
 }
 
 /*

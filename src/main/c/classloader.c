@@ -37,6 +37,13 @@ Class* Class_new()
     return class;
 }
 
+/**
+ * Looks for cinit method and - if available - runs it on current thread.
+ */
+void Class_init(Class* obj) {
+    
+}
+
 Classloader* Classloader_new() {
     return (Classloader*)malloc(sizeof(Classloader));
 }
