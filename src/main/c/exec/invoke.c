@@ -24,20 +24,11 @@
 
 extern Stackframe* Stackframe_create_init_push(Thread*, Class*, Method*);
 
-void do_INVOKEINTERFACE(Thread *thread)
-{
-    dbgmsg("INVOKEINTERFACE not implemented");
-    current_frame(thread)->instPtr++;
-}
-
 /*
- * Invoke instance method; dispatch based on runtime class type
- * (virtual method invokation).
+ * Basic invoke function.
  */
-void do_INVOKEVIRTUAL(Thread *thread)
+void invoke(Thread *thread)
 {
-    dbgmsg("INVOKEVIRTUAL");
-
     Stackframe* frame = current_frame(thread);
     uint16_t idx = Get2ByteOperand(frame);
 
@@ -83,14 +74,30 @@ void do_INVOKEVIRTUAL(Thread *thread)
             = Stackframe_create_init_push(thread, targetClass, targetMethod);
 }
 
+void do_INVOKEINTERFACE(Thread *thread)
+{
+    dbgmsg("INVOKEINTERFACE");
+    invoke(thread);
+}
+
+/*
+ * Invoke instance method; dispatch based on runtime class type
+ * (virtual method invokation).
+ */
+void do_INVOKEVIRTUAL(Thread *thread)
+{
+    dbgmsg("INVOKEDYNAMIC");
+    invoke(thread);
+}
+
 /*
  * Invoke instance method; special handling for superclass, private,
  * and instance initialization method invocations.
  */
 void do_INVOKESPECIAL(Thread *thread)
 {
-    dbgmsg("INVOKESPECIAL not implemented")
-        current_frame(thread)->instPtr++;
+    dbgmsg("INVOKESPECIAL")
+    invoke(thread);
 }
 
 /*
@@ -100,28 +107,5 @@ void do_INVOKESPECIAL(Thread *thread)
 void do_INVOKESTATIC(Thread *thread)
 {
     dbgmsg("INVOKESTATIC");
-
-    /* Index in the constant pool pointing to method reference */
-    uint16_t index = Get2ByteOperand(current_frame(thread));
-    uint16_t nargs = 0;         // TODO: Parse method descriptor
-
-    /* Create a new frame for the invoking method */
-    Stackframe *new_frame =
-        malloc(sizeof(Stackframe));
-    Stackframe *cur_frame = current_frame(thread);
-
-    new_frame->method = dlink(thread, index, NULL);
-
-    /* Operand stack contains nargs arguments for the called method
-     * which form the contents of the new_frame's local var array */
-    new_frame->localVarsLen = nargs;
-    new_frame->localVars = malloc(sizeof(Varframe) * nargs);
-    Varframe *var;
-    for (int n = 0; n < nargs; n++) {
-        // TODO: Add handling for long and double
-        Stack_pop(&(cur_frame->operandStack), (void **) &var);
-    }
-
-    /* Push the new frame onto the frame stack */
-    Stack_push(thread->frameStack, (void *) new_frame);
+    invoke(thread);
 }
