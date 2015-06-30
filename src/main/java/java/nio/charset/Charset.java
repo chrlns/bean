@@ -15,31 +15,20 @@
  *  limitations under the License.
  */
 
-package java.io;
+package java.nio.charset;
 
-public class PrintStream {
+/**
+ *
+ * @author Christian Lins
+ */
+public class Charset {
     
-    protected OutputStream out; // FIXME Must go to FilterOutputStream
-    
-    public PrintStream(OutputStream out) {
-        this.out = out;
+    public static Charset defaultCharset() {
+        return new Charset("US-ASCII", null);
     }
     
-    public void print(String str) {
-        try {
-            out.write(str.getBytes());
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public void println() {
-        print("\n"); // FIXME
-    }
-    
-    public void println(String str) {
-        print(str);
-        println();
+    protected Charset(String canonicalName, String[] aliases) {
+        
     }
     
 }

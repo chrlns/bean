@@ -46,7 +46,7 @@ void Stackframe_init(
     assert(frame->method != NULL);
 }
 
-int push_invokation_stackframe(Thread* thread, Class* class, Method* method) {
+Stackframe* Stackframe_create_init_push(Thread* thread, Class* class, Method* method) {
     // Create stackframe for main method
     Stackframe *stackframe = malloc(sizeof(Stackframe));
     Stackframe_init(stackframe, method, class->ConstantPool);
@@ -54,7 +54,7 @@ int push_invokation_stackframe(Thread* thread, Class* class, Method* method) {
     // and push it onto thread's invocation stack
     int ret = Stack_push(thread->frameStack, stackframe);
     assert(0 == ret); // check for unexpected stack overflow
-    return ret;
+    return stackframe;
 }
 
 int start_process(FILE* class_file)
@@ -82,7 +82,7 @@ int start_process(FILE* class_file)
         return false;
     }
     
-    push_invokation_stackframe(&(vm->Threads[0]), new_class, mainMethod);
+    Stackframe_create_init_push(&(vm->Threads[0]), new_class, mainMethod);
 
     /* Search for class constructor */
     clinitMethod = find_method_name(new_class, "<clinit>");
@@ -90,7 +90,7 @@ int start_process(FILE* class_file)
         dbgmsg("No class constructor found. Continue with main.");
     } else {
         // Invoke class constructor using special INVOKE instruction
-        push_invokation_stackframe(&(vm->Threads[0]), new_class, clinitMethod);
+        Stackframe_create_init_push(&(vm->Threads[0]), new_class, clinitMethod);
     }
 
     return true;

@@ -15,31 +15,29 @@
  *  limitations under the License.
  */
 
-package java.io;
+package java.lang;
 
-public class PrintStream {
+import java.nio.charset.Charset;
+
+/**
+ *
+ * @author Christian Lins
+ */
+public class String {
     
-    protected OutputStream out; // FIXME Must go to FilterOutputStream
-    
-    public PrintStream(OutputStream out) {
-        this.out = out;
+    public String() {
     }
     
-    public void print(String str) {
-        try {
-            out.write(str.getBytes());
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+    public byte[] getBytes() {
+        return getBytes(Charset.defaultCharset());
     }
     
-    public void println() {
-        print("\n"); // FIXME
+    // FIXME
+    public byte[] getBytes(Charset cset) {
+        byte[] buf = new byte[3];
+        buf[0] = 65;
+        buf[1] = 66;
+        buf[2] = 67;
+        return buf;
     }
-    
-    public void println(String str) {
-        print(str);
-        println();
-    }
-    
 }

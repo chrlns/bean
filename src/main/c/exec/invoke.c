@@ -22,6 +22,8 @@
 #include <linker.h>
 #include <vm.h>
 
+extern Stackframe* Stackframe_create_init_push(Thread*, Class*, Method*);
+
 void do_INVOKEINTERFACE(Thread *thread)
 {
     dbgmsg("INVOKEINTERFACE not implemented");
@@ -75,8 +77,10 @@ void do_INVOKEVIRTUAL(Thread *thread)
     void* objRef;
     Stack_pop(&(frame->operandStack), &objRef);
 
-    // Invoke method by constructing a new Stackframe and push it onto the 
-    // Thread's frameStack
+    // Invoke method by constructing a new Stackframe and 
+    // push it onto the Thread's frameStack
+    Stackframe* newFrame 
+            = Stackframe_create_init_push(thread, targetClass, targetMethod);
 }
 
 /*
