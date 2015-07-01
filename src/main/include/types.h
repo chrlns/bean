@@ -28,8 +28,8 @@
 #define JAVATYPE_BYTE       0x04
 
 typedef int32_t Boolean; /* Java Type Boolean */
-typedef char StringUTF8;
-typedef short StringUTF16;
+typedef uint8_t StringUTF8;
+typedef uint16_t StringUTF16;
 
 union __varframe_data {
     Boolean BooleanValue;

@@ -28,7 +28,7 @@ extern VM* vm;
 int init_thread(Thread *thread)
 {
     thread->Priority   = THREAD_PRIORITY_NORMAL;
-    thread->frameStack = Stack_new(32); // FIXME What's the appropriate size?
+    thread->frameStack = Stack_new(64); // FIXME What's the appropriate size?
     return true;
 }
 
@@ -40,10 +40,18 @@ void Stackframe_init(
     frame->constants = constants;
     frame->method    = method;
     frame->instPtr   = method->CodeInfo->Code;
+    frame->localVars = (Varframe*)malloc(sizeof(Varframe) * method->localVarsLen);
+    frame->localVarsLen = method->localVarsLen;
 
     assert(frame->constants != NULL);
     assert(frame->instPtr != NULL);
     assert(frame->method != NULL);
+}
+
+void* Stackframe_dispose(Stackframe* frame) {
+    free(frame->localVars);
+    free(frame);
+    return NULL;
 }
 
 Stackframe* Stackframe_create_init_push(Thread* thread, Class* class, Method* method) {

@@ -40,10 +40,11 @@ void Method_parseDescriptor(Method* method, const char* descriptor) {
  * Finds, loads and initializes a new class specified by the
  * full qualified name.
  */
-Class* find_class_by_name(char* qualifiedName)
+Class* Classloader_forName(char* qualifiedName)
 {
     /* Search for already loaded class */
     for (int n = 0; n < vm->classloader->loaded_classes_num; n++) {
+        //printf("Comparing %s with %s\n", qualifiedName, vm->classloader->loaded_classes[n].QualifiedName);
         if (strcmp(qualifiedName, vm->classloader->loaded_classes[n].QualifiedName) == 0) {
             dbgmsg("Class already loaded.");
             return &vm->classloader->loaded_classes[n];
@@ -61,7 +62,9 @@ Class* find_class_by_name(char* qualifiedName)
         return NULL;
     }
 
-    /* We must initialize the class file later */
+    // Initialize the class instance
+    class->QualifiedName = (char*)malloc(sizeof(char) * strlen(qualifiedName) + 1);
+    strcpy(class->QualifiedName, qualifiedName);
 
     return class;
 }
@@ -157,7 +160,7 @@ Method *find_method_idx(Class *vmclass,
     if (classIndex + 1 == vmclass->ThisClassIndex) {
         return find_method_nameidx(vmclass, methodNameIndex);
     } else {
-        methodClass = find_class_by_name(className);
+        methodClass = Classloader_forName(className);
         methodInvoked = find_method_name(methodClass, methodName);      /* Search for method to be invoked */
 
         if (methodInvoked == NULL) {

@@ -63,8 +63,11 @@ int exec_thread(Thread *thread)
            (void *) thread->RunningClass);
 #endif
 
-    // Instruction pointer is incremented by one AFTER execution.
-    switch (*(frame->instPtr)) {
+    // Instruction pointer is incremented by one AFTER execution,
+    // except for the INVOKE and RETURN statements where this is handled in
+    // the appropriate do-functions.
+    uint8_t opcode = *(frame->instPtr);
+    switch (opcode) {
     case IL_NOP:{              /* No operation */
             // Simply do nothing but incrementing IP
             break;
@@ -1087,9 +1090,8 @@ int exec_thread(Thread *thread)
         }
     }
 
-    // Instruction pointer is incremented by one. Some opcodes have
-    // already incremented the pointer, but the last incrementation is
-    // done here
+    // Instruction pointer is incremented by one. Some opcodes have already
+    // incremented the pointer, but the last incrementation is done here
     frame->instPtr++;
 
 #ifdef INTERACTIVE

@@ -46,7 +46,7 @@ void invoke(Thread *thread)
 #endif
     
     // Resolve class identified by nameStr->Text
-    Class* targetClass = find_class_by_name(nameStr->Text);
+    Class* targetClass = Classloader_forName(nameStr->Text);
     
     // Find method in class
     Method* targetMethod = find_method_name(targetClass, descStr->Text);
@@ -68,6 +68,10 @@ void invoke(Thread *thread)
     void* objRef;
     Stack_pop(&(frame->operandStack), &objRef);
 
+    // Increment the invokers instruction pointer by one, otherwise
+    // we'll be stuck in an infinite loop
+    frame->instPtr++;
+    
     // Invoke method by constructing a new Stackframe and 
     // push it onto the Thread's frameStack
     Stackframe* newFrame 
@@ -86,7 +90,7 @@ void do_INVOKEINTERFACE(Thread *thread)
  */
 void do_INVOKEVIRTUAL(Thread *thread)
 {
-    dbgmsg("INVOKEDYNAMIC");
+    dbgmsg("INVOKEVIRTUAL");
     invoke(thread);
 }
 
@@ -108,4 +112,12 @@ void do_INVOKESTATIC(Thread *thread)
 {
     dbgmsg("INVOKESTATIC");
     invoke(thread);
+}
+
+void do_INVOKEDYNAMIC(Thread *thread) {
+    dbgmsg("INVOKEDYNAMIC");
+    invoke(thread);
+    
+    Stackframe* frame = current_frame(thread);
+    Get2ByteOperand(frame); // Skip two zero bytes
 }

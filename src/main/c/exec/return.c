@@ -20,6 +20,13 @@
 
 extern VM* vm;
 
+void check_end_of_exec(Thread* thread) {
+    if (thread->frameStack->size == 0) {
+        dbgmsg("Execution has ended!");
+        vm->alive = false;
+    }
+}
+
 /*
  * The current method must have return type void. If the current method
  * is a synchronized method, the monitor acquired or reentered on invocation
@@ -36,41 +43,58 @@ void do_RETURN(Thread *thread) {
 
     // Pop stackframe of current method
     Stack_pop(thread->frameStack, (void**)&frame);
-    free(frame);
-    
-    if (thread->frameStack->size == 0) {
-        dbgmsg("Execution has ended!");
-        vm->alive = false;
-        return;
-    }
+    frame = Stackframe_dispose(frame);
 
     // Release monitor if existing
     /*if (isAccessFlag(invokeStackFrame->method->Method, ACC_SYNCHRONIZED) == true) {
         do_MONITOREXIT(thread);
         current_frame(thread)->instPtr--;
     }*/
+    
+    check_end_of_exec(thread); 
 }
 
 void do_ARETURN(Thread *thread)
 {
+    dbgmsg("ARETURN");
+    
+    Stackframe* frame;
+    
+    // Pop stackframe of current method
+    Stack_pop(thread->frameStack, (void**)&frame);
+    
+    // Pop the object reference from the current operand stacks and
+    // push it onto the invokers operand stack
+    Object* objref;
+    Stack_pop(&(frame->operandStack), (void **) &objref);
+    
+    Stackframe* invokerFrame = current_frame(thread);
+    Stack_push(&(invokerFrame->operandStack), objref);
+    
+    frame = Stackframe_dispose(frame);
 }
 
 void do_DRETURN(Thread *thread)
 {
+    check_end_of_exec(thread); 
 }
 
 void do_FRETURN(Thread *thread)
 {
+    check_end_of_exec(thread); 
 }
 
 void do_LRETURN(Thread *thread)
 {
+    check_end_of_exec(thread); 
 }
 
 void do_IRETURN(Thread *thread)
 {
+    check_end_of_exec(thread); 
 }
 
 void do_RET(Thread *thread)
 {
+    check_end_of_exec(thread); 
 }

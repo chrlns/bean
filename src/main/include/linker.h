@@ -30,6 +30,6 @@ struct LINKFLAGS
 Method* dlink(Thread*, unsigned short, struct LINKFLAGS*);
 Method* find_method_name(Class*, const char*);
 
-Class* find_class_by_name(char* qualifiedName);
+Class* Classloader_forName(char* qualifiedName);
 
 #endif

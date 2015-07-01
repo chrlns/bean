@@ -43,4 +43,5 @@ typedef struct Stackframe
     Method* method;
 } Stackframe;
 
+void* Stackframe_dispose(Stackframe*);
 #endif

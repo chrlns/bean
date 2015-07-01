@@ -19,6 +19,14 @@
 #include <linker.h>
 #include <vm.h>
 
+/* Fetch field from object */
+void do_GETFIELD(Thread *thread)
+{
+    dbgmsg("GETFIELD");
+
+    //uint16_t index = Get2ByteOperand(current_frame(thread));
+}
+
 /* Get static field from class */
 void do_GETSTATIC(Thread *thread) {
     dbgmsg("GETSTATIC");
@@ -65,7 +73,7 @@ void do_GETSTATIC(Thread *thread) {
 
     // We have to make sure that the given class and field type are
     // already loaded. If not they must be loaded now.
-    Class* class = find_class_by_name(className->Text);
+    Class* class = Classloader_forName(className->Text);
 
     // Push the scalar type value or object reference onto the stack
     // FIXME

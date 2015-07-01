@@ -33,21 +33,21 @@ void do_ALOAD(Thread *thread)
    var[0] is always the reference to the local class (this). */
 void do_ALOADi(Thread *thread, uint8_t localVarIndex)
 {
-    /*Stackframe* stackframe = (Stackframe*)thread->methodStack.top;
-       Varframe* localVar = malloc(sizeof(Varframe));
+    Stackframe* frame = current_frame(thread);
+    Varframe* localVar = malloc(sizeof(Varframe));
 
-       #ifdef DEBUG
-       printf("\tALOAD_%u\n", localVarIndex);
-       #endif
-       assert(stackframe->localVarsLen > localVarIndex);
+#ifdef DEBUG
+    printf("\tALOAD_%u\n", localVarIndex);
+#endif
+    assert(frame->localVarsLen > localVarIndex);
 
-     */
+
     /* Values from the operand stack may be freed somewhere, so we
      * need a deep copy of the local var array value */
 //      *localVar = stackframe->localVars[localVarIndex];
 
     /* Push value to operand stack */
-//      Stack_push(&(thread->operandStack), localVar);
+    Stack_push(&(frame->operandStack), localVar);
 }
 
 void do_IALOAD(Thread *thread)

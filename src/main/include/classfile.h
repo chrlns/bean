@@ -75,7 +75,7 @@ struct CONSTANT_NAMETYPE_INFO {
 
 struct CONSTANT_UTF8_INFO {
     uint16_t Length;
-    StringUTF8* Text;
+    uint8_t* Text;
 };
 
 struct CONSTANTPOOL {
