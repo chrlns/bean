@@ -17,7 +17,9 @@
 
 #include <vm.h>
 
-#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#define __BYTE_ORDER_LITTLE_ENDIAN__
+
+#ifdef __BYTE_ORDER_LITTLE_ENDIAN__
 /* Works only for reading bigendian and saving in littleendian */
 unsigned int BufferToInt(unsigned char buffer[4])
 {
@@ -35,7 +37,7 @@ unsigned int BufferToInt(unsigned char buffer[4])
 }
 #endif
 
-#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+#ifdef __BYTE_ORDER_BIG_ENDIAN__
 /* Works only for reading bigendian and saving in bigendian */
 unsigned int BufferToInt(unsigned char buffer[4])
 {
@@ -53,7 +55,7 @@ unsigned int BufferToInt(unsigned char buffer[4])
 }
 #endif
 
-#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#ifdef __BYTE_ORDER_LITTLE_ENDIAN__
 /* Works only for reading bigendian (Java) and saving in littleendian */
 unsigned short BufferToShort(unsigned char buffer[2])
 {
@@ -67,7 +69,7 @@ unsigned short BufferToShort(unsigned char buffer[2])
 }
 #endif
 
-#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+#ifdef __BYTE_ORDER_ORDER_BIG_ENDIAN__
 /* Works only for reading bigendian (Java) and saving in bigendian */
 unsigned short BufferToShort(unsigned char buffer[2])
 {

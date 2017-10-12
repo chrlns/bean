@@ -45,7 +45,12 @@ void Class_init(Class* obj) {
 }
 
 Classloader* Classloader_new() {
-    return (Classloader*)malloc(sizeof(Classloader));
+    Classloader* classloader = (Classloader*)malloc(sizeof(Classloader));
+
+	classloader->loaded_classes = NULL;
+	classloader->loaded_classes_num = 0;
+
+	return classloader;
 }
 
 void Classloader_destroy(Classloader* ptr) {
