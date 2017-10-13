@@ -32,6 +32,8 @@ VM* VM_new() {
     vm->alive = true;
     vm->classloader = Classloader_new();
     vm->classpath = "./";
+	vm->ThreadNum = 0;
+	vm->Threads = NULL;
 
     return vm;
 }

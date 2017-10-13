@@ -42,6 +42,9 @@ void Stackframe_init(
     frame->instPtr   = method->CodeInfo->Code;
     frame->localVars = (Varframe*)malloc(sizeof(Varframe) * method->localVarsLen);
     frame->localVarsLen = method->localVarsLen;
+	frame->operandStack.limit = 0; // Max. size of the operand stack
+	frame->operandStack.size = 0;  
+	frame->operandStack.top = NULL;  
 
     assert(frame->constants != NULL);
     assert(frame->instPtr != NULL);

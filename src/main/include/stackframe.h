@@ -30,8 +30,7 @@ typedef struct Stackframe
     int16_t   localVarsLen;
 
     /* Operand stack */
-    Stack   operandStack;
-    int16_t operandStackSize; /* Max. size of the operand stack */
+    Stack operandStack;
 
     /* Reference to the constant pool */
     struct CONSTANTPOOL* constants;
