@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2020 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -694,6 +694,11 @@ bool ReadMethodInfo(Class * vmclass, FILE* classfile,
 
 FILE* find_class_file(const char* class)
 {
+#ifdef ATMEGA
+    // TODO FIXME
+    return NULL;
+#endif
+
 #ifdef DEBUG
     printf("Using %s as classpath\n", vm->classpath);
 #endif
