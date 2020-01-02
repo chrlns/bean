@@ -11,15 +11,14 @@ Some statements:
  - No extensive security features
  - No HW-threads (e.g. POSIX)
 
-The target platform is the [Arduino Zero](http://arduino.cc/en/Main/ArduinoBoardZero) board with an [Atmel ATSAMD21G](http://www.atmel.com/Images/45037B_SAM%20D%20Family_E_US_021014_Web.pdf) (48 MHz, 32 KBytes RAM). At least as soon as I get one...
+The target platform is my ancient [Arduino Duemilanove](https://www.arduino.cc/en/Main/arduinoBoardDuemilanove) board with an Atmel ATmega320p (16 MHz, 32 KiB Flash, 2 KiB RAM). Not that much hardware for a Java VM ;-)
 
 Usage
 -----
 
-To compile Bean you need Maven, a JDK and a GCC-compatible C compiler.
+To compile and flash Bean you need avr-gcc and avrdude:
 
-    $ mvn clean compile
- 
-To start Bean with the "Hello World" sample programm:
+    $ make micro
+    $ make program
 
-    $ target/nar/.../bin/bean -cp target/classes/ Hello
+Currently you cannot do anything useful with Bean but I will try to make a simple "hello world" pin 13 blink java class runable on the Bean VM.
