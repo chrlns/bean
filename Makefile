@@ -3,7 +3,9 @@ SRC_DIRS ?= ./src
 SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
 
 # Arduino Duemilanove ATmega328P
-CFLAGS=-mmcu=atmega328 -Os
+CFLAGS=-mmcu=atmega328 -Os -std=c11 -Wall
+
+all: micro
 
 micro:
 	avr-gcc -DATMEGA $(CFLAGS) -I src/include/ $(SRCS) -o bean
