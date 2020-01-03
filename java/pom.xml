@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.lins.bean</groupId>
     <artifactId>bean</artifactId>
-    <packaging>nar</packaging>
+    <packaging>jar</packaging>
     <version>0.1-SNAPSHOT</version>
     <name>Bean JVM</name>
     <url>https://github.com/cli/bean</url>
@@ -14,48 +14,8 @@
     </properties>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>com.github.maven-nar</groupId>
-                    <artifactId>nar-maven-plugin</artifactId>
-                    <version>3.0.0</version>
-                    <extensions>true</extensions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
 
         <plugins>
-
-            <plugin>
-                <groupId>com.github.maven-nar</groupId>
-                <artifactId>nar-maven-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <linker>
-                        <name>gcc</name>
-                    </linker>
-                    <c>
-                        <name>gcc</name>
-                        <sourceDirectory>${basedir}/src/main/c</sourceDirectory>
-                        <includes>
-                            <include>**/*.c</include>
-                        </includes>
-                        <includePaths>
-                            <includePath>${basedir}/src/main/include</includePath>
-                        </includePaths>
-                        <options>
-                            <option>-std=c99</option>
-                        </options>
-                    </c>
-                    <libraries>
-                        <library>
-                            <type>executable</type>
-                            <run>true</run>
-                        </library>
-                    </libraries>
-                </configuration>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -72,71 +32,6 @@
     </build>
 
     <profiles>
-
-        <profile>
-            <id>amd64-Linux</id>
-            <activation>
-                <os>
-                    <name>Linux</name>
-                    <arch>amd64</arch>
-                </os>
-            </activation>
-            <properties>
-                <stack.protector.option>-fno-stack-protector</stack.protector.option>
-                <architecture.option>-m64</architecture.option>
-                <debug.option>true</debug.option>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.github.maven-nar</groupId>
-                        <artifactId>nar-maven-plugin</artifactId>
-                        <configuration>
-                            <c>
-                                <name>gcc</name>
-                                <options>
-                                    <option>-DDEBUG</option>
-                                    <option>-std=c99</option>
-                                    <option>-g</option>
-                                    <option>-Wall</option>
-                                </options>
-                            </c>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>arm-Linux</id>
-            <activation>
-                <os>
-                    <name>Linux</name>
-                    <arch>arm</arch>
-                </os>
-            </activation>
-            <properties>
-                <stack.protector.option>-fno-stack-protector</stack.protector.option>
-                <debug.option>true</debug.option>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.github.maven-nar</groupId>
-                        <artifactId>nar-maven-plugin</artifactId>
-                        <configuration>
-                            <c>
-                                <options>
-                                    <option>-DDEBUG</option>
-                                    <option>-std=c99</option>
-                                    <option>-Wall</option>
-                                </options>
-                            </c>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
 
     </profiles>
 

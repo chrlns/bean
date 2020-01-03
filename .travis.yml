@@ -1,8 +1,10 @@
 sudo: false
 language: c
-script: "make micro"
+script: "make all"
 addons:
   apt:
     packages:
       - gcc-avr
       - avr-libc
+      - openjdk-11-jdk
+      - maven
