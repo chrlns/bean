@@ -76,14 +76,16 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    FILE* class_file = find_class_file(main_class);
-    if (class_file == NULL) {
+
+
+    Class* mainClass = Classloader_forName(main_class);
+    if (mainClass == NULL) {
         printf("Could not open main class: %s\n", main_class);
         return 1;
     }
 
     /* Creating init processes... */
-    if (start_process(class_file) == false) {
+    if (start_process(mainClass) == false) {
         printf("Fatal Error: Could not start init process %s!\n", main_class);
         return 2;
     }

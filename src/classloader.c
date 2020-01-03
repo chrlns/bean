@@ -496,17 +496,10 @@ bool ReadAttributeInfo(struct ATTRIBUTE_INFO * attributeInfo,
     unsigned char buffer2[2];
     unsigned char buffer4[4];
 
-#ifdef DEBUG
-    printf("Begin reading ATTRIBUTE_INFO...\n");
-#endif
-
     /* Read attribute name index */
     if (fread(buffer2, 1, 2, classfile) == 2) {
         attributeInfo->AttributeNameIndex = BufferToShort(buffer2);
     } else {
-#ifdef DEBUG
-        printf("Read of ATTRIBUTE_INFO.AttributeNameIndex failed!\n");
-#endif
         return false;
     }
 
@@ -514,9 +507,6 @@ bool ReadAttributeInfo(struct ATTRIBUTE_INFO * attributeInfo,
     if (fread(buffer4, 1, 4, classfile) == 4) {
         attributeInfo->AttributeLength = BufferToInt(buffer4);
     } else {
-#ifdef DEBUG
-        printf("Read ATTRIBUTE_INFO.AttributeLength!\n");
-#endif
         return false;
     }
 
@@ -537,9 +527,6 @@ bool ReadAttributeInfo(struct ATTRIBUTE_INFO * attributeInfo,
 #endif
         return false;
     }
-#ifdef DEBUG
-    printf("Read of ATTRIBUTE_INFO succeeded!\n");
-#endif
 
     return true;
 }

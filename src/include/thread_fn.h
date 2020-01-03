@@ -24,7 +24,7 @@
 #include <thread.h>
 
 int  exec_thread(Thread*);
-int  start_process(FILE*);
+int  start_process(Class*);
 
 Thread* Thread_next_ready();
 void Thread_exec(Thread* thread);

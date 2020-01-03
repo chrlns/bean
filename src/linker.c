@@ -40,8 +40,8 @@ void Method_parseDescriptor(Method* method, const char* descriptor) {
  * Finds, loads and initializes a new class specified by the
  * full qualified name.
  */
-Class* Classloader_forName(char* qualifiedName)
-{
+Class* Classloader_forName(char* qualifiedName) {
+    printf("Classload_forName: %s\n", qualifiedName);
     /* Search for already loaded class */
     for (int n = 0; n < vm->classloader->loaded_classes_num; n++) {
         //printf("Comparing %s with %s\n", qualifiedName, vm->classloader->loaded_classes[n].QualifiedName);
@@ -69,11 +69,6 @@ Class* Classloader_forName(char* qualifiedName)
     return class;
 }
 
-Class *FindClassByNameIndex(Class *localClass,
-                                     unsigned short nameIndex)
-{
-    return NULL;
-}
 
 /* This method searches in the local constant pool for a method and returns the index
      of the method in the MethodLookupTable. */

@@ -28,7 +28,7 @@
 #include <class.h>
 #include <stackframe.h>
 #include <classloader.h>
-
+#include <linker.h>
 
 #define isAccessFlag(method, accFlag) \
     (method->AccessFlags & accFlag) == accFlag

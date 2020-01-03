@@ -68,7 +68,7 @@ Stackframe* Stackframe_create_init_push(Thread* thread, Class* class, Method* me
     return stackframe;
 }
 
-int start_process(FILE* class_file)
+int start_process(Class* new_class)
 {
     Method* mainMethod = NULL;
     Method* clinitMethod = NULL;
@@ -79,12 +79,6 @@ int start_process(FILE* class_file)
 
     /* Initialize main thread */
     init_thread(&vm->Threads[0]);
-
-    Class* new_class = Class_new();
-
-    if (load_class_file(class_file, new_class) == false) {
-        return false;
-    }
 
     /* Search for main method */
     mainMethod = find_method_name(new_class, "main");
