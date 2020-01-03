@@ -66,6 +66,8 @@ int exec_thread(Thread *thread)
     // Instruction pointer is incremented by one AFTER execution,
     // except for the INVOKE and RETURN statements where this is handled in
     // the appropriate do-functions.
+    bool incrementPtr = true;
+
     uint8_t opcode = *(frame->instPtr);
     switch (opcode) {
     case IL_NOP:{              /* No operation */
@@ -915,6 +917,7 @@ int exec_thread(Thread *thread)
     case IL_RET:
         {
             do_RET(thread);
+            incrementPtr = false;
             break;
         }
     case IL_TABLESWITCH:
@@ -930,31 +933,37 @@ int exec_thread(Thread *thread)
     case IL_IRETURN:
         {
             do_IRETURN(thread);
+            incrementPtr = false;
             break;
         }
     case IL_LRETURN:
         {
             do_LRETURN(thread);
+            incrementPtr = false;
             break;
         }
     case IL_FRETURN:
         {
             do_FRETURN(thread);
+            incrementPtr = false;
             break;
         }
     case IL_DRETURN:
         {
             do_DRETURN(thread);
+            incrementPtr = false;
             break;
         }
     case IL_ARETURN:
         {
             do_ARETURN(thread);
+            incrementPtr = false;
             break;
         }
     case IL_RETURN:
         {
             do_RETURN(thread);
+            incrementPtr = false;
             break;
         }
     case IL_GETSTATIC:
@@ -980,21 +989,25 @@ int exec_thread(Thread *thread)
     case IL_INVOKEVIRTUAL:
         {
             do_INVOKEVIRTUAL(thread);
+            incrementPtr = false;
             break;
         }
     case IL_INVOKESPECIAL:
         {
             do_INVOKESPECIAL(thread);
+            incrementPtr = false;
             break;
         }
     case IL_INVOKESTATIC:
         {
             do_INVOKESTATIC(thread);
+            incrementPtr = false;
             break;
         }
     case IL_INVOKEINTERFACE:
         {
             do_INVOKEINTERFACE(thread);
+            incrementPtr = false;
             break;
         }
     case IL_NEW:
@@ -1092,7 +1105,9 @@ int exec_thread(Thread *thread)
 
     // Instruction pointer is incremented by one. Some opcodes have already
     // incremented the pointer, but the last incrementation is done here
-    frame->instPtr++;
+    if(incrementPtr) {
+        frame->instPtr++;
+    }
 
 #ifdef INTERACTIVE
     printf("Press any key to continue execution...\n");
