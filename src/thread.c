@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2020 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -123,7 +123,7 @@ Thread* Thread_next_ready(void)
     return Thread_next_ready();
 }
 
-void Thread_exec(Thread* thread) {
+void Thread_exec(Thread* thread, bool Xexecstep) {
     // Run the thread code until timeslice is over
     for (; thread->PriorityCurrent > 0; thread->PriorityCurrent >>= 1) {
         if (!vm->alive) {
@@ -131,5 +131,10 @@ void Thread_exec(Thread* thread) {
             return;
         }
         exec_thread(thread);
+
+        if (Xexecstep) {
+            dbgmsg("Press any key to continue execution...\n");
+            getchar();
+        }
     }   
 }

@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2020 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -1108,11 +1108,6 @@ int exec_thread(Thread *thread)
     if(incrementPtr) {
         frame->instPtr++;
     }
-
-#ifdef INTERACTIVE
-    printf("Press any key to continue execution...\n");
-    getchar();
-#endif
 
     return true;
 }

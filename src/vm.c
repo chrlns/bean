@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2020 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@ void VM_destroy(VM* vm) {
 int main(int argc, char *argv[])
 {
     char* main_class = NULL;
+    bool argXexecstep = false;
 
     /* Create new VM instance */
     vm = VM_new();    
@@ -59,6 +60,8 @@ int main(int argc, char *argv[])
             if (argv[n][0] == '-') {
                 if (strcmp(argv[n], "-cp") == 0) {
                     vm->classpath = argv[++n];
+                } else if (strcmp(argv[n], "-Xexecstep") == 0) {
+                    argXexecstep = true;
                 } else {
                     printf("Unknown argument '%s'\n", argv[n]);
                 }
@@ -76,8 +79,6 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-
-
     Class* mainClass = Classloader_forName(main_class);
     if (mainClass == NULL) {
         printf("Could not open main class: %s\n", main_class);
@@ -93,7 +94,7 @@ int main(int argc, char *argv[])
     dbgmsg("Start!");
     while (vm->alive) {
         Thread* thread = Thread_next_ready();
-        Thread_exec(thread);
+        Thread_exec(thread, argXexecstep);
     }
 
     dbgmsg("Shutdown virtual machine...");

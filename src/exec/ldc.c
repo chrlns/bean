@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2020 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -31,21 +31,28 @@ void do_LDC(Thread *thread) {
     printf("\tLDC Tag = %u\n", item->Tag);
 #endif
     switch (item->Tag) {
-        case CONSTANTPOOL_INTEGER:
-        {
+        case CONSTANTPOOL_UTF8: {
+            value->data.ptr = item->Data; /* Pointer to a CONSTANT_UTF8_INFO structure */
+            break;
+        }
+        case CONSTANTPOOL_INTEGER: {
             value->data.SignedInt32Value = (int32_t) ((struct CONSTANT_INTEGER_INFO*) item->Data)->Value;
             break;
         }
-        case CONSTANTPOOL_FLOAT:
-        {
+        case CONSTANTPOOL_FLOAT: {
             value->data.FloatValue = (float) ((struct CONSTANT_FLOAT_INFO*) item->Data)->Value;
             break;
         }
-        case CONSTANTPOOL_STRING:
-        {
-            value->data.ptr = item->Data; /* Pointer to a string info. */
+        case CONSTANTPOOL_STRING: {
+            value->data.ptr = item->Data; /* Pointer to a CONSTANT_STRING_INFO structure */
             break;
         }
+#ifdef DEBUG
+        default: {
+            dbgmsg("LDC Unknown Constant Pool Type. Exit!");
+            exit(-1);
+        }
+#endif
     }
 
     /* Push value onto the stack */
