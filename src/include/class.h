@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2020 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ typedef struct Class {
     uint16_t                MainMethodIndex;    // 0 means no method, >0 index in the Methods array.
     Method*   Methods;
     uint16_t                MethodsNum;
-    const char*             QualifiedName;      // Full qualified name
+    char*                   QualifiedName;      // Full qualified name
     uint16_t                SuperClassIndex;
     uint16_t                ThisClassIndex;
     struct VERSION          Version;

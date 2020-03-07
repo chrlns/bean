@@ -713,7 +713,7 @@ FILE* find_class_file(const char* class)
     char* class_file_path = malloc(sizeof(char) *
         (strlen(class_file) + strlen(vm->classpath) + 1));
     strcpy(class_file_path, vm->classpath);
-    strncat(class_file_path, class_file, strlen(class_file));
+    class_file_path = strncat(class_file_path, class_file, strlen(class_file));
     file = fopen(class_file_path, "rb");
 #ifdef DEBUG
     printf("Trying '%s'\n", class_file_path);

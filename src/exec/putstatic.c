@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2020 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,17 @@
 void do_PUTSTATIC(Thread *thread)
 {
     uint16_t index;
+    Stackframe* frame = current_frame(thread);
     dbgmsg("PUTSTATIC");
 
+    // Index of the value that is to be put in the class
+    // within the constant pool
     index = Get2ByteOperand(current_frame(thread));
+    frame->instPtr++;
+
+    struct CONSTANTPOOL item = frame->constants[index - 1];
+
+#ifdef DEBUG
+    printf("\tPUTSTATIC Tag = %u\n", item.Tag);
+#endif
 }

@@ -75,7 +75,8 @@ int main(int argc, char *argv[])
     if (main_class == NULL) {
         printf("bean [options] <classname>\n");
         printf("Missing options!\n");
-        printf("-cp\t Class path (currently only one supported)\n");
+        printf("-cp\t\t Class path (currently only one supported)\n");
+        printf("-Xexecstep\t Pause execution after every instruction\n");
         return 0;
     }
 
