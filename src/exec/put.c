@@ -50,3 +50,12 @@ void do_PUTSTATIC(Thread *thread)
         exit(-1);
     }
 }
+
+/* Set field in object */
+void do_PUTFIELD(Thread *thread)
+{
+    uint16_t index;
+    dbgmsg("PUTFIELD");
+
+    index = Get2ByteOperand(current_frame(thread));
+}
