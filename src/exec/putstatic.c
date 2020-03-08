@@ -28,11 +28,25 @@ void do_PUTSTATIC(Thread *thread)
     // Index of the value that is to be put in the class
     // within the constant pool
     index = Get2ByteOperand(current_frame(thread));
-    frame->instPtr++;
 
     struct CONSTANTPOOL item = frame->constants[index - 1];
 
-#ifdef DEBUG
-    printf("\tPUTSTATIC Tag = %u\n", item.Tag);
-#endif
+    #ifdef DEBUG
+        printf("\tPUTSTATIC Tag = %u\n", item.Tag);
+    #endif
+
+    if (item.Tag == CONSTANTPOOL_FIELDREF) {
+        struct CONSTANT_REF_INFO* fieldRef = (struct CONSTANT_REF_INFO*)item.Data;
+        #ifdef DEBUG
+            printf("\tClassIndex = %u\n", fieldRef->ClassIndex);
+            printf("\tNameAndTypeIndex = %u\n", fieldRef->NameAndTypeIndex);
+        #endif
+        struct CONSTANT_CLASS_INFO* classInfo = (struct CONSTANT_CLASS_INFO*)
+            &frame->constants[fieldRef->ClassIndex - 1];
+        struct CONSTANT_NAMETYPE_INFO* nameTypeInfo = (struct CONSTANT_NAMETYPE_INFO*)
+            &frame->constants[fieldRef->NameAndTypeIndex - 1];
+    } else {
+        printf("Unexpected CONSTANTPOOL item!");
+        exit(-1);
+    }
 }
