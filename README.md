@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/chrlns/bean.svg?branch=master)](https://travis-ci.org/chrlns/bean)
-
 Bean JVM
 =========
 
