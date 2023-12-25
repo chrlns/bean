@@ -81,6 +81,12 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    Class* objectClass = Classloader_forName("java/lang/Object");
+    if (objectClass == NULL) {
+        printf("Could not open Object class\n");
+        return 1;
+    }
+
     Class* mainClass = Classloader_forName(main_class);
     if (mainClass == NULL) {
         printf("Could not open main class: %s\n", main_class);

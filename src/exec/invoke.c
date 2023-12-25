@@ -27,7 +27,7 @@ extern Stackframe* Stackframe_create_init_push(Thread*, Class*, Method*);
 /*
  * Basic invoke function.
  */
-void invoke(Thread *thread)
+void invoke(Thread *thread, bool is_static)
 {
     Stackframe* frame = current_frame(thread);
     uint16_t idx = Get2ByteOperand(frame);
@@ -53,6 +53,9 @@ void invoke(Thread *thread)
 
     uint16_t nargs = 0;         // TODO: Parse method descriptor
     
+    // INVOKESPECIAL/VIRTUAL/INTERFACE: pop objectref and args
+    // INVOKESTATIC: pop args
+
     // Pop nargs from operand stack
     /* Operand stack contains nargs arguments for the called method
      * which form the contents of the new_frame's local var array */
@@ -67,6 +70,9 @@ void invoke(Thread *thread)
     // Pop object reference from operand stack
     void* objRef;
     Stack_pop(&(frame->operandStack), &objRef);
+#ifdef DEBUG
+    printf("\tObjRef %p\n", objRef);
+#endif
 
     // Increment the invokers instruction pointer by one, otherwise
     // we'll be stuck in an infinite loop
@@ -81,7 +87,7 @@ void invoke(Thread *thread)
 void do_INVOKEINTERFACE(Thread *thread)
 {
     dbgmsg("INVOKEINTERFACE");
-    invoke(thread);
+    invoke(thread, false);
 }
 
 /*
@@ -91,7 +97,7 @@ void do_INVOKEINTERFACE(Thread *thread)
 void do_INVOKEVIRTUAL(Thread *thread)
 {
     dbgmsg("INVOKEVIRTUAL");
-    invoke(thread);
+    invoke(thread, false);
 }
 
 /*
@@ -101,7 +107,7 @@ void do_INVOKEVIRTUAL(Thread *thread)
 void do_INVOKESPECIAL(Thread *thread)
 {
     dbgmsg("INVOKESPECIAL")
-    invoke(thread);
+    invoke(thread, false);
 }
 
 /*
@@ -111,12 +117,12 @@ void do_INVOKESPECIAL(Thread *thread)
 void do_INVOKESTATIC(Thread *thread)
 {
     dbgmsg("INVOKESTATIC");
-    invoke(thread);
+    invoke(thread, true);
 }
 
 void do_INVOKEDYNAMIC(Thread *thread) {
     dbgmsg("INVOKEDYNAMIC");
-    invoke(thread);
+    invoke(thread, false);
     
     Stackframe* frame = current_frame(thread);
     Get2ByteOperand(frame); // Skip two zero bytes

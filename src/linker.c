@@ -54,7 +54,8 @@ Class* Classloader_forName(const char* qualifiedName) {
     FILE* class_file = find_class_file(qualifiedName);
     if (class_file == NULL) {
         printf("Classfile %s not found!\n", qualifiedName);
-        return NULL;
+        exit(-1);
+        //return NULL; // FIXME We should raise an exception here
     }
 
     Class* class = Class_new();
@@ -180,7 +181,7 @@ Method* find_method_idx(Class *vmclass,
 
 //          return methodConstructor;
             dbgmsg("Not implemented");
-            return NULL;
+            exit(-1);
         }
 
         /* Class is the base-of-all java/lang/Object */

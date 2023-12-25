@@ -19,6 +19,7 @@
 #define _STACKFRAME_H_
 
 #include <classfile.h>
+#include <object.h>
 #include <stack.h>
 #include <types.h>
 
@@ -40,6 +41,8 @@ typedef struct Stackframe
 
     /* Invoked method */
     Method* method;
+
+    Object* object;
 } Stackframe;
 
 void* Stackframe_dispose(Stackframe*);

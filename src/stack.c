@@ -50,6 +50,10 @@ Stack* Stack_new(unsigned int limit)
 
 int Stack_pop(Stack* stack, void** data)
 {
+    #ifdef DEBUG
+        printf("Stack_pop(%p) limit=%u, size=%u\n", (void*)stack, stack->limit, stack->size);
+    #endif
+
     void *ptr;
 
     if (stack->size == 0) {
@@ -66,6 +70,10 @@ int Stack_pop(Stack* stack, void** data)
 
 int Stack_push(Stack* stack, void* data)
 {
+    #ifdef DEBUG
+        printf("Stack_push(%p) limit=%u, size=%u\n", (void*)stack, stack->limit, stack->size);
+    #endif
+
     if (stack->size == stack->limit) {
         return 1;  /* Stack overflow */
     } else {

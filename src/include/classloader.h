@@ -24,13 +24,6 @@
 #include <class.h>
 #include <types.h>
 
-/* Represents a Java object */
-typedef struct {
-    Class*    class;
-    Varframe* fields;
-    uint16_t  fields_num;
-} Object;
-
 bool load_class_file(FILE* classfile, Class* clazz);
 FILE* find_class_file(const char* class);
 

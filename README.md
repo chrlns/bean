@@ -20,3 +20,8 @@ To compile and flash Bean you need avr-gcc and avrdude:
     $ make program
 
 Currently you cannot do anything useful with Bean but I will try to make a simple "hello world" pin 13 blink java class runable on the Bean VM.
+You can run (or at least try to run) the Hello program on the PC with:
+
+    $ ./bean -cp java/target/classes/ Hello
+
+It will probably fail fast.
