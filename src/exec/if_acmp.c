@@ -25,6 +25,8 @@ void do_IF_ACMPEQ(Thread *thread)
     dbgmsg("IF_ACMPEQ");
 
     offset = Get2ByteOperand(current_frame(thread));
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 /* Branch if reference comparison succeeds */
@@ -34,4 +36,6 @@ void do_IF_ACMPNE(Thread *thread)
     dbgmsg("IF_ACMPNE");
 
     offset = Get2ByteOperand(current_frame(thread));
+    dbgmsg("Not implemented");
+    exit(-10);
 }

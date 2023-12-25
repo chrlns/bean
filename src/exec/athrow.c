@@ -24,4 +24,6 @@ void do_ATHROW(Thread *thread)
 #ifdef DEBUG
     printf("\tATHROW\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

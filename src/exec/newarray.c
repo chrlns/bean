@@ -24,4 +24,7 @@ void do_NEWARRAY(Thread *thread)
 
     uint8_t atype;
     atype = Get1ByteOperand(current_frame(thread));
+
+    dbgmsg("Not implemented");
+    exit(-10);
 }

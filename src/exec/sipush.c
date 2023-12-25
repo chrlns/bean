@@ -21,4 +21,6 @@
 void do_SIPUSH(Thread *thread)
 {
     dbgmsg("SIPUSH");
+    dbgmsg("Not implemented");
+    exit(-10);
 }

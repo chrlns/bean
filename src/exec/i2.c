@@ -22,6 +22,8 @@ void do_I2S(Thread *thread)
 #ifdef DEBUG
     printf("\tI2S\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_I2L(Thread *thread)
@@ -29,6 +31,8 @@ void do_I2L(Thread *thread)
 #ifdef DEBUG
     printf("\tI2L\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_I2C(Thread *thread)
@@ -36,6 +40,8 @@ void do_I2C(Thread *thread)
 #ifdef DEBUG
     printf("\tI2C\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_I2B(Thread *thread)
@@ -43,6 +49,8 @@ void do_I2B(Thread *thread)
 #ifdef DEBUG
     printf("\tI2B\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_I2D(Thread *thread)
@@ -50,6 +58,8 @@ void do_I2D(Thread *thread)
 #ifdef DEBUG
     printf("\tI2D\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_I2F(Thread *thread)
@@ -57,4 +67,6 @@ void do_I2F(Thread *thread)
 #ifdef DEBUG
     printf("\tI2F\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

@@ -25,4 +25,6 @@ void do_ANEWARRAY(Thread *thread)
     dbgmsg("ANEWARRAY");
 
     index = Get2ByteOperand(current_frame(thread));
+    dbgmsg("Not implemented");
+    exit(-10);
 }

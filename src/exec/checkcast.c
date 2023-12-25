@@ -23,4 +23,6 @@ void do_CHECKCAST(Thread *thread)
 #ifdef DEBUG
     printf("\tCHECKCAST\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

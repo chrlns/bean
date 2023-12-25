@@ -19,6 +19,9 @@
 
 void IF_ICMP(Thread *thread, bool(*cmpfnc) (int, int))
 {
+    dbgmsg()"IF_ICMP");
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_IF_ICMPLE(Thread *thread)
@@ -26,6 +29,8 @@ void do_IF_ICMPLE(Thread *thread)
 #ifdef DEBUG
     printf("\tIF_ICMPLE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_IF_ICMPGT(Thread *thread)
@@ -33,6 +38,8 @@ void do_IF_ICMPGT(Thread *thread)
 #ifdef DEBUG
     printf("\tIF_ICMPGT\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_IF_ICMPGE(Thread *thread)
@@ -40,6 +47,8 @@ void do_IF_ICMPGE(Thread *thread)
 #ifdef DEBUG
     printf("\tIF_ICMPGE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_IF_ICMPLT(Thread *thread)
@@ -47,6 +56,8 @@ void do_IF_ICMPLT(Thread *thread)
 #ifdef DEBUG
     printf("\tIF_ICMPLT\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_IF_ICMPNE(Thread *thread)
@@ -54,6 +65,8 @@ void do_IF_ICMPNE(Thread *thread)
 #ifdef DEBUG
     printf("\tICMPNE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_IF_ICMPEQ(Thread *thread)
@@ -61,4 +74,6 @@ void do_IF_ICMPEQ(Thread *thread)
 #ifdef DEBUG
     printf("\tNOP\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

@@ -22,6 +22,8 @@ void do_FLOADi(Thread *thread, int index)
 #ifdef DEBUG
     printf("\tFLOADi\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_FLOAD(Thread *thread)
@@ -29,4 +31,6 @@ void do_FLOAD(Thread *thread)
 #ifdef DEBUG
     printf("\tFLOAD\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

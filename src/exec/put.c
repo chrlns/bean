@@ -58,4 +58,7 @@ void do_PUTFIELD(Thread *thread)
     dbgmsg("PUTFIELD");
 
     index = Get2ByteOperand(current_frame(thread));
+
+    dbgmsg("Not implemented");
+    exit(-10);
 }

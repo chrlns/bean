@@ -22,6 +22,8 @@ void do_LLOADi(Thread *thread, int index)
 #ifdef DEBUG
     printf("\tNOP\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_LLOAD(Thread *thread)
@@ -29,4 +31,6 @@ void do_LLOAD(Thread *thread)
 #ifdef DEBUG
     printf("\tNOP\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

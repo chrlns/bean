@@ -19,6 +19,9 @@
 
 void IF(Thread *thread, bool(*cmpfnc) (int, int))
 {
+    dbgmsg("IF");
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 /* Branch if int comparison with zero succeeds */
@@ -27,6 +30,8 @@ void do_IFLE(Thread *thread)
 #ifdef DEBUG
     printf("\tIFLE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 /* Branch if int comparison with zero succeeds */
@@ -35,6 +40,8 @@ void do_IFGT(Thread *thread)
 #ifdef DEBUG
     printf("\tIFGT\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 /* Branch if int comparison with zero succeeds */
@@ -43,6 +50,8 @@ void do_IFGE(Thread *thread)
 #ifdef DEBUG
     printf("\tIFGE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 /* Branch if int comparison with zero succeeds */
@@ -51,6 +60,8 @@ void do_IFLT(Thread *thread)
 #ifdef DEBUG
     printf("\tIFLT\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 /* Branch if int comparison with zero succeeds */
@@ -59,6 +70,8 @@ void do_IFNE(Thread *thread)
 #ifdef DEBUG
     printf("\tIFNE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 /* Branch if int comparison with zero succeeds */
@@ -67,4 +80,6 @@ void do_IFEQ(Thread *thread)
 #ifdef DEBUG
     printf("\tIFEQ\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

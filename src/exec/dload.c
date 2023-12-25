@@ -21,6 +21,8 @@
 void do_DLOAD(Thread *thread)
 {
     dbgmsg("DLOAD");
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 /* Pushes object reference from local vars [0] onto the stack
@@ -28,4 +30,6 @@ void do_DLOAD(Thread *thread)
 void do_DLOADi(Thread *thread, int localVarIndex)
 {
     dbgmsg("DLOADi");
+    dbgmsg("Not implemented");
+    exit(-10);
 }

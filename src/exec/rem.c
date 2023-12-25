@@ -22,6 +22,8 @@ void do_IREM(Thread *thread)
 #ifdef DEBUG
     printf("\tIREM\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_LREM(Thread *thread)
@@ -29,6 +31,8 @@ void do_LREM(Thread *thread)
 #ifdef DEBUG
     printf("\tLREM\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_FREM(Thread *thread)
@@ -36,6 +40,8 @@ void do_FREM(Thread *thread)
 #ifdef DEBUG
     printf("\tFREM\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_DREM(Thread *thread)
@@ -43,4 +49,6 @@ void do_DREM(Thread *thread)
 #ifdef DEBUG
     printf("\tDREM\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

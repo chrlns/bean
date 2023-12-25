@@ -27,5 +27,7 @@ void do_LOOKUPSWITCH(Thread *thread)
     /* This opcode is a little tricky because it uses padding bytes for
        address alignment (nobody knows why...), so the length of the
        operands is variable! */
+    dbgmsg("Not implemented");
+    exit(-10);
 
 }

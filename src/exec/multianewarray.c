@@ -28,4 +28,6 @@ void do_MULTIANEWARRAY(Thread *thread)
 
     index = Get2ByteOperand(current_frame(thread));
     dimensions = Get1ByteOperand(current_frame(thread));
+    dbgmsg("Not implemented");
+    exit(-10);
 }

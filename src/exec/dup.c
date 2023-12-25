@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2015 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2023 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,13 +15,14 @@
  *  limitations under the License.
  */
 
+#include <debug.h>
 #include <vm.h>
 
 void do_DUP(Thread *thread)
 {
-#ifdef DEBUG
-    printf("\tDUP\n");
-#endif
+    dbgmsg("DUP");
+    dbgmsg("Not implemented");
+    exit(-1);
 }
 
 void do_DUP_X1(Thread *thread)
@@ -29,6 +30,7 @@ void do_DUP_X1(Thread *thread)
 #ifdef DEBUG
     printf("\tDUP_X1\n");
 #endif
+    dbgmsg("Not implemented");
 }
 
 void do_DUP_X2(Thread *thread)
@@ -36,6 +38,7 @@ void do_DUP_X2(Thread *thread)
 #ifdef DEBUG
     printf("\tDUP_X2\n");
 #endif
+    dbgmsg("Not implemented");
 }
 
 void do_DUP2(Thread *thread)
@@ -43,6 +46,7 @@ void do_DUP2(Thread *thread)
 #ifdef DEBUG
     printf("\tDUP2\n");
 #endif
+    dbgmsg("Not implemented");
 }
 
 void do_DUP2_X1(Thread *thread)
@@ -50,6 +54,7 @@ void do_DUP2_X1(Thread *thread)
 #ifdef DEBUG
     printf("\tDUP2_X1\n");
 #endif
+    dbgmsg("Not implemented");
 }
 
 void do_DUP2_X2(Thread *thread)
@@ -57,4 +62,5 @@ void do_DUP2_X2(Thread *thread)
 #ifdef DEBUG
     printf("\tDUP2_X2\n");
 #endif
+    dbgmsg("Not implemented");
 }

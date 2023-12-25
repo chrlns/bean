@@ -22,6 +22,8 @@ void do_D2I(Thread *thread)
 #ifdef DEBUG
     printf("\tD2I\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_D2L(Thread *thread)
@@ -29,6 +31,8 @@ void do_D2L(Thread *thread)
 #ifdef DEBUG
     printf("\tD2L\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_D2F(Thread *thread)
@@ -36,4 +40,6 @@ void do_D2F(Thread *thread)
 #ifdef DEBUG
     printf("\tD2F\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

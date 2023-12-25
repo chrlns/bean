@@ -22,4 +22,6 @@
 void do_ACONST_NULL(Thread* thread)
 {
     dbgmsg("ACONST_NULL");
+    dbgmsg("Not implemented");
+    exit(-10);
 }

@@ -21,4 +21,6 @@
 void do_LCONSTi(Thread *thread, int64_t constant)
 {
     dbgmsg("LCONSTi");
+        dbgmsg("Not implemented");
+    exit(-10);
 }

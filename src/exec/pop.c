@@ -22,6 +22,8 @@ void do_POP(Thread *thread)
 #ifdef DEBUG
     printf("\tPOP\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_POP2(Thread *thread)
@@ -29,4 +31,6 @@ void do_POP2(Thread *thread)
 #ifdef DEBUG
     printf("\tPOP2\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

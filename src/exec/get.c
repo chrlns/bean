@@ -25,6 +25,8 @@ void do_GETFIELD(Thread *thread)
     dbgmsg("GETFIELD");
 
     //uint16_t index = Get2ByteOperand(current_frame(thread));
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 /* Get static field from class */
@@ -77,4 +79,6 @@ void do_GETSTATIC(Thread *thread) {
 
     // Push the scalar type value or object reference onto the stack
     // FIXME
+    dbgmsg("Not implemented");
+    exit(-10);
 }

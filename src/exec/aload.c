@@ -22,11 +22,14 @@
 /* Load reference from local variable. */
 void do_ALOAD(Thread *thread)
 {
+    dbgmsg("Not implemented");
+    exit(-10);
     /*struct OperandStackFrame obj; */
 
     /* Load var from LocalVarArray */
 
     /* Push obj onto the stack */
+
 }
 
 /* Pushes object reference from local vars [0] onto the stack
@@ -52,32 +55,48 @@ void do_ALOADi(Thread *thread, uint8_t localVarIndex)
 
 void do_IALOAD(Thread *thread)
 {
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_LALOAD(Thread *thread)
 {
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_FALOAD(Thread *thread)
 {
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_DALOAD(Thread *thread)
 {
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_AALOAD(Thread *thread)
 {
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_BALOAD(Thread *thread)
 {
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_CALOAD(Thread *thread)
 {
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_SALOAD(Thread *thread)
 {
+    dbgmsg("Not implemented");
+    exit(-10);
 }

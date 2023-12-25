@@ -60,7 +60,13 @@ void do_LDC(Thread *thread) {
 }
 
 void do_LDC_W(Thread *thread) {
+    dbgmsg("LDC_W");
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_LDC2_W(Thread *thread) {
+    dbgmsg("LDC2_W");
+    dbgmsg("Not implemented");
+    exit(-10);
 }

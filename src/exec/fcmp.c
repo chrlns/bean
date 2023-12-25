@@ -22,6 +22,8 @@ void do_FCMPG(Thread *thread)
 #ifdef DEBUG
     printf("\tFCMPG\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_FCMPL(Thread *thread)
@@ -29,4 +31,6 @@ void do_FCMPL(Thread *thread)
 #ifdef DEBUG
     printf("\tFCMPL\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

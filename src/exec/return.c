@@ -76,25 +76,40 @@ void do_ARETURN(Thread *thread)
 
 void do_DRETURN(Thread *thread)
 {
-    check_end_of_exec(thread); 
+    check_end_of_exec(thread);
+    dbgmsg("DRETURN");
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_FRETURN(Thread *thread)
 {
-    check_end_of_exec(thread); 
+    check_end_of_exec(thread);
+    dbgmsg("FRETURN");
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_LRETURN(Thread *thread)
 {
     check_end_of_exec(thread); 
+    dbgmsg("LRETURN");
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_IRETURN(Thread *thread)
 {
-    check_end_of_exec(thread); 
+    check_end_of_exec(thread);
+    dbgmsg("IRETURN");
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_RET(Thread *thread)
 {
-    check_end_of_exec(thread); 
+    check_end_of_exec(thread);
+    dbgmsg("RET");
+    dbgmsg("Not implemented");
+    exit(-10);
 }

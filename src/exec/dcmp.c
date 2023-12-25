@@ -22,6 +22,8 @@ void do_DCMPG(Thread *thread)
 #ifdef DEBUG
     printf("\tDCMPG\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_DCMPL(Thread *thread)
@@ -29,4 +31,6 @@ void do_DCMPL(Thread *thread)
 #ifdef DEBUG
     printf("\tDCMPL\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

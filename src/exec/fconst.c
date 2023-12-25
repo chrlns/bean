@@ -21,4 +21,6 @@
 void do_FCONSTi(Thread *thread, float constant)
 {
     dbgmsg("FCONSTi");
+    dbgmsg("Not implemented");
+    exit(-10);
 }

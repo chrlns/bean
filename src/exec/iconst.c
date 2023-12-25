@@ -23,4 +23,6 @@ void do_ICONSTi(Thread *thread, int constant)
 #ifdef DEBUG
     printf("\tICONSTi\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

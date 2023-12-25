@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2020 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2023 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -83,7 +83,7 @@ int start_process(Class* new_class)
     /* Search for main method */
     mainMethod = find_method_name(new_class, "main");
     if (mainMethod == NULL) {
-        dbgmsg("No main method found!\n");
+        dbgmsg("No main method found!");
         return false;
     }
     
@@ -95,6 +95,7 @@ int start_process(Class* new_class)
         dbgmsg("No class constructor found. Continue with main.");
     } else {
         // Invoke class constructor using special INVOKE instruction
+        dbgmsg("Invoke <clinit>");
         Stackframe_create_init_push(&(vm->Threads[0]), new_class, clinitMethod);
     }
 

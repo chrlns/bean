@@ -22,6 +22,8 @@ void do_ISTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tISTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_LSTORE(Thread *thread)
@@ -29,6 +31,8 @@ void do_LSTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tLSTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_LSTOREi(Thread *thread, int index)
@@ -36,6 +40,8 @@ void do_LSTOREi(Thread *thread, int index)
 #ifdef DEBUG
     printf("\tLSTOREi\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_ISTOREi(Thread *thread, int index)
@@ -43,6 +49,8 @@ void do_ISTOREi(Thread *thread, int index)
 #ifdef DEBUG
     printf("\tISTOREi\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_FSTOREi(Thread *thread, int index)
@@ -50,6 +58,8 @@ void do_FSTOREi(Thread *thread, int index)
 #ifdef DEBUG
     printf("\tFSTOREi\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_DSTOREi(Thread *thread, int index)
@@ -57,6 +67,8 @@ void do_DSTOREi(Thread *thread, int index)
 #ifdef DEBUG
     printf("\tDSTOREi\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_ASTOREi(Thread *thread, int index)
@@ -64,6 +76,8 @@ void do_ASTOREi(Thread *thread, int index)
 #ifdef DEBUG
     printf("\tASTOREi\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_FSTORE(Thread *thread)
@@ -71,6 +85,8 @@ void do_FSTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tFSTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_IASTORE(Thread *thread)
@@ -78,6 +94,8 @@ void do_IASTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tIASTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_FASTORE(Thread *thread)
@@ -85,6 +103,8 @@ void do_FASTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tFASTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_DASTORE(Thread *thread)
@@ -92,6 +112,8 @@ void do_DASTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tDASTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_AASTORE(Thread *thread)
@@ -99,6 +121,8 @@ void do_AASTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tAASTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_LASTORE(Thread *thread)
@@ -106,6 +130,8 @@ void do_LASTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tLASTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_BASTORE(Thread *thread)
@@ -113,6 +139,8 @@ void do_BASTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tBASTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_CASTORE(Thread *thread)
@@ -120,6 +148,8 @@ void do_CASTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tCASTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_SASTORE(Thread *thread)
@@ -127,6 +157,8 @@ void do_SASTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tSASTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_DSTORE(Thread *thread)
@@ -134,6 +166,8 @@ void do_DSTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tDSTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_ASTORE(Thread *thread)
@@ -141,4 +175,6 @@ void do_ASTORE(Thread *thread)
 #ifdef DEBUG
     printf("\tASTORE\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

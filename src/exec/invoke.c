@@ -20,6 +20,7 @@
 #include <classfile.h>
 #include <debug.h>
 #include <linker.h>
+#include <object.h>
 #include <vm.h>
 
 extern Stackframe* Stackframe_create_init_push(Thread*, Class*, Method*);
@@ -27,7 +28,7 @@ extern Stackframe* Stackframe_create_init_push(Thread*, Class*, Method*);
 /*
  * Basic invoke function.
  */
-void invoke(Thread *thread, bool is_static)
+void invoke(Thread *thread, bool is_static, bool is_special)
 {
     Stackframe* frame = current_frame(thread);
     uint16_t idx = Get2ByteOperand(frame);
@@ -68,11 +69,15 @@ void invoke(Thread *thread, bool is_static)
     }
     
     // Pop object reference from operand stack
-    void* objRef;
-    Stack_pop(&(frame->operandStack), &objRef);
+    Object* objRef;
+    Stack_pop(&(frame->operandStack), (void**)&objRef);
 #ifdef DEBUG
     printf("\tObjRef %p\n", objRef);
 #endif
+    if (is_special && strcmp("<init>", nameStr->Text) == 0) {
+        // The ctor is being called, so the object is initialized afterwards
+        objRef->initialized = true;
+    }
 
     // Increment the invokers instruction pointer by one, otherwise
     // we'll be stuck in an infinite loop
@@ -87,7 +92,7 @@ void invoke(Thread *thread, bool is_static)
 void do_INVOKEINTERFACE(Thread *thread)
 {
     dbgmsg("INVOKEINTERFACE");
-    invoke(thread, false);
+    invoke(thread, false, false);
 }
 
 /*
@@ -97,7 +102,7 @@ void do_INVOKEINTERFACE(Thread *thread)
 void do_INVOKEVIRTUAL(Thread *thread)
 {
     dbgmsg("INVOKEVIRTUAL");
-    invoke(thread, false);
+    invoke(thread, false, false);
 }
 
 /*
@@ -107,7 +112,7 @@ void do_INVOKEVIRTUAL(Thread *thread)
 void do_INVOKESPECIAL(Thread *thread)
 {
     dbgmsg("INVOKESPECIAL")
-    invoke(thread, false);
+    invoke(thread, false, true);
 }
 
 /*
@@ -117,12 +122,12 @@ void do_INVOKESPECIAL(Thread *thread)
 void do_INVOKESTATIC(Thread *thread)
 {
     dbgmsg("INVOKESTATIC");
-    invoke(thread, true);
+    invoke(thread, true, false);
 }
 
 void do_INVOKEDYNAMIC(Thread *thread) {
     dbgmsg("INVOKEDYNAMIC");
-    invoke(thread, false);
+    invoke(thread, false, false);
     
     Stackframe* frame = current_frame(thread);
     Get2ByteOperand(frame); // Skip two zero bytes

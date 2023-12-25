@@ -22,4 +22,6 @@
 void do_ARRAYLENGTH(Thread *thread)
 {
     dbgmsg("ARRAYLENGTH");
+    dbgmsg("Not implemented");
+    exit(-10);
 }

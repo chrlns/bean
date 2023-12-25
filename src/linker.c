@@ -88,12 +88,13 @@ Method* find_method_name(Class* vmclass, const char* qualifiedName)
     for (n = 0; n < vmclass->MethodsNum; n++) {
         nameIndex = vmclass->Methods[n].NameIndex - 1;  /* Constant Pool index starts with 1, so we must subtract one */
         if (strcmp(qualifiedName, ((struct CONSTANT_UTF8_INFO *)vmclass->ConstantPool[nameIndex].Data)->Text) == 0) {
-            dbgmsg("Found method.");
+            dbgmsg("Found method.\n");
             return &(vmclass->Methods[n]);
         }
     }
 
-    dbgmsg("Method not found!");
+    dbgmsg("Method not found!\n");
+    exit(-1);
     return NULL;
 }
 
@@ -165,6 +166,7 @@ Method* find_method_idx(Class *vmclass,
 
         return methodInvoked;
 
+        /* If it's not java.lang.Object ... */
         if (strcmp(methodClass->QualifiedName, "java/lang/Object") != 0) {
 //          /* Find class constructor */
 //          methodConstructor = FindMethodByName(methodClass, "<init>");
@@ -183,13 +185,13 @@ Method* find_method_idx(Class *vmclass,
             dbgmsg("Not implemented");
             exit(-1);
         }
-
         /* Class is the base-of-all java/lang/Object */
-        if (strcmp((const char*)methodName, "<init>") == 0) {
+        else if (strcmp((const char*)methodName, "<init>") == 0) {
             flags->AbortInvoke = true;
             return NULL;
-        } else
+        } else {
             return methodInvoked;
+        }
     }
 }
 

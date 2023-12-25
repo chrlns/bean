@@ -28,7 +28,7 @@ public class Charset {
     }
     
     protected Charset(String canonicalName, String[] aliases) {
-        
+         
     }
     
 }

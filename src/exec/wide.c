@@ -25,4 +25,6 @@
 void do_WIDE(Thread *thread)
 {
     dbgmsg("WIDE");
+    dbgmsg("Not implemented");
+    exit(-10);
 }

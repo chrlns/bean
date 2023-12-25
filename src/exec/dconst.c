@@ -21,9 +21,13 @@
 void do_DCONSTi(Thread *thread, double constant)
 {
     dbgmsg("DCONSTi");
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 void do_DCONST(Thread *thread)
 {
     dbgmsg("DCONST");
+    dbgmsg("Not implemented");
+    exit(-10);
 }

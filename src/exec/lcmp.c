@@ -23,4 +23,6 @@ void do_LCMP(Thread *thread)
 #ifdef DEBUG
     printf("\tLCMP\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }

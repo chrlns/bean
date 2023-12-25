@@ -27,4 +27,6 @@ void do_TABLESWITCH(Thread *thread)
     /* This opcode is a little tricky because it uses 0 to 3 bytes for
        address alignment, so the operands are of variable size and additionally
        of variable number! */
+    dbgmsg("Not implemented");
+    exit(-10);
 }

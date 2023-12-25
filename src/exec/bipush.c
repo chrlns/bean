@@ -23,4 +23,6 @@ void do_BIPUSH(Thread *thread)
 #ifdef DEBUG
     printf("\tBIPUSH\n");
 #endif
+    dbgmsg("Not implemented");
+    exit(-10);
 }
