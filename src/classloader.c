@@ -388,8 +388,7 @@ BufferToShort(buffer2);
 
         /* Read interface indices */
         class->Interfaces =
-            (unsigned short *) malloc(sizeof(unsigned short) *
-                                         class->InterfacesNum);
+            (unsigned short*)malloc(sizeof(unsigned short) * class->InterfacesNum);
         for (n = 0; n < class->InterfacesNum; n++) {
             fread(buffer2, 1, 2, classfile);
             class->Interfaces[n] = BufferToShort(buffer2);
@@ -397,51 +396,51 @@ BufferToShort(buffer2);
 
         /* Read fields count */
         fread(buffer2, 1, 2, classfile);
-        class->FieldsNum = BufferToShort(buffer2);
+        class->fieldsNum = BufferToShort(buffer2);
 
-        /* Read fields */
-        class->Fields =
-            (struct FIELD_INFO *) malloc(sizeof(struct FIELD_INFO) *
-                                            class->FieldsNum);
-        for (n = 0; n < class->FieldsNum; n++) {
+        /* Read field infos */
+        class->fieldInfos = (FieldInfo*)malloc(sizeof(FieldInfo) * class->fieldsNum);
+        class->fieldValues = (Varframe*)malloc(sizeof(Varframe) * class->fieldsNum);
+
+        for (n = 0; n < class->fieldsNum; n++) {
             /* Read access flags */
             fread(buffer2, 1, 2, classfile);
-            class->Fields[n].AccessFlags = BufferToShort(buffer2);
+            class->fieldInfos[n].AccessFlags = BufferToShort(buffer2);
 
             /* Read name index */
             fread(buffer2, 1, 2, classfile);
-            class->Fields[n].NameIndex = BufferToShort(buffer2);
+            class->fieldInfos[n].NameIndex = BufferToShort(buffer2);
 
             /* Read descriptor index */
             fread(buffer2, 1, 2, classfile);
-            class->Fields[n].DescriptorIndex = BufferToShort(buffer2);
+            class->fieldInfos[n].DescriptorIndex = BufferToShort(buffer2);
 
             /* Read attributes count */
             fread(buffer2, 1, 2, classfile);
-            class->Fields[n].AttributesNum = BufferToShort(buffer2);
+            class->fieldInfos[n].AttributesNum = BufferToShort(buffer2);
 
             /* Read attributes */
-            class->Fields[n].Attributes = (struct ATTRIBUTE_INFO *)
+            class->fieldInfos[n].Attributes = (struct ATTRIBUTE_INFO *)
                 malloc(sizeof(struct ATTRIBUTE_INFO) *
-                          class->Fields[n].AttributesNum);
-            for (m = 0; m < class->Fields[n].AttributesNum; m++) {
+                          class->fieldInfos[n].AttributesNum);
+            for (m = 0; m < class->fieldInfos[n].AttributesNum; m++) {
                 /* Read attribute name index */
                 fread(buffer2, 1, 2, classfile);
-                class->Fields[n].Attributes[m].AttributeNameIndex =
+                class->fieldInfos[n].Attributes[m].AttributeNameIndex =
                     BufferToShort(buffer2);
 
                 /* Read length of info array */
                 fread(buffer4, 1, 4, classfile);
-                class->Fields[n].Attributes[m].AttributeLength =
+                class->fieldInfos[n].Attributes[m].AttributeLength =
                     BufferToInt(buffer4);
 
                 /* Allocate space for infos */
-                class->Fields[n].Attributes[m].Info =
-                    (unsigned char *) malloc(class->
-                                                Fields[n].Attributes
+                class->fieldInfos[n].Attributes[m].Info =
+                    (unsigned char*) malloc(class->
+                                                fieldInfos[n].Attributes
                                                 [m].AttributeLength);
-                fread(class->Fields[n].Attributes[m].Info, 1,
-                       class->Fields[n].Attributes[m].AttributeLength,
+                fread(class->fieldInfos[n].Attributes[m].Info, 1,
+                       class->fieldInfos[n].Attributes[m].AttributeLength,
                        classfile);
             }
         }

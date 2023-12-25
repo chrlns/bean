@@ -31,14 +31,15 @@ typedef struct Class {
     uint16_t                AttributesNum;
     struct CONSTANTPOOL*    ConstantPool;       // Is indexed from 1 to ConstantPoolNum-1
     uint16_t                ConstantPoolNum;
-    struct FIELD_INFO*      Fields;
-    uint16_t                FieldsNum;
+    struct FIELD_INFO*      fieldInfos;
+    uint16_t                fieldsNum;
+    Varframe*               fieldValues;        // Runtime storage for class variables
     uint32_t                InstanceCounter;    // Counts the number of instances that use this class.
                                                 // If that count is 0, the Garbage Collector can free this class.
     uint16_t*               Interfaces;
     uint16_t                InterfacesNum;
     uint16_t                MainMethodIndex;    // 0 means no method, >0 index in the Methods array.
-    Method*   Methods;
+    Method*                 Methods;
     uint16_t                MethodsNum;
     char*                   QualifiedName;      // Full qualified name
     uint16_t                SuperClassIndex;

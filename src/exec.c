@@ -58,7 +58,7 @@ int exec_thread(Thread *thread)
     
 #ifdef DEBUG
     assert(frame != NULL);
-    printf("Opcode %x (%p)\tClass %p\n",
+    printf("Opcode 0x%x (%p)\tClass %p\n",
            *(frame->instPtr), (void *) frame->instPtr,
            (void *) thread->RunningClass);
 #endif

@@ -43,10 +43,10 @@ struct CONSTANT_CLASS_INFO {
     uint16_t NameIndex;
 };
 
-struct CONSTANT_REF_INFO {
+typedef struct CONSTANT_REF_INFO {
     uint16_t ClassIndex;
     uint16_t NameAndTypeIndex;
-};
+} ConstantRefInfo;
 
 struct CONSTANT_STRING_INFO {
     uint16_t StringIndex;
@@ -78,10 +78,10 @@ struct CONSTANT_UTF8_INFO {
     char* Text;
 };
 
-struct CONSTANTPOOL {
+typedef struct CONSTANTPOOL {
     uint8_t Tag;
     void* Data; /* Pointer to a dynamically allocated structure. */
-};
+} ConstantPool;
 
 /*********************
  * ATTRIBUTE STRUCTS *
@@ -177,12 +177,12 @@ struct ATTRIBUTE_INFO_DEPRECATED {
 
 /* INFO STRUCTS */
 
-struct FIELD_INFO {
+typedef struct FIELD_INFO {
     uint16_t AccessFlags;
     uint16_t NameIndex;
     uint16_t DescriptorIndex;
     uint16_t AttributesNum;
     struct ATTRIBUTE_INFO *Attributes;
-};
+} FieldInfo;
 
 #endif

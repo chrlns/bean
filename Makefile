@@ -4,7 +4,7 @@ SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
 
 # Arduino Duemilanove ATmega328P
 CFLAGS_AVR=-mmcu=atmega328 -Os -std=c11 -Wall
-CFLAGS_AMD64=-O2 -std=c18 -Wall
+CFLAGS_AMD64=-std=c18 -Wall
 
 all: micro pc java
 

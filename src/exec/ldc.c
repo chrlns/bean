@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2020 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2023 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,9 +23,10 @@ void do_LDC(Thread *thread) {
     dbgmsg("LDC");
     
     Stackframe* frame = current_frame(thread);
-    Varframe *value = (Varframe*)malloc(sizeof (Varframe));
-    struct CONSTANTPOOL* item = &frame->constants[*(frame->instPtr)];
-    frame->instPtr++;
+    Varframe* value = (Varframe*)malloc(sizeof(Varframe));
+    uint8_t idx = *(++frame->instPtr); // Next byte is index byte
+    struct CONSTANTPOOL* item = &frame->constants[idx - 1]; // -1 because real constant pool starts with 0
+    //frame->instPtr++;
 
 #ifdef DEBUG
     printf("\tLDC Tag = %u\n", item->Tag);
@@ -44,7 +45,10 @@ void do_LDC(Thread *thread) {
             break;
         }
         case CONSTANTPOOL_STRING: {
+            // A reference to a String instance should be put onto the stack
             value->data.ptr = item->Data; /* Pointer to a CONSTANT_STRING_INFO structure */
+            dbgmsg("Not implemented");
+            exit(-10);
             break;
         }
 #ifdef DEBUG

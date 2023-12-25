@@ -29,14 +29,14 @@ void do_PUTSTATIC(Thread *thread)
     // within the constant pool
     index = Get2ByteOperand(current_frame(thread));
 
-    struct CONSTANTPOOL item = frame->constants[index - 1];
+    ConstantPool item = frame->constants[index - 1];
 
     #ifdef DEBUG
-        printf("\tPUTSTATIC Tag = %u\n", item.Tag);
+        printf("\tTag = %u\n", item.Tag);
     #endif
 
     if (item.Tag == CONSTANTPOOL_FIELDREF) {
-        struct CONSTANT_REF_INFO* fieldRef = (struct CONSTANT_REF_INFO*)item.Data;
+        ConstantRefInfo* fieldRef = (ConstantRefInfo*)item.Data;
         #ifdef DEBUG
             printf("\tClassIndex = %u\n", fieldRef->ClassIndex);
             printf("\tNameAndTypeIndex = %u\n", fieldRef->NameAndTypeIndex);
@@ -45,10 +45,21 @@ void do_PUTSTATIC(Thread *thread)
             &frame->constants[fieldRef->ClassIndex - 1];
         struct CONSTANT_NAMETYPE_INFO* nameTypeInfo = (struct CONSTANT_NAMETYPE_INFO*)
             &frame->constants[fieldRef->NameAndTypeIndex - 1];
+
+        Stackframe *frame = current_frame(thread);
+
+        /* Pop value from operand stack */
+        Varframe* value;
+        Stack_pop(&(frame->operandStack), (void **)&value);
+
+        /* Put value into class fields */
+        dbgmsg("Here");
     } else {
         printf("Unexpected CONSTANTPOOL item!");
         exit(-1);
     }
+    dbgmsg("Not implemented");
+    exit(-10);
 }
 
 /* Set field in object */
