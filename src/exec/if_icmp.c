@@ -19,7 +19,7 @@
 
 void IF_ICMP(Thread *thread, bool(*cmpfnc) (int, int))
 {
-    dbgmsg()"IF_ICMP");
+    dbgmsg("IF_ICMP");
     dbgmsg("Not implemented");
     exit(-10);
 }

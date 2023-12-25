@@ -26,6 +26,7 @@
 
 #include <thread.h>
 #include <class.h>
+#include <debug.h>
 #include <stackframe.h>
 #include <classloader.h>
 #include <linker.h>

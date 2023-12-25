@@ -15,8 +15,8 @@
  *  limitations under the License.
  */
 
-#include <debug.h>
 #include <thread.h>
+#include <vm.h>
 
 /* Push the null object reference onto the operand stack. */
 void do_ACONST_NULL(Thread* thread)
