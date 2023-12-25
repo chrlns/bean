@@ -40,7 +40,7 @@ void Method_parseDescriptor(Method* method, const char* descriptor) {
  * Finds, loads and initializes a new class specified by the
  * full qualified name.
  */
-Class* Classloader_forName(char* qualifiedName) {
+Class* Classloader_forName(const char* qualifiedName) {
     printf("Classload_forName: %s\n", qualifiedName);
     /* Search for already loaded class */
     for (int n = 0; n < vm->classloader->loaded_classes_num; n++) {
@@ -72,7 +72,7 @@ Class* Classloader_forName(char* qualifiedName) {
 
 /* This method searches in the local constant pool for a method and returns the index
      of the method in the MethodLookupTable. */
-Method* find_method_name(Class *vmclass, const char *qualifiedName)
+Method* find_method_name(Class* vmclass, const char* qualifiedName)
 {
     unsigned short n, nameIndex;
 
@@ -111,17 +111,17 @@ Method* find_method_nameidx(Class *vmclass, short methodNameIndex)
  * This method tries to find a method by parsing the string identifier
  * and looking for method in local classes.
  */
-Method *find_method_idx(Class *vmclass,
+Method* find_method_idx(Class *vmclass,
                                Thread *thread,
                                uint16_t methodIndex,
                                struct LINKFLAGS *flags)
 {
-    Class *methodClass;
+    Class* methodClass;
     Method* methodInvoked;
     unsigned short classIndex, classNameIndex, nameTypeIndex,
         methodNameIndex;
-    char *className;
-    char *methodName;
+    char* className;
+    char* methodName;
 
     /* The Constant Pool Index is indexed beginning with 1 not 0... */
     methodIndex--;
@@ -184,7 +184,7 @@ Method *find_method_idx(Class *vmclass,
         }
 
         /* Class is the base-of-all java/lang/Object */
-        if (strcmp(methodName, "<init>") == 0) {
+        if (strcmp((const char*)methodName, "<init>") == 0) {
             flags->AbortInvoke = true;
             return NULL;
         } else

@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2020 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2023 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -75,7 +75,7 @@ struct CONSTANT_NAMETYPE_INFO {
 
 struct CONSTANT_UTF8_INFO {
     uint16_t Length;
-    uint8_t* Text;
+    char* Text;
 };
 
 struct CONSTANTPOOL {

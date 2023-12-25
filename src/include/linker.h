@@ -1,6 +1,6 @@
 /*
  *  Bean Java VM
- *  Copyright (C) 2005-2020 Christian Lins <christian@lins.me>
+ *  Copyright (C) 2005-2023 Christian Lins <christian@lins.me>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,13 +23,13 @@
 
 struct LINKFLAGS
 {
-  unsigned int AbortInvoke : 1; /* Abort the Invoke, e.g. because of a internal handled constructor. */
-  unsigned int IsNative    : 1; /* Invoked method is natively handled by the VM. */
+    unsigned int AbortInvoke : 1; /* Abort the Invoke, e.g. because of a internal handled constructor. */
+    unsigned int IsNative    : 1; /* Invoked method is natively handled by the VM. */
 };
 
 Method* dlink(Thread*, unsigned short, struct LINKFLAGS*);
 Method* find_method_name(Class*, const char*);
 
-Class* Classloader_forName(char* qualifiedName);
+Class* Classloader_forName(const char* qualifiedName);
 
 #endif

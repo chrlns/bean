@@ -49,7 +49,7 @@ void invoke(Thread *thread)
     Class* targetClass = Classloader_forName(nameStr->Text);
     
     // Find method in class
-    Method* targetMethod = find_method_name(targetClass, descStr->Text);
+    Method* targetMethod = find_method_name(targetClass, descStr->Text);    
 
     uint16_t nargs = 0;         // TODO: Parse method descriptor
     
