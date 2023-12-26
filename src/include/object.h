@@ -32,7 +32,7 @@ typedef struct Object {
 
     /* Fields necessary for heap and gc management */
     bool gc_marked;
-    Object* next;
+    struct Object* next;
 } Object;
 
 Object* Object_new(const Class* clazz);
