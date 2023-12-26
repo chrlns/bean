@@ -45,8 +45,14 @@ void do_LDC(Thread *thread) {
             break;
         }
         case CONSTANTPOOL_STRING: {
-            // A reference to a String instance should be put onto the stack
-            value->data.ptr = item->Data; /* Pointer to a CONSTANT_STRING_INFO structure */
+            /* A reference to a String instance should be put onto the stack */
+            uint16_t stridx = ((struct CONSTANT_STRING_INFO*)item->Data)->StringIndex;
+            uint16_t strlen = ((struct CONSTANT_UTF8_INFO*)&frame->constants[stridx - 1])->Length;
+            char* strtext = ((struct CONSTANT_UTF8_INFO*)&frame->constants[stridx - 1])->Text;
+
+
+
+            value->data.ptr = NULL;
             dbgmsg("Not implemented");
             exit(-10);
             break;

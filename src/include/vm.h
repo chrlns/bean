@@ -26,9 +26,10 @@
 
 #include <thread.h>
 #include <class.h>
-#include <debug.h>
-#include <stackframe.h>
 #include <classloader.h>
+#include <debug.h>
+#include <object.h>
+#include <stackframe.h>
 #include <linker.h>
 
 #define isAccessFlag(method, accFlag) \
@@ -73,8 +74,8 @@ typedef struct VM {
     unsigned char ThreadNum;
     struct MONITOR* Monitors; /* Monitors */
 
-    unsigned int* MemoryHeap; /* Array of int (pointern) representing the
-                                          GC-Heap of the application. */
+    Object* heapHead;  /* Head of the linked list representing the heap */
+
     bool DoCollectGarbage; /* This is true if the Garbage Collector must
                                           be called. */
 } VM;

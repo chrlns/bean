@@ -29,6 +29,12 @@ typedef struct Object {
         
     Varframe* fields;
     uint16_t  fields_num;
+
+    /* Fields necessary for heap and gc management */
+    bool gc_marked;
+    Object* next;
 } Object;
+
+Object* Object_new(const Class* clazz);
 
 #endif

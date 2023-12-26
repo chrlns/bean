@@ -94,7 +94,7 @@ int start_process(Class* new_class)
     if (clinitMethod == NULL) {
         dbgmsg("No class constructor found. Continue with main.");
     } else {
-        // Invoke class constructor using special INVOKE instruction
+        /* Invoke class constructor using special INVOKE instruction */
         dbgmsg("Invoke <clinit>");
         Stackframe_create_init_push(&(vm->Threads[0]), new_class, clinitMethod);
     }

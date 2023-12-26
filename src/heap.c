@@ -16,3 +16,17 @@
  */
 
 #include <vm.h>
+
+extern VM* vm;
+
+/**
+ * @brief Creates a new Object on the heap, registers it with the GC and 
+ *        returns a pointer to it.
+ * 
+ * @param clazz 
+ * @return Object* 
+ */
+Object* Heap_newObject(const Class* clazz)
+{
+    Object* str = (Object*)malloc(sizeof(Object));
+}
